@@ -1,0 +1,227 @@
+# (PART) Other Resources {-} 
+
+# Resources
+
+Useful resources for next steps.
+
+
+### Suggested Further Reading Material
+
+* [Orchestrating Single Cell Analysis with Bioconductor](https://bioconductor.org/books/release/OSCA/) - this book teaches single cell analysis with the bioconductor ecosystem of packages rather than Seurat. Regardless of your preference for Bioconductor or Seurat, it provides an excellent grounding and further depth and rationale behind each step of a single cell analysis.
+* [Seurat tutorials for gene expression, spatial & multimodal analysis](https://satijalab.org/seurat/articles/get_started.html)
+* [Getting started with Signac - the sibling package to Seurat for scATAC analysis](https://satijalab.org/signac/articles/overview.html)
+* [Monocle documentationn for trajectories](https://cole-trapnell-lab.github.io/monocle3/docs/trajectories/)
+* [Cell Annotation with SingleR](http://bioconductor.org/books/devel/SingleRBook/)
+* [VDJ analysis with Immcantation](https://immcantation.readthedocs.io/en/stable/)
+
+### Useful links arising from the discussion during the previous workshop
+*	[10x Genomics link to ribosomal protein expression](https://kb.10xgenomics.com/hc/en-us/articles/218169723-What-fraction-of-reads-map-to-ribosomal-proteins-)
+*	[10x Genomics link to mitochondrial gene expression](https://kb.10xgenomics.com/hc/en-us/articles/360001086611-Why-do-I-see-a-high-level-of-mitochondrial-gene-expression-)
+*   [scRNA Tools, catalogue of tools for scRNA Seq analysis](https://www.scrna-tools.org/)
+
+#### Data interpretation
+*	[Interactive website explaining UMAP and comparision to t-SNE.](https://pair-code.github.io/understanding-umap/)
+*	[OSCA, dimensionality reduction interpretation](http://bioconductor.org/books/3.14/OSCA.basic/dimensionality-reduction.html#visualization-interpretation)
+*   [A simple description of what PCA and UMAP do, with a 3D example.](https://logarithmic.net/2023/dimred.html)
+
+#### Data tools and visualisation 
+*	[scTransform Vignette](https://satijalab.org/seurat/articles/sctransform_vignette.html)
+*	[Link to the workflowr library](https://github.com/jdblischak/workflowr)
+*	[iSEE Bioconductor library, interactive explorer](https://bioconductor.org/packages/release/bioc/html/iSEE.html)
+*	[ShinyCell makes interactive Shiny app from Seurat output](https://github.com/SGDDNB/ShinyCell)
+*	[iCellR interactive data explorer](https://github.com/rezakj/iCellR)
+*	[Diffusion maps for single cell instead of umaps](https://www.helmholtz-munich.de/icb/research/groups/marr-lab/software/destiny/index.html)
+*[Projections of a high-dimensional dataset with an animated scatter-plot](https://logarithmic.net/langevitour/)
+
+#### Papers
+*   [Doublet cell detection method benchmarking paper.](https://www.cell.com/cell-systems/fulltext/S2405-4712(20)30459-2)
+*	[From Louvain to Leiden: guaranteeing well-connected communities](https://www.nature.com/articles/s41598-019-41695-z)
+
+#### Reference data and databases
+*	[Gene tissue expression database](https://gtexportal.org/home/)
+*	[ImmGen Database and Explorer](https://www.immgen.org/Databrowser19/DatabrowserPage.html)
+*	[Single Cell Study Portal from The Broad](https://singlecell.broadinstitute.org/single_cell)
+*	[Common ref data for cell indexing](http://bioconductor.org/packages/release/data/experiment/vignettes/celldex/inst/doc/userguide.html#2_General-purpose_references)
+*	[Azimuth is a Seurat-friendly reference-based annotation tool](https://azimuth.hubmapconsortium.org/references/#Human%20-%20PBMC)
+*	[Celaref, cell reference annotation tool](https://www.bioconductor.org/packages/release/bioc/html/celaref.html)
+
+
+
+<!-- There's alot more we could add here!, Cell type, python AnnData information, Galaxy informatio, trajectory inference inof ...-->
+
+## Help and fruther Resources
+
+### Seurat Vignettes {-}
+
+https://satijalab.org/seurat/index.html
+ 
+There are a good many Seurat vigettes for different aspects of the Seurat package. E.g. 
+
+* [Guided Clustering tutorial](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) : We've just worked through this
+* [Differential expression](https://satijalab.org/seurat/archive/v3.1/de_vignette.html) : An Exploration of differential expression methods within Seurat
+* [Data integration](https://satijalab.org/seurat/articles/integration_introduction.html) : Seurat's data integration is a popular method to combine different datasets into one joint analysis.
+
+
+
+### Seurat Cheatsheet {-}
+
+https://satijalab.org/seurat/articles/essential_commands.html
+
+A useful resource for asking; How can I do 'X' with my seurat object?
+
+
+### OSCA {-}
+
+https://bioconductor.org/books/release/OSCA/
+
+An comprehensive resource for analysis approaches for single cell data. 
+This uses the SingleCellExperiment bioconductor ecosystem, but alot of the same principle still apply. 
+
+This includes a good discussion of useing [pseudobulk approaches](http://bioconductor.org/books/3.15/OSCA.multisample/multi-sample-comparisons.html#creating-pseudo-bulk-samples), worth checking out for  differential expression analyses.
+
+
+### MBP training Reading list {-}
+
+https://monashbioinformaticsplatform.github.io/Single-Cell-Workshop/
+
+A workshop page for a previous workshop (upon which this one is based) run by Monash Bioinformatics Platform  - down the bottom there
+is an extensive list of useful single cell links and resources.
+
+
+### Biocommons Single Cell Omics {-}
+
+https://www.biocommons.org.au/single-cell-omics
+
+Join the single cell omics community resources being setup by biocommons. 
+
+
+----------------
+
+
+## Data
+
+### Demo 10X data {-}
+
+https://www.10xgenomics.com/resources/datasets
+
+10X genomics have quite a few example datasets availble for download (including PBMC3k). 
+This is a useful resource if you want to see what the 'raw' data looks like for a particular technology.
+
+
+
+### GEO {-}
+
+https://www.ncbi.nlm.nih.gov/geo/
+
+Many papers publish their raw single cell data in GEO. Formats vary, but often you can find the counts matrix.
+# (PART) Other resources {-}
+
+
+### Seurat data {-}
+
+https://github.com/satijalab/seurat-data
+
+Package for obtaining a few datasets as seurat objects.
+
+
+
+<!-- ### scRNAseq {-} -->
+<!-- https://bioconductor.org/packages/release/data/experiment/html/scRNAseq.html -->
+<!-- Preloaded sce data. -->
+
+
+
+----------------
+
+
+## Analysis Tools 
+
+A handful of the many tools that might be worth checking out for next steps.
+
+### Cyclone {-}
+
+https://pubmed.ncbi.nlm.nih.gov/26142758/
+
+Part of the scran package, cyclone is a(nother) method for determining cell phase.
+[Doco](https://rdrr.io/bioc/scran/man/cyclone.html)
+
+
+### Harmony {-}
+
+https://portals.broadinstitute.org/harmony/articles/quickstart.html
+
+Method for integration of multiple single cell datasets.
+
+
+### SingleR {-}
+
+http://bioconductor.org/books/release/SingleRBook/
+
+There is extensive documentation for the singleR package in the 'singleR' book.
+
+### Scrublet {-}
+
+https://github.com/swolock/scrublet
+
+A python based tool for doublet detection. One of many tools in this space.
+
+### ScVelo {-}
+
+https://scvelo.readthedocs.io/
+
+A package for single cell RNA velocity analysis, useful for developmental/pseudotime trajectories. Python/scanpy based.
+
+
+### Monocle {-}
+
+https://cole-trapnell-lab.github.io/monocle3/
+
+A package for single cell developmental//pseudotime trajectory analysis.
+
+
+
+### TidySeurat {-}
+
+https://stemangiola.github.io/tidyseurat/
+
+For fans of tidyverse-everything, there's tidyseurat. Example workflow [here](https://tidytranscriptomics-workshops.github.io/bioc2022_tidytranscriptomics/articles/tidytranscriptomics_case_study.html)
+
+
+----------------
+
+## Preprocessing Tools
+
+Tooks that process raw sequencing data into counts matricies
+
+### Cell Ranger {-}
+
+https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
+
+CellRanger is the 10X tool that takes raw fastq sequence files and produces the counts matricies that are the starting point for today's analysis. It only works for 10X data.
+
+
+### STARSolo {-}
+
+STAR is an aligner (which is actually used within cell ranger). STARSolo is a tool for producing counts matricies, and is configurable enough for use with multiple technologies.
+
+https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md
+
+
+
+
+
+
+<!-- tidyverse -->
+
+<!-- singleR -->
+<!-- celldex -->
+<!-- library(SingleCellExperiment) -->
+<!-- library(SingleR) -->
+<!-- library(celldex) -->
+
+<!-- For monocle: (not done.) -->
+<!-- remotes::install_github('satijalab/seurat-wrappers') -->
+<!-- onfigure: error: gdal-config not found or not executable. -->
+<!-- remotes::install_github('rspatial/terra') -->
+<!-- devtools::install_github('cole-trapnell-lab/monocle3') -->
+

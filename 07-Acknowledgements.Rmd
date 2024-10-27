@@ -1,0 +1,11 @@
+# Acknowledgements
+
+This material is mostly based on the [Seurat introductory tutorial.](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html)
+
+It also draws from material for a [workshop provided by QCIF](https://swbioinf.github.io/scRNAseqInR_Doco/index.html) developed by Sarah Williams and Ahmed Mehdi for the Australian Biocommons.
+
+                  
+                                                                                                                                                         
+                                                                                                                                                         
+                                                                                                                                                         
+                                                                                                                                                         

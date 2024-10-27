@@ -1,0 +1,8 @@
+# Session info
+
+```{r}
+
+library(pander)
+demo.Rmd_session <- sessionInfo()
+pander(demo.Rmd_session)
+```

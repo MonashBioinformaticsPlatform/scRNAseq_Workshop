@@ -1,0 +1,71 @@
+--- 
+title: "scRNAseq Analysis in R with Seurat"
+author: 'Monash Genomics and Bioinformatics Platform (MGBP)'
+date: 'Compiled: `r format(Sys.Date(), "%B %d, %Y")`'
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  scRNAseq analysis in R with Seurat workshop material 
+link-citations: yes
+github-repo: https://github.com/MonashBioinformaticsPlatform/Nov2023_scRNAseq_workshop
+---
+***
+
+# Getting started
+
+Instructors: [Adele Barugahare,](https://www.monash.edu/researchinfrastructure/bioinformatics/about/people) [Paul Harrison](https://www.monash.edu/researchinfrastructure/bioinformatics/about/people) & [Laura Perlaza-Jimenez](https://www.monash.edu/researchinfrastructure/bioinformatics/about/people)
+
+## Summary
+
+This workshop, conducted by the Monash Genomics and Bioinformatics Platform, will cover how to extend analysis to contemporary third-party tools, Seurat and SingleR. We will be walking through the Seurat 3K PBMC Dataset Tutorial and extend this to cell annotation using SingleR.   
+Material for scRNAseq analysis in R with Seurat workshop.This workshop follows the introductory [Guided Clustering Tutorial](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) tutorial from Seurat.
+
+
+Important links:
+
+* [Installation and Setup instructions](set-up.html)
+* [Slideshow introduction](../slides)
+* [Challenge solutions](solutions.html) (no peeking!)
+
+
+### Recommended Computer Requirements:
+
+System Requirements:
+
+
+*Windows:*
+
+* Windows 8.1 (64-bit) or later
+* 4GB RAM
+* SSD storage highly recommended
+* Updated video/display drivers recommended
+
+
+*macOS:*
+
+* macOS 10.15 (Catalina) or later
+* 4GB RAM
+* SSD storage highly recommended
+
+Install latest versions of:
+
+* R
+* RStudio
+* Seurat
+* SeuratWrappers
+* SingleR
+* Celldex
+* Harmony
+
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 
+  'bookdown', 'knitr', 'rmarkdown'
+  ), 'packages.bib')
+```

@@ -1,0 +1,55 @@
+# Set up
+
+For this workshop you will have available a VM. However, if you which to use your local computer here are the set up instructions:
+
+**IMPORTANT: If you have an M1 Mac - Make sure you have [gfortan](https://mac.r-project.org/tools/).**
+
+## Get the workshop material and data
+
+In RStudio **create a new project**. This ensures all the files for this workshop are placed in their own folder.
+
+Once you've created a new project, run the following R code
+
+## Package Installation
+ 
+For this workshop, several packages need to be installed.
+
+BiocManager likes to update installed packages, but we have disabled this in the R code below. If your installation fails, then you might need to turn updates on. Note that if there are a large number of packages that BiocManager wants to update it can take several hours.
+
+These instructions have been tested with R version 4.2.1 and Bioconductor version 3.16.
+
+```{r eval=FALSE}
+## Install required packages for Seurat:
+install.packages(c("Seurat", "dplyr", "remotes", "R.utils","harmony"))
+
+## Install required Bioconductor packages
+install.packages("BiocManager")
+BiocManager::install(c('SingleR', 'celldex',
+                       'BiocGenerics', 'DelayedArray', 'DelayedMatrixStats',
+                       'limma', 'S4Vectors', 'SingleCellExperiment',
+                       'SummarizedExperiment','edgeR' ),
+                     update=FALSE)
+
+
+## install clustree
+install.packages("clustree")
+install.packages("RColorBrewer")
+```
+
+## Raw Data
+
+```{r }
+# where are you? what folder are you working in
+
+getwd()
+
+## Download and untar the data
+options(timeout=3600)
+download.file(
+    "https://bioinformatics.erc.monash.edu/home/lper0012/SingleCellWorkshopData/data.tar","data.tar")
+
+untar("data.tar")
+
+
+```
+

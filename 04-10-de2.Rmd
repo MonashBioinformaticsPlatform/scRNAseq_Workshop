@@ -1,0 +1,267 @@
+# Differential Expression {#de2}
+
+
+There are many different methods for calculating differential expression between groups in scRNAseq data. There are a number of review papers worth consulting on this topic.
+
+There is the [Seurat differential expression Vignette](https://satijalab.org/seurat/archive/v3.1/de_vignette.html) which walks through the variety implemented in Seurat. 
+
+There is also a good discussion of useing [pseudobulk approaches](http://bioconductor.org/books/3.15/OSCA.multisample/multi-sample-comparisons.html#creating-pseudo-bulk-samples) which is worth checking out if youre planning differential expression analyses.
+
+---
+
+We will now look at [GSE96583](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE96583), another PBMC dataset. For speed, we will be looking at a subset of 5000 cells from this data. The cells in this dataset were pooled from eight individual donors. This data contains two batches of single cell sequencing. One of the batches was stimulated with IFN-beta.
+
+
+
+
+The data has already been processed as we have done with the first PBMC dataset, and can be loaded from the `kang2018.rds` file in the data folder.
+
+```{r }
+kang <- readRDS("data/kang2018.rds")
+head(kang@meta.data)
+```
+
+How cells from each condition do we have?
+```{r}
+table(kang$stim)
+```
+
+How many cells per individuals per group?
+```{r}
+table(kang$ind, kang$stim)
+```
+And for each sample, how many of each cell type has been classified?
+
+```{r}
+table(paste(kang$ind,kang$stim), kang$cell)
+```
+
+
+
+## Prefiltering
+
+#### Why do we need to do this? {- .rational}
+
+If expression is below a certain level, it will be almost impossible to see any differential expression.
+
+#### {-}
+
+
+When doing differential expression, you generally ignore genes with low expression.
+In single cell datasets, there are many genes like this. Filtering here to make our dataset smaller so it runs quicker, and there is less aggressive correction for multiple hypotheses.
+
+How many genes before filtering?
+```{r}
+kang
+```
+
+
+How many copies of each gene are there?
+```{R}
+total_per_gene <- rowSums(GetAssayData(kang, assay='RNA', slot='counts'))
+hist(log10(total_per_gene))
+```
+
+
+
+Lets keep only those genes with at least 50 copies across the entire experiment.
+```{r}
+kang <- kang[total_per_gene >= 50, ] 
+```
+
+
+How many genes after filtering?
+```{r}
+kang
+```
+
+
+
+We might like to see the effect of IFN-beta stimulation on each cell type individually. For the purposes of this workshop, just going to test one cell type; CD14+ Monocytes 
+
+An easy way is to subset the object. 
+
+```{r}
+# Set idents to 'cell' column.
+Idents(kang) <- kang$cell
+DimPlot(kang)
+kang.celltype <- kang[, kang$cell == "CD14+ Monocytes" ]
+DimPlot(kang.celltype)
+```
+
+
+
+
+##  Default Wilcox test
+
+To run this test, we change the Idents to the factor(column) we want to test. In this case, that's 'stim'.
+
+```{r}
+# Change Ident to Condition
+Idents(kang.celltype) <- kang.celltype$stim
+
+# default, wilcox test
+de_result_wilcox <- FindMarkers(kang.celltype, 
+            ident.1 = 'stim',
+            ident.2 = 'ctrl',
+            logfc.threshold = 0, # Give me ALL results
+            min.pct = 0
+            )
+
+# Add average expression for plotting
+de_result_wilcox$AveExpr<- rowMeans(kang.celltype[["RNA"]]@data[rownames(de_result_wilcox),])
+```
+
+Look at the top differentially expressed genes.
+```{r}
+head(de_result_wilcox)
+```
+
+```{r}
+p1 <- ggplot(de_result_wilcox, aes(x=AveExpr, y=avg_log2FC, col=p_val_adj < 0.05)) +
+  geom_point() +
+  scale_colour_manual(values=c('TRUE'="red",'FALSE'="black")) + 
+  theme_bw() +
+  ggtitle("Wilcox Test")
+
+
+p2 <- ggplot(de_result_wilcox, aes(x=avg_log2FC, y=-log10(p_val), col=p_val_adj < 0.05)) +
+  geom_point() +
+  scale_colour_manual(values=c('TRUE'="red",'FALSE'="black")) + 
+  theme_bw() +
+  ggtitle("Wilcox Test (Volcano)")
+
+p1 + p2
+```
+
+
+## Seurat Negative binomial
+
+Negative binonial test is run almost the same way - just need to specify it under 'test.use'
+
+```{r results='hide', warning=FALSE, message=FALSE}
+
+# Change Ident to Condition
+Idents(kang.celltype) <- kang.celltype$stim
+
+# default, wilcox test
+de_result_negbinom <- FindMarkers(kang.celltype, 
+            test.use="negbinom", # Choose a different test.
+            ident.1 = 'stim',
+            ident.2 = 'ctrl',
+            logfc.threshold = 0, # Give me ALL results
+            min.pct = 0
+)
+
+# Add average expression for plotting
+de_result_negbinom$AveExpr<- rowMeans(kang.celltype[["RNA"]]@data[rownames(de_result_negbinom),])
+```
+
+
+
+Look at the top differentially expressed genes.
+```{r}
+head(de_result_negbinom)
+```
+
+```{r}
+p1 <- ggplot(de_result_negbinom, aes(x=AveExpr, y=avg_log2FC, col=p_val_adj < 0.05)) +
+  geom_point() +
+  scale_colour_manual(values=c('TRUE'="red",'FALSE'="black")) + 
+  theme_bw() +
+  ggtitle("Negative Bionomial Test")
+
+
+p2 <- ggplot(de_result_negbinom, aes(x=avg_log2FC, y=-log10(p_val), col=p_val_adj < 0.05)) +
+  geom_point() +
+  scale_colour_manual(values=c('TRUE'="red",'FALSE'="black")) + 
+  theme_bw() +
+  ggtitle("Negative Bionomial Test (Volcano)")
+
+p1 + p2
+```
+
+
+## Pseudobulk
+
+Pseudobulk analysis is an option where you have biological replicates. It is essentially pooling the individual cell counts and treating your expreiment like a bulk RNAseq.
+
+
+First, you need to build a pseudobulk matrix - the `AggregateExpression()` function can do this, once you set the 'Idents' of your seurat object to your grouping factor (here, thats a combination of individual+treatment called 'sample', instead of the 'stim' treatment column).
+
+```{r}
+# Tools for bulk differential expression
+library(limma)
+library(edgeR)
+
+
+# Change idents to ind for grouping.
+kang.celltype$sample <- factor(paste(kang.celltype$stim, kang.celltype$ind, sep="_"))
+Idents(kang.celltype) <- kang.celltype$sample
+
+# THen pool together counts in those groups
+# AggregateExperssion returns a list of matricies - one for each assay requested (even just requesting one)
+pseudobulk_matrix_list <- AggregateExpression( kang.celltype,  slot = 'counts', assays='RNA' )
+pseudobulk_matrix      <- pseudobulk_matrix_list[['RNA']]
+colnames(pseudobulk_matrix) <- as.character(colnames(pseudobulk_matrix)) # Changes colnames to simple text
+pseudobulk_matrix[1:5,1:4]
+```
+
+Now it looks like a bulk RNAseq experiment, so treat it like one.
+
+We can use the popular `limma` package for differential expression. Here is one [tutorial](https://ucdavis-bioinformatics-training.github.io/2018-June-RNA-Seq-Workshop/thursday/DE.html), and the hefty reference manual is hosted by [bioconductor](https://bioconductor.org/packages/release/bioc/html/limma.html).
+
+In brief, this code below constructs a linear model for this experiment that accounts for the variation in individuals and treatment. It then tests for differential expression between 'stim' and 'ctrl' groups.
+
+```{R}
+dge <- DGEList(pseudobulk_matrix)
+dge <- calcNormFactors(dge)
+
+# Remove _ or - and everything after it - yeilds stim group
+stim <- gsub("[-_].*","",colnames(pseudobulk_matrix)) 
+
+# Removing everything before the _ or - for the individual, then converting those numerical ind explictiy to text. Else limma will treat them as numbers!
+ind  <- as.character(gsub(".*[-_]","",colnames(pseudobulk_matrix))) 
+
+design <- model.matrix( ~0 + stim + ind)
+vm  <- voom(dge, design = design, plot = FALSE)
+fit <- lmFit(vm, design = design)
+
+contrasts <- makeContrasts(stimstim - stimctrl, levels=coef(fit))
+fit <- contrasts.fit(fit, contrasts)
+fit <- eBayes(fit)
+
+de_result_pseudobulk <- topTable(fit, n = Inf, adjust.method = "BH")
+de_result_pseudobulk <- arrange(de_result_pseudobulk , adj.P.Val)
+```
+
+
+Look at the significantly differentially expressed genes:
+```{r}
+head(de_result_pseudobulk)
+```
+
+
+```{r}
+p1 <- ggplot(de_result_pseudobulk, aes(x=AveExpr, y=logFC, col=adj.P.Val < 0.05)) +
+  geom_point() +
+  scale_colour_manual(values=c('TRUE'="red",'FALSE'="black")) + 
+  theme_bw() +
+  ggtitle("Pseudobulk")
+
+
+p2 <- ggplot(de_result_pseudobulk, aes(x=logFC, y=-log10(P.Value), col=adj.P.Val < 0.05)) +
+  geom_point() +
+  scale_colour_manual(values=c('TRUE'="red",'FALSE'="black")) + 
+  theme_bw() +
+  ggtitle("Pseudobulk Test (Volcano)")
+
+p1 + p2
+
+```
+
+#### Discussion {- .challenge}
+
+These methods give different results. How would you decide which to use? How could you check an individual gene?
+
+#### {-}

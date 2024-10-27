@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 17 Solutions | scRNAseq Analysis in R with Seurat</title>
+<meta name="author" content="Monash Genomics and Bioinformatics Platform (MGBP)">
+<meta name="description" content="17.1 Discussion: The Seurat Object in R ## To look at our seurat object str(pbmc) ## To access the meta.data slot pbmc@meta.data ## meta.data contains cell metadata identified by cell barcode,...">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
+<meta property="og:title" content="Chapter 17 Solutions | scRNAseq Analysis in R with Seurat">
+<meta property="og:type" content="book">
+<meta property="og:description" content="17.1 Discussion: The Seurat Object in R ## To look at our seurat object str(pbmc) ## To access the meta.data slot pbmc@meta.data ## meta.data contains cell metadata identified by cell barcode,...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 17 Solutions | scRNAseq Analysis in R with Seurat">
+<meta name="twitter:description" content="17.1 Discussion: The Seurat Object in R ## To look at our seurat object str(pbmc) ## To access the meta.data slot pbmc@meta.data ## meta.data contains cell metadata identified by cell barcode,...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1.9000/transition.js"></script><script src="libs/bs3compat-0.5.1.9000/tabs.js"></script><script src="libs/bs3compat-0.5.1.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">scRNAseq Analysis in R with Seurat</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Getting started</a></li>
+<li><a class="" href="set-up.html"><span class="header-section-number">2</span> Set up</a></li>
+<li><a class="" href="schedule.html"><span class="header-section-number">3</span> Schedule</a></li>
+<li class="book-part">Seurat Object</li>
+<li><a class="" href="structure.html"><span class="header-section-number">4</span> Structure</a></li>
+<li><a class="" href="load.html"><span class="header-section-number">5</span> Load data</a></li>
+<li class="book-part">Single Cell Analysis</li>
+<li><a class="" href="qc.html"><span class="header-section-number">6</span> QC Filtering</a></li>
+<li><a class="" href="norm.html"><span class="header-section-number">7</span> Normalisation</a></li>
+<li><a class="" href="reducedims.html"><span class="header-section-number">8</span> PCAs and UMAPs</a></li>
+<li><a class="" href="dimensionality-reduction.html"><span class="header-section-number">9</span> Dimensionality reduction</a></li>
+<li><a class="" href="clustering.html"><span class="header-section-number">10</span> Clustering</a></li>
+<li><a class="" href="clustermarkers.html"><span class="header-section-number">11</span> Cluster Markers</a></li>
+<li class="book-part">Futher Analysis</li>
+<li><a class="" href="singler.html"><span class="header-section-number">12</span> SingleR</a></li>
+<li><a class="" href="de2.html"><span class="header-section-number">13</span> Differential Expression</a></li>
+<li><a class="" href="CellCycle.html"><span class="header-section-number">14</span> Cell cycle Assignment</a></li>
+<li><a class="" href="Harmony.html"><span class="header-section-number">15</span> Data set integration with Harmony</a></li>
+<li class="book-part">Other Resources</li>
+<li><a class="" href="resources.html"><span class="header-section-number">16</span> Resources</a></li>
+<li><a class="active" href="solutions.html"><span class="header-section-number">17</span> Solutions</a></li>
+<li><a class="" href="acknowledgements.html"><span class="header-section-number">18</span> Acknowledgements</a></li>
+<li><a class="" href="session-info.html"><span class="header-section-number">19</span> Session info</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/MonashBioinformaticsPlatform/Nov2023_scRNAseq_workshop">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="solutions" class="section level1" number="17">
+<h1>
+<span class="header-section-number">17</span> Solutions<a class="anchor" aria-label="anchor" href="#solutions"><i class="fas fa-link"></i></a>
+</h1>
+<div id="discussion-the-seurat-object-in-r-1" class="section level2" number="17.1">
+<h2>
+<span class="header-section-number">17.1</span> Discussion: The Seurat Object in R<a class="anchor" aria-label="anchor" href="#discussion-the-seurat-object-in-r-1"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## To look at our seurat object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## To access the meta.data slot</span></span>
+<span><span class="va">pbmc</span><span class="op">@</span><span class="va">meta.data</span></span>
+<span></span>
+<span><span class="co">## meta.data contains cell metadata identified by cell barcode, currently there is nFeatures and nCounts</span></span>
+<span></span>
+<span><span class="co">## the actual count data can be found by which is what we had in `pbmc.data` lots of accessors here!</span></span>
+<span></span>
+<span><span class="va">pbmc</span><span class="op">@</span><span class="va">assays</span><span class="op">$</span><span class="va">RNA</span><span class="op">@</span><span class="va">counts</span></span>
+<span><span class="co"># or</span></span>
+<span><span class="va">pbmc</span><span class="op">$</span><span class="va">RNA</span><span class="op">@</span><span class="va">counts</span></span>
+<span><span class="co"># or</span></span>
+<span><span class="va">pbmc</span><span class="op">[[</span><span class="st">"RNA"</span><span class="op">]</span><span class="op">]</span><span class="op">@</span><span class="va">counts</span></span>
+<span></span>
+<span><span class="co">## this is the data object in pbmc.data but is now stored within the seurat object</span></span>
+<span><span class="va">pbmc</span><span class="op">@</span><span class="va">assays</span><span class="op">$</span><span class="va">RNA</span><span class="op">@</span><span class="va">counts</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"CD3D"</span>,<span class="st">"TCL1A"</span>,<span class="st">"MS4A1"</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># The PBMC dataset is a gene-expression dataset and is stored in an assay called `RNA`. What other types of assays could we have stored in a Seurat object if we had a different type of dataset?</span></span>
+<span><span class="co"># We could have a ATAC assay if we had done single cell ATAC</span></span>
+<span><span class="co"># We could have a HTO assay if we'd done cell hashtagging</span></span>
+<span><span class="co"># We could have a CSP assay if we captured cell surface protein data</span></span></code></pre></div>
+</div>
+<div id="challenge-the-meta.data-slot-in-the-seurat-object-1" class="section level2" number="17.2">
+<h2>
+<span class="header-section-number">17.2</span> Challenge: The meta.data slot in the Seurat object<a class="anchor" aria-label="anchor" href="#challenge-the-meta.data-slot-in-the-seurat-object-1"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Show QC metrics for the first 5 cells</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">@</span><span class="va">meta.data</span>, <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="challenge-ribosomal-gene-expression-as-a-qc-metric" class="section level2" number="17.3">
+<h2>
+<span class="header-section-number">17.3</span> Challenge: Ribosomal gene expression as a QC metric<a class="anchor" aria-label="anchor" href="#challenge-ribosomal-gene-expression-as-a-qc-metric"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pbmc</span><span class="op">$</span><span class="va">percent.riboL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/PercentageFeatureSet.html">PercentageFeatureSet</a></span><span class="op">(</span><span class="va">pbmc</span>, pattern <span class="op">=</span> <span class="st">"^RPL"</span><span class="op">)</span></span>
+<span><span class="va">pbmc</span><span class="op">$</span><span class="va">percent.riboS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/PercentageFeatureSet.html">PercentageFeatureSet</a></span><span class="op">(</span><span class="va">pbmc</span>, pattern <span class="op">=</span> <span class="st">"^RPS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeatureScatter.html">FeatureScatter</a></span><span class="op">(</span><span class="va">pbmc</span>, feature1 <span class="op">=</span> <span class="st">"percent.riboS"</span>, feature2 <span class="op">=</span> <span class="st">"percent.riboL"</span><span class="op">)</span></span>
+<span><span class="va">plot1</span></span></code></pre></div>
+<p>The large and small ribosomal subunit genes are correlated within cell.</p>
+<p>What about with mitochondria and gene, feature counts?</p>
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeatureScatter.html">FeatureScatter</a></span><span class="op">(</span><span class="va">pbmc</span>, feature1 <span class="op">=</span> <span class="st">"percent.riboL"</span>, feature2 <span class="op">=</span> <span class="st">"percent.mt"</span><span class="op">)</span></span>
+<span><span class="va">plot2</span></span></code></pre></div>
+<p>There are cells with low ribosome and low mitochondrial gene percentages, and some outliers too (low ribo, high mt).</p>
+<p>These are the cells you may want to exclude.</p>
+<p>To highlight cells with very low percentage of ribosomal genes, create a new column in the meta.data table and
+with <code>FeatureScatter</code> make a plot of the RNA count and mitochondrial percentage with the cells with very low
+ribosomal gene perentage.</p>
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pbmc</span><span class="op">$</span><span class="va">lowRiboL</span> <span class="op">&lt;-</span> <span class="va">pbmc</span><span class="op">$</span><span class="va">percent.riboL</span> <span class="op">&lt;=</span> <span class="fl">5</span></span>
+<span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FeatureScatter.html">FeatureScatter</a></span><span class="op">(</span><span class="va">pbmc</span>, feature1 <span class="op">=</span> <span class="st">"nCount_RNA"</span>, feature2 <span class="op">=</span> <span class="st">"percent.mt"</span>, group.by <span class="op">=</span> <span class="st">"lowRiboL"</span><span class="op">)</span></span>
+<span><span class="va">plot1</span></span></code></pre></div>
+</div>
+<div id="challenge-labelling-genes-of-interest" class="section level2" number="17.4">
+<h2>
+<span class="header-section-number">17.4</span> Challenge: Labelling Genes of Interest<a class="anchor" aria-label="anchor" href="#challenge-labelling-genes-of-interest"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># earlier we created a variable genes plot</span></span>
+<span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/VariableFeaturePlot.html">VariableFeaturePlot</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create a vector of genes of interest</span></span>
+<span><span class="va">goi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IL8"</span>, <span class="st">"IDH2"</span>, <span class="st">"CXCL3"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># now we add the labels we want</span></span>
+<span><span class="va">plot3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/LabelPoints.html">LabelPoints</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">plot1</span>, points <span class="op">=</span> <span class="va">goi</span>, repel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plot3</span></span></code></pre></div>
+</div>
+<div id="challenge-try-different-cluster-settings-1" class="section level2" number="17.5">
+<h2>
+<span class="header-section-number">17.5</span> Challenge: Try different cluster settings<a class="anchor" aria-label="anchor" href="#challenge-try-different-cluster-settings-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>Setting the resolution to 0.05 produces less clusters:</p>
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pbmc2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html">FindClusters</a></span><span class="op">(</span><span class="va">pbmc</span>, resolution <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">pbmc2</span>, reduction <span class="op">=</span> <span class="st">'pca'</span>, dims<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">pbmc2</span>, reduction <span class="op">=</span> <span class="st">'umap'</span><span class="op">)</span></span></code></pre></div>
+<p>Using only the first two principal components, the clusters look muddled in the UMAP:</p>
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pbmc3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindNeighbors.html">FindNeighbors</a></span><span class="op">(</span><span class="va">pbmc</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">pbmc3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html">FindClusters</a></span><span class="op">(</span><span class="va">pbmc3</span>, resolution <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">pbmc3</span>, reduction <span class="op">=</span> <span class="st">'pca'</span>, dims<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">pbmc3</span>, reduction <span class="op">=</span> <span class="st">'umap'</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="challenge-reference-based-annotation" class="section level2" number="17.6">
+<h2>
+<span class="header-section-number">17.6</span> Challenge: Reference Based Annotation<a class="anchor" aria-label="anchor" href="#challenge-reference-based-annotation"><i class="fas fa-link"></i></a>
+</h2>
+<p>See if you can annotate the data with the fine labels from the Monoco reference dataset and whether it improves the cell type annotation resolution.</p>
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">monaco</span> <span class="op">&lt;-</span> <span class="fu">celldex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/celldex/man/MonacoImmuneData.html">MonacoImmuneData</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">monaco.pred.fine</span> <span class="op">&lt;-</span> <span class="fu">SingleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SingleR/man/SingleR.html">SingleR</a></span><span class="op">(</span></span>
+<span>  test <span class="op">=</span> <span class="va">sce</span>, ref <span class="op">=</span> <span class="va">monaco</span>, labels <span class="op">=</span> <span class="va">monaco</span><span class="op">$</span><span class="va">label.fine</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pbmc</span><span class="op">$</span><span class="va">monaco_fine</span> <span class="op">&lt;-</span> <span class="va">monaco.pred.fine</span><span class="op">$</span><span class="va">labels</span></span>
+<span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">pbmc</span>, reduction<span class="op">=</span><span class="st">'umap'</span>, group.by<span class="op">=</span><span class="st">'monaco_fine'</span><span class="op">)</span></span></code></pre></div>
+<ul>
+<li>The T cell &amp; monocyte groups will have more specific cell groups. Discuss the difference between labelling an entire cluster and individual annotating cells - do you believe that every cell in a cluster belongs to the group or do you believe that you have a mix of cell types?</li>
+</ul>
+<p>Do you lose any groups?</p>
+<ul>
+<li>The platelet cells that were previously identified are no longer being annotated as platelets. The Monoco reference doesn’t contain any information about platelets and so SingleR doesn’t label them as such. This is a weakness of reference based methods - they are only as good as your reference</li>
+</ul>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="resources.html"><span class="header-section-number">16</span> Resources</a></div>
+<div class="next"><a href="acknowledgements.html"><span class="header-section-number">18</span> Acknowledgements</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#solutions"><span class="header-section-number">17</span> Solutions</a></li>
+<li><a class="nav-link" href="#discussion-the-seurat-object-in-r-1"><span class="header-section-number">17.1</span> Discussion: The Seurat Object in R</a></li>
+<li><a class="nav-link" href="#challenge-the-meta.data-slot-in-the-seurat-object-1"><span class="header-section-number">17.2</span> Challenge: The meta.data slot in the Seurat object</a></li>
+<li><a class="nav-link" href="#challenge-ribosomal-gene-expression-as-a-qc-metric"><span class="header-section-number">17.3</span> Challenge: Ribosomal gene expression as a QC metric</a></li>
+<li><a class="nav-link" href="#challenge-labelling-genes-of-interest"><span class="header-section-number">17.4</span> Challenge: Labelling Genes of Interest</a></li>
+<li><a class="nav-link" href="#challenge-try-different-cluster-settings-1"><span class="header-section-number">17.5</span> Challenge: Try different cluster settings</a></li>
+<li><a class="nav-link" href="#challenge-reference-based-annotation"><span class="header-section-number">17.6</span> Challenge: Reference Based Annotation</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/MonashBioinformaticsPlatform/Nov2023_scRNAseq_workshop/blob/master/06-solutions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/MonashBioinformaticsPlatform/Nov2023_scRNAseq_workshop/edit/master/06-solutions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 16, 2023.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>
