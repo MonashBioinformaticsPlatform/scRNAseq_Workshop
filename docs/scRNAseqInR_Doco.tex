@@ -109,7 +109,7 @@
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{plainnat}
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
@@ -120,7 +120,7 @@
 
 \title{scRNAseq Analysis in R with Seurat}
 \author{Monash Genomics and Bioinformatics Platform (MGBP)}
-\date{Compiled: November 16, 2023}
+\date{Compiled: October 27, 2024}
 
 \begin{document}
 \maketitle
@@ -131,13 +131,11 @@
 }
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{getting-started}{%
-\chapter{Getting started}\label{getting-started}}
+\chapter{Getting started}\label{getting-started}
 
 Instructors: \href{https://www.monash.edu/researchinfrastructure/bioinformatics/about/people}{Adele Barugahare,} \href{https://www.monash.edu/researchinfrastructure/bioinformatics/about/people}{Paul Harrison} \& \href{https://www.monash.edu/researchinfrastructure/bioinformatics/about/people}{Laura Perlaza-Jimenez}
 
-\hypertarget{summary}{%
-\section{Summary}\label{summary}}
+\section{Summary}\label{summary}
 
 This workshop, conducted by the Monash Genomics and Bioinformatics Platform, will cover how to extend analysis to contemporary third-party tools, Seurat and SingleR. We will be walking through the Seurat 3K PBMC Dataset Tutorial and extend this to cell annotation using SingleR.\\
 Material for scRNAseq analysis in R with Seurat workshop.This workshop follows the introductory \href{https://satijalab.org/seurat/articles/pbmc3k_tutorial.html}{Guided Clustering Tutorial} tutorial from Seurat.
@@ -154,8 +152,7 @@ Important links:
   \href{solutions.html}{Challenge solutions} (no peeking!)
 \end{itemize}
 
-\hypertarget{recommended-computer-requirements}{%
-\subsection{Recommended Computer Requirements:}\label{recommended-computer-requirements}}
+\subsection{Recommended Computer Requirements:}\label{recommended-computer-requirements}
 
 System Requirements:
 
@@ -205,22 +202,19 @@ Install latest versions of:
   Harmony
 \end{itemize}
 
-\hypertarget{set-up}{%
-\chapter{Set up}\label{set-up}}
+\chapter{Set up}\label{set-up}
 
 For this workshop you will have available a VM. However, if you which to use your local computer here are the set up instructions:
 
 \textbf{IMPORTANT: If you have an M1 Mac - Make sure you have \href{https://mac.r-project.org/tools/}{gfortan}.}
 
-\hypertarget{get-the-workshop-material-and-data}{%
-\section{Get the workshop material and data}\label{get-the-workshop-material-and-data}}
+\section{Get the workshop material and data}\label{get-the-workshop-material-and-data}
 
 In RStudio \textbf{create a new project}. This ensures all the files for this workshop are placed in their own folder.
 
 Once you've created a new project, run the following R code
 
-\hypertarget{package-installation}{%
-\section{Package Installation}\label{package-installation}}
+\section{Package Installation}\label{package-installation}
 
 For this workshop, several packages need to be installed.
 
@@ -248,15 +242,14 @@ These instructions have been tested with R version 4.2.1 and Bioconductor versio
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{raw-data}{%
-\section{Raw Data}\label{raw-data}}
+\section{Raw Data}\label{raw-data}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# where are you? what folder are you working in}
 
 \FunctionTok{getwd}\NormalTok{()}
-\CommentTok{\#\textgreater{} [1] "/Users/lper0012/Dropbox/BioPlatform/Teaching/Nov2023\_scRNAseq\_workshop"}
+\CommentTok{\#\textgreater{} [1] "/Users/lper0012/Library/CloudStorage/Dropbox/BioPlatform/Teaching/scRNAseq\_Workshop\_ABACBS\_2024"}
 
 \DocumentationTok{\#\# Download and untar the data}
 \FunctionTok{options}\NormalTok{(}\AttributeTok{timeout=}\DecValTok{3600}\NormalTok{)}
@@ -267,8 +260,7 @@ These instructions have been tested with R version 4.2.1 and Bioconductor versio
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{schedule}{%
-\chapter{Schedule}\label{schedule}}
+\chapter{Schedule}\label{schedule}
 
 \begin{longtable}[]{@{}cc@{}}
 \toprule\noalign{}
@@ -303,11 +295,9 @@ Time & Content \\
 17:00 & Final remarks and conclusion \\
 \end{longtable}
 
-\hypertarget{part-seurat-object}{%
-\part{Seurat Object}\label{part-seurat-object}}
+\part{Seurat Object}\label{part-seurat-object}
 
-\hypertarget{structure}{%
-\chapter{Structure}\label{structure}}
+\chapter{Structure}\label{structure}
 
 Most of todays workshop will be following the Seurat PBMC tutorial (reproduced in the next section).
 We'll load raw counts data, do some QC and setup various useful information in a Seurat object.
@@ -316,8 +306,7 @@ But before that - what does a Seurat object look like, and what can we do with i
 
 Lets have a look at a Seurat object that's already setup.
 
-\hypertarget{load-an-existing-seurat-object}{%
-\section{Load an existing Seurat object}\label{load-an-existing-seurat-object}}
+\section{Load an existing Seurat object}\label{load-an-existing-seurat-object}
 
 The data we're working with today is a small dataset of about 3000 PBMCs (peripheral blood mononuclear cells) from a healthy donor. Just one sample.
 
@@ -345,8 +334,7 @@ And here's the one we prepared earlier. Seurat objects are usually saved as `.rd
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{discussion-the-seurat-object-in-r}{%
-\subsubsection*{Discussion: The Seurat Object in R}\label{discussion-the-seurat-object-in-r}}
+\subsubsection*{Discussion: The Seurat Object in R}\label{discussion-the-seurat-object-in-r}
 \addcontentsline{toc}{subsubsection}{Discussion: The Seurat Object in R}
 
 Lets take a look at the seurat object we have just created in R, \texttt{pbmc\_processed}
@@ -403,8 +391,7 @@ What is in the \texttt{meta.data} slot within your Seurat object currently? What
 
 Where is our count data within the Seurat object?
 
-\hypertarget{whats-in-there}{%
-\section{What's in there?}\label{whats-in-there}}
+\section{What's in there?}\label{whats-in-there}
 
 Some of the most important information for working with Seurat objects is in the metadata.
 This is cell level information - each row is one cell, identified by its barcode.
@@ -489,22 +476,19 @@ But the raw counts data is accessible too.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{load}{%
-\chapter{Load data}\label{load}}
+\chapter{Load data}\label{load}
 
 This workshop follows the introductory \href{https://satijalab.org/seurat/articles/pbmc3k_tutorial.html}{Guided Clustering Tutorial} tutorial from Seurat.
 
 The bulk of this workshop may be found in its original format there.
 
-\hypertarget{setup-the-seurat-object}{%
-\section{Setup the Seurat Object}\label{setup-the-seurat-object}}
+\section{Setup the Seurat Object}\label{setup-the-seurat-object}
 
 For this tutorial, we will be analyzing the a dataset of Peripheral Blood Mononuclear Cells (PBMC) freely available from 10X Genomics. There are 2,700 single cells that were sequenced on the Illumina NextSeq 500. The raw data can be found \href{https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz}{here}.
 
 We start by reading in the data. The \texttt{Read10X()} function reads in the output of the \href{https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger}{cellranger} pipeline from 10X, returning a unique molecular identified (UMI) count matrix. The values in this matrix represent the number of molecules for each feature (i.e.~gene; row) that are detected in each cell (column).
 
-\hypertarget{note-what-does-the-data-look-like}{%
-\subsubsection*{Note: What does the data look like?}\label{note-what-does-the-data-look-like}}
+\subsubsection*{Note: What does the data look like?}\label{note-what-does-the-data-look-like}
 \addcontentsline{toc}{subsubsection}{Note: What does the data look like?}
 
 What do the input files look like? It varies, but this is the output of the CellRanger pipleine, described \href{https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/output/gex-outputs}{here}
@@ -534,8 +518,7 @@ What do the input files look like? It varies, but this is the output of the Cell
 └── web_summary.html
 \end{verbatim}
 
-\hypertarget{section}{%
-\subsection*{}\label{section}}
+\subsection*{}\label{section}
 \addcontentsline{toc}{subsection}{}
 
 We next use the count matrix to create a \texttt{Seurat} object. The object serves as a container that contains both data (like the count matrix) and analysis (like PCA, or clustering results) for a single-cell dataset. For a technical discussion of the \texttt{Seurat} object structure, check out the \href{https://github.com/satijalab/seurat/wiki}{GitHub Wiki}. For example, the count matrix is stored in \texttt{pbmc@assays\$RNA@counts}.
@@ -559,7 +542,7 @@ We next use the count matrix to create a \texttt{Seurat} object. The object serv
 \CommentTok{\#\textgreater{} An object of class Seurat }
 \CommentTok{\#\textgreater{} 13714 features across 2700 samples within 1 assay }
 \CommentTok{\#\textgreater{} Active assay: RNA (13714 features, 0 variable features)}
-\CommentTok{\#\textgreater{}  2 layers present: counts, data}
+\CommentTok{\#\textgreater{}  1 layer present: counts}
 \end{Highlighting}
 \end{Shaded}
 
@@ -597,25 +580,20 @@ The \texttt{.} values in the matrix represent 0s (no molecules detected). Since 
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{part-single-cell-analysis}{%
-\part{Single Cell Analysis}\label{part-single-cell-analysis}}
+\part{Single Cell Analysis}\label{part-single-cell-analysis}
 
-\hypertarget{qc}{%
-\chapter{QC Filtering}\label{qc}}
+\chapter{QC Filtering}\label{qc}
 
 The steps below encompass the standard pre-processing workflow for scRNA-seq data in Seurat. These represent the selection and filtration of cells based on QC metrics, data normalization and scaling, and the detection of highly variable features.
 
-\hypertarget{qc-and-selecting-cells-for-further-analysis}{%
-\section{QC and selecting cells for further analysis}\label{qc-and-selecting-cells-for-further-analysis}}
+\section{QC and selecting cells for further analysis}\label{qc-and-selecting-cells-for-further-analysis}
 
-\hypertarget{why-do-we-need-to-do-this}{%
-\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this}}
+\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this}
 \addcontentsline{toc}{subsubsection}{Why do we need to do this?}
 
 Low quality cells can add noise to your results leading you to the wrong biological conclusions. Using only good quality cells helps you to avoid this. Reduce noise in the data by filtering out low quality cells such as dying or stressed cells (high mitochondrial expression) and cells with few features that can reflect empty droplets.
 
-\hypertarget{section-1}{%
-\subsubsection*{}\label{section-1}}
+\subsubsection*{}\label{section-1}
 \addcontentsline{toc}{subsubsection}{}
 
 Seurat allows you to easily explore QC metrics and filter cells based on any user-defined criteria. A few QC metrics \href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4758103/}{commonly used} by the community include
@@ -656,8 +634,7 @@ Seurat allows you to easily explore QC metrics and filter cells based on any use
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{challenge-the-meta.data-slot-in-the-seurat-object}{%
-\subsubsection*{Challenge: The meta.data slot in the Seurat object}\label{challenge-the-meta.data-slot-in-the-seurat-object}}
+\subsubsection*{Challenge: The meta.data slot in the Seurat object}\label{challenge-the-meta.data-slot-in-the-seurat-object}
 \addcontentsline{toc}{subsubsection}{Challenge: The meta.data slot in the Seurat object}
 
 Where are QC metrics stored in Seurat?
@@ -683,8 +660,7 @@ Where are QC metrics stored in Seurat?
   several samples in our experiment. Add a \texttt{samplename} column to to the \texttt{meta.data} table.
 \end{enumerate}
 
-\hypertarget{section-2}{%
-\subsubsection*{}\label{section-2}}
+\subsubsection*{}\label{section-2}
 \addcontentsline{toc}{subsubsection}{}
 
 In the example below, we visualize QC metrics, and use these to filter cells.
@@ -701,6 +677,8 @@ In the example below, we visualize QC metrics, and use these to filter cells.
 \begin{Highlighting}[]
 \CommentTok{\#Visualize QC metrics as a violin plot}
 \FunctionTok{VlnPlot}\NormalTok{(pbmc, }\AttributeTok{features =} \FunctionTok{c}\NormalTok{(}\StringTok{"nFeature\_RNA"}\NormalTok{, }\StringTok{"nCount\_RNA"}\NormalTok{, }\StringTok{"percent.mt"}\NormalTok{), }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{)}
+\CommentTok{\#\textgreater{} Warning: Default search for "data" layer in "RNA" assay}
+\CommentTok{\#\textgreater{} yielded no results; utilizing "counts" layer instead.}
 \end{Highlighting}
 \end{Shaded}
 
@@ -712,13 +690,15 @@ In the example below, we visualize QC metrics, and use these to filter cells.
 
 \CommentTok{\# visualize the max and min }
 \FunctionTok{VlnPlot}\NormalTok{(pbmc, }\AttributeTok{features =} \StringTok{"nFeature\_RNA"}\NormalTok{)}\SpecialCharTok{+} \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{1000}\NormalTok{,}\DecValTok{3000}\NormalTok{))}
+\CommentTok{\#\textgreater{} Warning: Default search for "data" layer in "RNA" assay}
+\CommentTok{\#\textgreater{} yielded no results; utilizing "counts" layer instead.}
 \CommentTok{\#\textgreater{} Scale for y is already present.}
 \CommentTok{\#\textgreater{} Adding another scale for y, which will replace the existing}
 \CommentTok{\#\textgreater{} scale.}
-\CommentTok{\#\textgreater{} Warning: Removed 2172 rows containing non{-}finite values}
-\CommentTok{\#\textgreater{} (\textasciigrave{}stat\_ydensity()\textasciigrave{}).}
-\CommentTok{\#\textgreater{} Warning: Removed 2172 rows containing missing values}
-\CommentTok{\#\textgreater{} (\textasciigrave{}geom\_point()\textasciigrave{}).}
+\CommentTok{\#\textgreater{} Warning: Removed 2172 rows containing non{-}finite outside the scale}
+\CommentTok{\#\textgreater{} range (\textasciigrave{}stat\_ydensity()\textasciigrave{}).}
+\CommentTok{\#\textgreater{} Warning: Removed 2172 rows containing missing values or values}
+\CommentTok{\#\textgreater{} outside the scale range (\textasciigrave{}geom\_point()\textasciigrave{}).}
 \end{Highlighting}
 \end{Shaded}
 
@@ -727,10 +707,12 @@ In the example below, we visualize QC metrics, and use these to filter cells.
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{VlnPlot}\NormalTok{(pbmc, }\AttributeTok{features =} \StringTok{"nFeature\_RNA"}\NormalTok{,}\AttributeTok{y.max =}\DecValTok{1000}\NormalTok{)}
-\CommentTok{\#\textgreater{} Warning: Removed 530 rows containing non{-}finite values}
-\CommentTok{\#\textgreater{} (\textasciigrave{}stat\_ydensity()\textasciigrave{}).}
-\CommentTok{\#\textgreater{} Warning: Removed 530 rows containing missing values}
-\CommentTok{\#\textgreater{} (\textasciigrave{}geom\_point()\textasciigrave{}).}
+\CommentTok{\#\textgreater{} Warning: Default search for "data" layer in "RNA" assay}
+\CommentTok{\#\textgreater{} yielded no results; utilizing "counts" layer instead.}
+\CommentTok{\#\textgreater{} Warning: Removed 530 rows containing non{-}finite outside the scale}
+\CommentTok{\#\textgreater{} range (\textasciigrave{}stat\_ydensity()\textasciigrave{}).}
+\CommentTok{\#\textgreater{} Warning: Removed 530 rows containing missing values or values}
+\CommentTok{\#\textgreater{} outside the scale range (\textasciigrave{}geom\_point()\textasciigrave{}).}
 \end{Highlighting}
 \end{Shaded}
 
@@ -801,8 +783,7 @@ Lets replot the feature scatters and see what they look like.
 
 \includegraphics{scRNAseqInR_Doco_files/figure-latex/qc2_sidebar-1.pdf}
 
-\hypertarget{challenge-filter-the-cells}{%
-\subsubsection*{Challenge: Filter the cells}\label{challenge-filter-the-cells}}
+\subsubsection*{Challenge: Filter the cells}\label{challenge-filter-the-cells}
 \addcontentsline{toc}{subsubsection}{Challenge: Filter the cells}
 
 Apply the filtering thresolds defined above.
@@ -828,17 +809,14 @@ The PBMC3k dataset we're working with in this tutorial is quite old. There are a
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{norm}{%
-\chapter{Normalisation}\label{norm}}
+\chapter{Normalisation}\label{norm}
 
-\hypertarget{why-do-we-need-to-do-this-1}{%
-\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-1}}
+\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-1}
 \addcontentsline{toc}{subsubsection}{Why do we need to do this?}
 
 The sequencing depth can be different per cell. This can bias the counts of expression showing higher numbers for more sequenced cells leading to the wrong biological conclusions. To correct this the feature counts are normalized.
 
-\hypertarget{section-3}{%
-\subsubsection*{}\label{section-3}}
+\subsubsection*{}\label{section-3}
 \addcontentsline{toc}{subsubsection}{}
 
 After removing unwanted cells from the dataset, the next step is to normalize the data. By default, we employ a global-scaling normalization method ``LogNormalize'' that normalizes the feature expression measurements for each cell by the total expression, multiplies this by a scale factor (10,000 by default), and log-transforms the result. Normalized values are stored in \texttt{pbmc\$RNA@data}.
@@ -846,6 +824,7 @@ After removing unwanted cells from the dataset, the next step is to normalize th
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pbmc }\OtherTok{\textless{}{-}} \FunctionTok{NormalizeData}\NormalTok{(pbmc, }\AttributeTok{normalization.method =} \StringTok{"LogNormalize"}\NormalTok{, }\AttributeTok{scale.factor =} \FloatTok{1e4}\NormalTok{)}
+\CommentTok{\#\textgreater{} Normalizing layer: counts}
 \end{Highlighting}
 \end{Shaded}
 
@@ -857,20 +836,16 @@ For clarity, in this previous line of code (and in future commands), we provide 
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{reducedims}{%
-\chapter{PCAs and UMAPs}\label{reducedims}}
+\chapter{PCAs and UMAPs}\label{reducedims}
 
-\hypertarget{identification-of-highly-variable-features-feature-selection}{%
-\section{Identification of highly variable features (feature selection)}\label{identification-of-highly-variable-features-feature-selection}}
+\section{Identification of highly variable features (feature selection)}\label{identification-of-highly-variable-features-feature-selection}
 
-\hypertarget{why-do-we-need-to-do-this-2}{%
-\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-2}}
+\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-2}
 \addcontentsline{toc}{subsubsection}{Why do we need to do this?}
 
 Identifying the most variable features allows retaining the real biological variability of the data and reduce noise in the data.
 
-\hypertarget{section-4}{%
-\subsubsection*{}\label{section-4}}
+\subsubsection*{}\label{section-4}
 \addcontentsline{toc}{subsubsection}{}
 
 We next calculate a subset of features that exhibit high cell-to-cell variation in the dataset (i.e, they are highly expressed in some cells, and lowly expressed in others). We and \href{https://www.nature.com/articles/nmeth.2645}{others} have found that focusing on these genes in downstream analysis helps to highlight biological signal in single-cell datasets.
@@ -880,6 +855,7 @@ Our procedure in Seurat is described in detail \href{https://doi.org/10.1016/j.c
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pbmc }\OtherTok{\textless{}{-}} \FunctionTok{FindVariableFeatures}\NormalTok{(pbmc, }\AttributeTok{selection.method =} \StringTok{\textquotesingle{}vst\textquotesingle{}}\NormalTok{, }\AttributeTok{nfeatures =} \DecValTok{2000}\NormalTok{)}
+\CommentTok{\#\textgreater{} Finding variable features for layer counts}
 \CommentTok{\# Identify the 10 most highly variable genes}
 \NormalTok{top10 }\OtherTok{\textless{}{-}} \FunctionTok{head}\NormalTok{(}\FunctionTok{VariableFeatures}\NormalTok{(pbmc), }\DecValTok{10}\NormalTok{)}
 \CommentTok{\# plot variable features with and without labels}
@@ -887,27 +863,22 @@ Our procedure in Seurat is described in detail \href{https://doi.org/10.1016/j.c
 \NormalTok{plot2 }\OtherTok{\textless{}{-}} \FunctionTok{LabelPoints}\NormalTok{(}\AttributeTok{plot =}\NormalTok{ plot1, }\AttributeTok{points =}\NormalTok{ top10, }\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{)}
 \CommentTok{\#\textgreater{} When using repel, set xnudge and ynudge to 0 for optimal results}
 \NormalTok{plot1 }\SpecialCharTok{+}\NormalTok{ plot2}
-\CommentTok{\#\textgreater{} Warning: Transformation introduced infinite values in continuous}
-\CommentTok{\#\textgreater{} x{-}axis}
-\CommentTok{\#\textgreater{} Transformation introduced infinite values in continuous}
-\CommentTok{\#\textgreater{} x{-}axis}
+\CommentTok{\#\textgreater{} Warning in scale\_x\_log10(): log{-}10 transformation introduced infinite values.}
+\CommentTok{\#\textgreater{} log{-}10 transformation introduced infinite values.}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{scRNAseqInR_Doco_files/figure-latex/var_features-1.pdf}
 
-\hypertarget{scaling-the-data}{%
-\section{Scaling the data}\label{scaling-the-data}}
+\section{Scaling the data}\label{scaling-the-data}
 
-\hypertarget{why-do-we-need-to-do-this-3}{%
-\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-3}}
+\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-3}
 \addcontentsline{toc}{subsubsection}{Why do we need to do this?}
 
 Highly expresed genes can overpower the signal of other less expresed genes with equal importance. Within the same cell the assumption is that the underlying RNA content is constant. Aditionally, If variables are provided in vars.to.regress, they are individually regressed against each feature, and the resulting residuals are then scaled and centered.
 This step allows controling for cell cycle and other factors that may bias your clustering.
 
-\hypertarget{section-5}{%
-\subsubsection*{}\label{section-5}}
+\subsubsection*{}\label{section-5}
 \addcontentsline{toc}{subsubsection}{}
 
 Next, we apply a linear transformation (`scaling') that is a standard pre-processing step prior to dimensional reduction techniques like PCA. The \texttt{ScaleData()} function:
@@ -966,21 +937,17 @@ However, particularly for advanced users who would like to use this functionalit
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{dimensionality-reduction}{%
-\chapter{Dimensionality reduction}\label{dimensionality-reduction}}
+\chapter{Dimensionality reduction}\label{dimensionality-reduction}
 
-\hypertarget{why-do-we-need-to-do-this-4}{%
-\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-4}}
+\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-4}
 \addcontentsline{toc}{subsubsection}{Why do we need to do this?}
 
 Imagine each gene represents a dimension - or an axis on a plot. We could plot the expression of two genes with a simple scatterplot. But a genome has thousands of genes - how do you collate all the information from each of those genes in a way that allows you to visualise it in a 2 dimensional image. This is where dimensionality reduction comes in, we calculate meta-features that contains combinations of the variation of different genes. From thousands of genes, we end up with 10s of meta-features
 
-\hypertarget{section-6}{%
-\subsubsection*{}\label{section-6}}
+\subsubsection*{}\label{section-6}
 \addcontentsline{toc}{subsubsection}{}
 
-\hypertarget{perform-linear-dimensional-reduction}{%
-\section{Perform linear dimensional reduction}\label{perform-linear-dimensional-reduction}}
+\section{Perform linear dimensional reduction}\label{perform-linear-dimensional-reduction}
 
 Next we perform PCA on the scaled data. By default, only the previously determined variable features are used as input, but can be defined using \texttt{features} argument if you wish to choose a different subset.
 
@@ -1078,8 +1045,7 @@ In particular \texttt{DimHeatmap()} allows for easy exploration of the primary s
 
 \includegraphics{scRNAseqInR_Doco_files/figure-latex/multi-heatmap-1.pdf}
 
-\hypertarget{determine-the-dimensionality-of-the-dataset}{%
-\section{Determine the `dimensionality' of the dataset}\label{determine-the-dimensionality-of-the-dataset}}
+\section{Determine the `dimensionality' of the dataset}\label{determine-the-dimensionality-of-the-dataset}
 
 To overcome the extensive technical noise in any single feature for scRNA-seq data, Seurat clusters cells based on their PCA scores, with each PC essentially representing a `metafeature' that combines information across a correlated feature set. The top principal components therefore represent a robust compression of the dataset. However, how many components should we choose to include? 10? 20? 100?
 
@@ -1115,8 +1081,7 @@ We chose 10 here, but encourage users to consider the following:
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{run-non-linear-dimensional-reduction-umaptsne}{%
-\section{Run non-linear dimensional reduction (UMAP/tSNE)}\label{run-non-linear-dimensional-reduction-umaptsne}}
+\section{Run non-linear dimensional reduction (UMAP/tSNE)}\label{run-non-linear-dimensional-reduction-umaptsne}
 
 Seurat offers several non-linear dimensional reduction techniques, such as tSNE and UMAP, to visualize and explore these datasets. The goal of these algorithms is to learn the underlying manifold of the data in order to place similar cells together in low-dimensional space. Cells within the graph-based clusters determined above should co-localize on these dimension reduction plots. As input to the UMAP and tSNE, we suggest using the same PCs as input to the clustering analysis.
 
@@ -1127,20 +1092,20 @@ Seurat offers several non-linear dimensional reduction techniques, such as tSNE 
 \CommentTok{\#\textgreater{} Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R{-}native UWOT using the cosine metric}
 \CommentTok{\#\textgreater{} To use Python UMAP via reticulate, set umap.method to \textquotesingle{}umap{-}learn\textquotesingle{} and metric to \textquotesingle{}correlation\textquotesingle{}}
 \CommentTok{\#\textgreater{} This message will be shown once per session}
-\CommentTok{\#\textgreater{} 10:06:59 UMAP embedding parameters a = 0.9922 b = 1.112}
-\CommentTok{\#\textgreater{} 10:06:59 Read 2638 rows and found 10 numeric columns}
-\CommentTok{\#\textgreater{} 10:06:59 Using Annoy for neighbor search, n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 10:06:59 Building Annoy index with metric = cosine, n\_trees = 50}
+\CommentTok{\#\textgreater{} 23:14:19 UMAP embedding parameters a = 0.9922 b = 1.112}
+\CommentTok{\#\textgreater{} 23:14:19 Read 2638 rows and found 10 numeric columns}
+\CommentTok{\#\textgreater{} 23:14:19 Using Annoy for neighbor search, n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 23:14:19 Building Annoy index with metric = cosine, n\_trees = 50}
 \CommentTok{\#\textgreater{} 0\%   10   20   30   40   50   60   70   80   90   100\%}
 \CommentTok{\#\textgreater{} [{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|}
 \CommentTok{\#\textgreater{} **************************************************|}
-\CommentTok{\#\textgreater{} 10:06:59 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpYdVDsb/file1e435ff167e7}
-\CommentTok{\#\textgreater{} 10:06:59 Searching Annoy index using 1 thread, search\_k = 3000}
-\CommentTok{\#\textgreater{} 10:06:59 Annoy recall = 100\%}
-\CommentTok{\#\textgreater{} 10:07:00 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 10:07:00 Initializing from normalized Laplacian + noise (using irlba)}
-\CommentTok{\#\textgreater{} 10:07:00 Commencing optimization for 500 epochs, with 105140 positive edges}
-\CommentTok{\#\textgreater{} 10:07:02 Optimization finished}
+\CommentTok{\#\textgreater{} 23:14:20 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//Rtmp6BVxEL/file111d661670d2b}
+\CommentTok{\#\textgreater{} 23:14:20 Searching Annoy index using 1 thread, search\_k = 3000}
+\CommentTok{\#\textgreater{} 23:14:20 Annoy recall = 100\%}
+\CommentTok{\#\textgreater{} 23:14:20 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 23:14:20 Initializing from normalized Laplacian + noise (using RSpectra)}
+\CommentTok{\#\textgreater{} 23:14:20 Commencing optimization for 500 epochs, with 105140 positive edges}
+\CommentTok{\#\textgreater{} 23:14:22 Optimization finished}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1153,20 +1118,17 @@ Seurat offers several non-linear dimensional reduction techniques, such as tSNE 
 
 \includegraphics{scRNAseqInR_Doco_files/figure-latex/tsneplot-1.pdf}
 
-\hypertarget{challenge-pc-genes}{%
-\subsubsection*{Challenge: PC genes}\label{challenge-pc-genes}}
+\subsubsection*{Challenge: PC genes}\label{challenge-pc-genes}
 \addcontentsline{toc}{subsubsection}{Challenge: PC genes}
 
 You can plot gene expression on the UMAP with the \texttt{FeaturePlot()} function.
 
 Try out some genes that were highly weighted in the principal component analysis. How do they look?
 
-\hypertarget{section-7}{%
-\subsubsection*{}\label{section-7}}
+\subsubsection*{}\label{section-7}
 \addcontentsline{toc}{subsubsection}{}
 
-\hypertarget{save}{%
-\section{Save}\label{save}}
+\section{Save}\label{save}
 
 You can save the object at this point so that it can easily be loaded back in without having to rerun the computationally intensive steps performed above, or easily shared with collaborators.
 
@@ -1176,21 +1138,17 @@ You can save the object at this point so that it can easily be loaded back in wi
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{clustering}{%
-\chapter{Clustering}\label{clustering}}
+\chapter{Clustering}\label{clustering}
 
-\hypertarget{why-do-we-need-to-do-this-5}{%
-\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-5}}
+\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-5}
 \addcontentsline{toc}{subsubsection}{Why do we need to do this?}
 
 Clustering the cells will allow you to visualise the variability of your data, can help to segregate cells into cell types.
 
-\hypertarget{section-8}{%
-\subsubsection*{}\label{section-8}}
+\subsubsection*{}\label{section-8}
 \addcontentsline{toc}{subsubsection}{}
 
-\hypertarget{cluster-cells}{%
-\section{Cluster cells}\label{cluster-cells}}
+\section{Cluster cells}\label{cluster-cells}
 
 Seurat v3 applies a graph-based clustering approach, building upon initial strategies in (\href{http://www.cell.com/abstract/S0092-8674(15)00549-8}{Macosko \emph{et al}}). Importantly, the \emph{distance metric} which drives the clustering analysis (based on previously identified PCs) remains the same. However, our approach to partitioning the cellular distance matrix into clusters has dramatically improved. Our approach was heavily inspired by recent manuscripts which applied graph-based clustering approaches to scRNA-seq data \href{http://bioinformatics.oxfordjournals.org/content/early/2015/02/10/bioinformatics.btv088.abstract}{{[}SNN-Cliq, Xu and Su, Bioinformatics, 2015{]}} and CyTOF data \href{http://www.ncbi.nlm.nih.gov/pubmed/26095251}{{[}PhenoGraph, Levine \emph{et al}., Cell, 2015{]}}. Briefly, these methods embed cells in a graph structure - for example a K-nearest neighbor (KNN) graph, with edges drawn between cells with similar feature expression patterns, and then attempt to partition this graph into highly interconnected `quasi-cliques' or `communities'.
 
@@ -1243,20 +1201,17 @@ Check out the clusters.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{challenge-try-different-cluster-settings}{%
-\subsubsection*{Challenge: Try different cluster settings}\label{challenge-try-different-cluster-settings}}
+\subsubsection*{Challenge: Try different cluster settings}\label{challenge-try-different-cluster-settings}
 \addcontentsline{toc}{subsubsection}{Challenge: Try different cluster settings}
 
 Run \texttt{FindNeighbours} and \texttt{FindClusters} again, with a different number of dimensions or with a different resolution. Examine the resulting clusters using \texttt{DimPlot}.
 
 To maintain the flow of this tutorial, please put the output of this exploration in a different variable, such as \texttt{pbmc2}!
 
-\hypertarget{section-9}{%
-\subsubsection*{}\label{section-9}}
+\subsubsection*{}\label{section-9}
 \addcontentsline{toc}{subsubsection}{}
 
-\hypertarget{choosing-a-cluster-resolution}{%
-\section{Choosing a cluster resolution}\label{choosing-a-cluster-resolution}}
+\section{Choosing a cluster resolution}\label{choosing-a-cluster-resolution}
 
 Its a good idea to try different resolutions when clustering to identify the varibility of your data.
 
@@ -1267,7 +1222,6 @@ Its a good idea to try different resolutions when clustering to identify the var
     \AttributeTok{dims =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)}
 \CommentTok{\#\textgreater{} Warning: The following arguments are not used: reduction,}
 \CommentTok{\#\textgreater{} dims}
-
 \CommentTok{\#\textgreater{} Warning: The following arguments are not used: reduction,}
 \CommentTok{\#\textgreater{} dims}
 \CommentTok{\#\textgreater{} Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck}
@@ -1479,6 +1433,11 @@ Plot a clustree to decide how many clusters you have and what resolution capture
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(clustree)}
 \CommentTok{\#\textgreater{} Loading required package: ggraph}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Attaching package: \textquotesingle{}ggraph\textquotesingle{}}
+\CommentTok{\#\textgreater{} The following object is masked from \textquotesingle{}package:sp\textquotesingle{}:}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{}     geometry}
 \FunctionTok{clustree}\NormalTok{(pbmc, }\AttributeTok{prefix =} \StringTok{"RNA\_snn\_res."}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.key.size =} \FunctionTok{unit}\NormalTok{(}\FloatTok{0.05}\NormalTok{, }\StringTok{"cm"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -1504,21 +1463,17 @@ Plot the UMAP with colored clusters with Dimplot
 
 \includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-27-1.pdf}
 
-\hypertarget{clustermarkers}{%
-\chapter{Cluster Markers}\label{clustermarkers}}
+\chapter{Cluster Markers}\label{clustermarkers}
 
-\hypertarget{why-do-we-need-to-do-this-6}{%
-\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-6}}
+\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-6}
 \addcontentsline{toc}{subsubsection}{Why do we need to do this?}
 
 Single cell data helps to segragate cell types. Use markers to identify cell types. warning: In this example the cell types/markers are well known and making this step easy, but in reality this step needs the experts curation.
 
-\hypertarget{section-10}{%
-\subsubsection*{}\label{section-10}}
+\subsubsection*{}\label{section-10}
 \addcontentsline{toc}{subsubsection}{}
 
-\hypertarget{finding-differentially-expressed-features-cluster-biomarkers}{%
-\section{Finding differentially expressed features (cluster biomarkers)}\label{finding-differentially-expressed-features-cluster-biomarkers}}
+\section{Finding differentially expressed features (cluster biomarkers)}\label{finding-differentially-expressed-features-cluster-biomarkers}
 
 Seurat can help you find markers that define clusters via differential expression. By default, it identifies positive and negative markers of a single cluster (specified in \texttt{ident.1}), compared to all other cells. \texttt{FindAllMarkers()} automates this process for all clusters, but you can also test groups of clusters vs.~each other, or against all cells.
 
@@ -1528,22 +1483,31 @@ The \texttt{min.pct} argument requires a feature to be detected at a minimum per
 \begin{Highlighting}[]
 \CommentTok{\# find all markers of cluster 2}
 \NormalTok{cluster2.markers }\OtherTok{\textless{}{-}} \FunctionTok{FindMarkers}\NormalTok{(pbmc, }\AttributeTok{ident.1 =} \DecValTok{2}\NormalTok{, }\AttributeTok{min.pct =} \FloatTok{0.25}\NormalTok{)}
+\CommentTok{\#\textgreater{} For a (much!) faster implementation of the Wilcoxon Rank Sum Test,}
+\CommentTok{\#\textgreater{} (default method for FindMarkers) please install the presto package}
+\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\#\textgreater{} install.packages(\textquotesingle{}devtools\textquotesingle{})}
+\CommentTok{\#\textgreater{} devtools::install\_github(\textquotesingle{}immunogenomics/presto\textquotesingle{})}
+\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\#\textgreater{} After installation of presto, Seurat will automatically use the more }
+\CommentTok{\#\textgreater{} efficient implementation (no further action necessary).}
+\CommentTok{\#\textgreater{} This message will be shown once per session}
 \FunctionTok{head}\NormalTok{(cluster2.markers, }\AttributeTok{n =} \DecValTok{5}\NormalTok{)}
 \CommentTok{\#\textgreater{}             p\_val avg\_log2FC pct.1 pct.2    p\_val\_adj}
-\CommentTok{\#\textgreater{} IL32 2.892340e{-}90  1.2013522 0.947 0.465 3.966555e{-}86}
-\CommentTok{\#\textgreater{} LTB  1.060121e{-}86  1.2695776 0.981 0.643 1.453850e{-}82}
-\CommentTok{\#\textgreater{} CD3D 8.794641e{-}71  0.9389621 0.922 0.432 1.206097e{-}66}
-\CommentTok{\#\textgreater{} IL7R 3.516098e{-}68  1.1873213 0.750 0.326 4.821977e{-}64}
-\CommentTok{\#\textgreater{} LDHB 1.642480e{-}67  0.8969774 0.954 0.614 2.252497e{-}63}
+\CommentTok{\#\textgreater{} IL32 2.892340e{-}90  1.3070772 0.947 0.465 3.966555e{-}86}
+\CommentTok{\#\textgreater{} LTB  1.060121e{-}86  1.3312674 0.981 0.643 1.453850e{-}82}
+\CommentTok{\#\textgreater{} CD3D 8.794641e{-}71  1.0597620 0.922 0.432 1.206097e{-}66}
+\CommentTok{\#\textgreater{} IL7R 3.516098e{-}68  1.4377848 0.750 0.326 4.821977e{-}64}
+\CommentTok{\#\textgreater{} LDHB 1.642480e{-}67  0.9911924 0.954 0.614 2.252497e{-}63}
 \CommentTok{\# find all markers distinguishing cluster 5 from clusters 0 and 3}
 \NormalTok{cluster5.markers }\OtherTok{\textless{}{-}} \FunctionTok{FindMarkers}\NormalTok{(pbmc, }\AttributeTok{ident.1 =} \DecValTok{5}\NormalTok{, }\AttributeTok{ident.2 =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{3}\NormalTok{), }\AttributeTok{min.pct =} \FloatTok{0.25}\NormalTok{)}
 \FunctionTok{head}\NormalTok{(cluster5.markers, }\AttributeTok{n =} \DecValTok{5}\NormalTok{)}
 \CommentTok{\#\textgreater{}                       p\_val avg\_log2FC pct.1 pct.2}
-\CommentTok{\#\textgreater{} FCGR3A        8.246578e{-}205   4.261495 0.975 0.040}
-\CommentTok{\#\textgreater{} IFITM3        1.677613e{-}195   3.879339 0.975 0.049}
-\CommentTok{\#\textgreater{} CFD           2.401156e{-}193   3.405492 0.938 0.038}
-\CommentTok{\#\textgreater{} CD68          2.900384e{-}191   3.020484 0.926 0.035}
-\CommentTok{\#\textgreater{} RP11{-}290F20.3 2.513244e{-}186   2.720057 0.840 0.017}
+\CommentTok{\#\textgreater{} FCGR3A        8.246578e{-}205   6.794969 0.975 0.040}
+\CommentTok{\#\textgreater{} IFITM3        1.677613e{-}195   6.192558 0.975 0.049}
+\CommentTok{\#\textgreater{} CFD           2.401156e{-}193   6.015172 0.938 0.038}
+\CommentTok{\#\textgreater{} CD68          2.900384e{-}191   5.530330 0.926 0.035}
+\CommentTok{\#\textgreater{} RP11{-}290F20.3 2.513244e{-}186   6.297999 0.840 0.017}
 \CommentTok{\#\textgreater{}                   p\_val\_adj}
 \CommentTok{\#\textgreater{} FCGR3A        1.130936e{-}200}
 \CommentTok{\#\textgreater{} IFITM3        2.300678e{-}191}
@@ -1566,24 +1530,24 @@ The \texttt{min.pct} argument requires a feature to be detected at a minimum per
 \CommentTok{\#\textgreater{} \# Groups:   cluster [9]}
 \CommentTok{\#\textgreater{}        p\_val avg\_log2FC pct.1 pct.2 p\_val\_adj cluster gene  }
 \CommentTok{\#\textgreater{}        \textless{}dbl\textgreater{}      \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{} \textless{}fct\textgreater{}   \textless{}chr\textgreater{} }
-\CommentTok{\#\textgreater{}  1 9.57e{-} 88       1.36 0.447 0.108 1.31e{-} 83 0       CCR7  }
-\CommentTok{\#\textgreater{}  2 3.75e{-}112       1.09 0.912 0.592 5.14e{-}108 0       LDHB  }
-\CommentTok{\#\textgreater{}  3 0               5.57 0.996 0.215 0         1       S100A9}
-\CommentTok{\#\textgreater{}  4 0               5.48 0.975 0.121 0         1       S100A8}
-\CommentTok{\#\textgreater{}  5 1.06e{-} 86       1.27 0.981 0.643 1.45e{-} 82 2       LTB   }
-\CommentTok{\#\textgreater{}  6 2.97e{-} 58       1.23 0.42  0.111 4.07e{-} 54 2       AQP3  }
-\CommentTok{\#\textgreater{}  7 0               4.31 0.936 0.041 0         3       CD79A }
-\CommentTok{\#\textgreater{}  8 9.48e{-}271       3.59 0.622 0.022 1.30e{-}266 3       TCL1A }
-\CommentTok{\#\textgreater{}  9 5.61e{-}202       3.10 0.983 0.234 7.70e{-}198 4       CCL5  }
-\CommentTok{\#\textgreater{} 10 7.25e{-}165       3.00 0.577 0.055 9.95e{-}161 4       GZMK  }
-\CommentTok{\#\textgreater{} 11 3.51e{-}184       3.31 0.975 0.134 4.82e{-}180 5       FCGR3A}
-\CommentTok{\#\textgreater{} 12 2.03e{-}125       3.09 1     0.315 2.78e{-}121 5       LST1  }
-\CommentTok{\#\textgreater{} 13 3.13e{-}191       5.32 0.961 0.131 4.30e{-}187 6       GNLY  }
-\CommentTok{\#\textgreater{} 14 7.95e{-}269       4.83 0.961 0.068 1.09e{-}264 6       GZMB  }
-\CommentTok{\#\textgreater{} 15 1.48e{-}220       3.87 0.812 0.011 2.03e{-}216 7       FCER1A}
-\CommentTok{\#\textgreater{} 16 1.67e{-} 21       2.87 1     0.513 2.28e{-} 17 7       HLA{-}D\textasciitilde{}}
-\CommentTok{\#\textgreater{} 17 1.92e{-}102       8.59 1     0.024 2.63e{-} 98 8       PPBP  }
-\CommentTok{\#\textgreater{} 18 9.25e{-}186       7.29 1     0.011 1.27e{-}181 8       PF4}
+\CommentTok{\#\textgreater{}  1 9.57e{-} 88       2.40 0.447 0.108 1.31e{-} 83 0       CCR7  }
+\CommentTok{\#\textgreater{}  2 1.35e{-} 51       2.14 0.342 0.103 1.86e{-} 47 0       LEF1  }
+\CommentTok{\#\textgreater{}  3 7.07e{-}139       7.28 0.299 0.004 9.70e{-}135 1       FOLR3 }
+\CommentTok{\#\textgreater{}  4 3.38e{-}121       6.74 0.277 0.006 4.64e{-}117 1       S100A\textasciitilde{}}
+\CommentTok{\#\textgreater{}  5 2.97e{-} 58       2.09 0.42  0.111 4.07e{-} 54 2       AQP3  }
+\CommentTok{\#\textgreater{}  6 5.03e{-} 34       1.87 0.263 0.07  6.90e{-} 30 2       CD40LG}
+\CommentTok{\#\textgreater{}  7 2.40e{-}272       7.38 0.564 0.009 3.29e{-}268 3       LINC0\textasciitilde{}}
+\CommentTok{\#\textgreater{}  8 2.75e{-}237       7.14 0.488 0.007 3.76e{-}233 3       VPREB3}
+\CommentTok{\#\textgreater{}  9 7.25e{-}165       4.41 0.577 0.055 9.95e{-}161 4       GZMK  }
+\CommentTok{\#\textgreater{} 10 3.27e{-} 88       3.74 0.419 0.061 4.48e{-} 84 4       GZMH  }
+\CommentTok{\#\textgreater{} 11 8.23e{-}168       5.88 0.37  0.005 1.13e{-}163 5       CKB   }
+\CommentTok{\#\textgreater{} 12 1.69e{-}212       5.43 0.506 0.01  2.32e{-}208 5       CDKN1C}
+\CommentTok{\#\textgreater{} 13 8.10e{-}179       6.22 0.471 0.013 1.11e{-}174 6       AKR1C3}
+\CommentTok{\#\textgreater{} 14 5.38e{-}112       6.07 0.29  0.007 7.38e{-}108 6       SH2D1B}
+\CommentTok{\#\textgreater{} 15 1.46e{-}207       8.03 0.5   0.002 2.00e{-}203 7       SERPI\textasciitilde{}}
+\CommentTok{\#\textgreater{} 16 1.48e{-}220       7.63 0.812 0.011 2.03e{-}216 7       FCER1A}
+\CommentTok{\#\textgreater{} 17 0              14.4  0.615 0     0         8       LY6G6F}
+\CommentTok{\#\textgreater{} 18 7.32e{-}222      13.9  0.385 0     1.00e{-}217 8       RP11{-}\textasciitilde{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1609,6 +1573,12 @@ We include several tools for visualizing marker expression. \texttt{VlnPlot()} (
 \begin{Highlighting}[]
 \CommentTok{\# you can plot raw counts as well}
 \FunctionTok{VlnPlot}\NormalTok{(pbmc, }\AttributeTok{features =} \FunctionTok{c}\NormalTok{(}\StringTok{"NKG7"}\NormalTok{, }\StringTok{"PF4"}\NormalTok{), }\AttributeTok{slot =} \StringTok{\textquotesingle{}counts\textquotesingle{}}\NormalTok{, }\AttributeTok{log =} \ConstantTok{TRUE}\NormalTok{)}
+\CommentTok{\#\textgreater{} Warning: The \textasciigrave{}slot\textasciigrave{} argument of \textasciigrave{}VlnPlot()\textasciigrave{} is deprecated as of}
+\CommentTok{\#\textgreater{} Seurat 5.0.0.}
+\CommentTok{\#\textgreater{} i Please use the \textasciigrave{}layer\textasciigrave{} argument instead.}
+\CommentTok{\#\textgreater{} This warning is displayed once every 8 hours.}
+\CommentTok{\#\textgreater{} Call \textasciigrave{}lifecycle::last\_lifecycle\_warnings()\textasciigrave{} to see where}
+\CommentTok{\#\textgreater{} this warning was generated.}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1774,8 +1744,7 @@ DotPlots
 
 \includegraphics{scRNAseqInR_Doco_files/figure-latex/clusterHeatmap-1.pdf}
 
-\hypertarget{use-makers-to-label-or-find-a-cluster}{%
-\section{Use makers to label or find a cluster}\label{use-makers-to-label-or-find-a-cluster}}
+\section{Use makers to label or find a cluster}\label{use-makers-to-label-or-find-a-cluster}
 
 If you know markers for your cell types, use AddModuleScore to label them.
 
@@ -1815,8 +1784,7 @@ If you know markers for your cell types, use AddModuleScore to label them.
 
 \includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-32-1.pdf}
 
-\hypertarget{assigning-cell-type-identity-to-clusters}{%
-\section{Assigning cell type identity to clusters}\label{assigning-cell-type-identity-to-clusters}}
+\section{Assigning cell type identity to clusters}\label{assigning-cell-type-identity-to-clusters}
 
 Fortunately in the case of this dataset, we can use canonical markers to easily match the unbiased clustering to known cell types:
 
@@ -1856,11 +1824,9 @@ Cluster ID & Markers & Cell Type \\
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{part-futher-analysis}{%
-\part{Futher Analysis}\label{part-futher-analysis}}
+\part{Futher Analysis}\label{part-futher-analysis}
 
-\hypertarget{singler}{%
-\chapter{SingleR}\label{singler}}
+\chapter{SingleR}\label{singler}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1902,13 +1868,22 @@ We will now use a package called SingleR to label each cell. SingleR uses a refe
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ls}\NormalTok{(}\StringTok{\textquotesingle{}package:celldex\textquotesingle{}}\NormalTok{)}
-\CommentTok{\#\textgreater{} [1] "BlueprintEncodeData"             }
-\CommentTok{\#\textgreater{} [2] "DatabaseImmuneCellExpressionData"}
-\CommentTok{\#\textgreater{} [3] "HumanPrimaryCellAtlasData"       }
-\CommentTok{\#\textgreater{} [4] "ImmGenData"                      }
-\CommentTok{\#\textgreater{} [5] "MonacoImmuneData"                }
-\CommentTok{\#\textgreater{} [6] "MouseRNAseqData"                 }
-\CommentTok{\#\textgreater{} [7] "NovershternHematopoieticData"}
+\CommentTok{\#\textgreater{}  [1] "BlueprintEncodeData"             }
+\CommentTok{\#\textgreater{}  [2] "DatabaseImmuneCellExpressionData"}
+\CommentTok{\#\textgreater{}  [3] "defineTextQuery"                 }
+\CommentTok{\#\textgreater{}  [4] "fetchLatestVersion"              }
+\CommentTok{\#\textgreater{}  [5] "fetchMetadata"                   }
+\CommentTok{\#\textgreater{}  [6] "fetchReference"                  }
+\CommentTok{\#\textgreater{}  [7] "HumanPrimaryCellAtlasData"       }
+\CommentTok{\#\textgreater{}  [8] "ImmGenData"                      }
+\CommentTok{\#\textgreater{}  [9] "listReferences"                  }
+\CommentTok{\#\textgreater{} [10] "listVersions"                    }
+\CommentTok{\#\textgreater{} [11] "MonacoImmuneData"                }
+\CommentTok{\#\textgreater{} [12] "MouseRNAseqData"                 }
+\CommentTok{\#\textgreater{} [13] "NovershternHematopoieticData"    }
+\CommentTok{\#\textgreater{} [14] "saveReference"                   }
+\CommentTok{\#\textgreater{} [15] "searchReferences"                }
+\CommentTok{\#\textgreater{} [16] "surveyReferences"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1919,10 +1894,6 @@ In this example, we'll use the \texttt{HumanPrimaryCellAtlasData} set, which con
 \CommentTok{\# This too is a sce object,}
 \CommentTok{\# colData is equivalent to seurat\textquotesingle{}s metadata}
 \NormalTok{ref.set }\OtherTok{\textless{}{-}}\NormalTok{ celldex}\SpecialCharTok{::}\FunctionTok{HumanPrimaryCellAtlasData}\NormalTok{()}
-\CommentTok{\#\textgreater{} see ?celldex and browseVignettes(\textquotesingle{}celldex\textquotesingle{}) for documentation}
-\CommentTok{\#\textgreater{} loading from cache}
-\CommentTok{\#\textgreater{} see ?celldex and browseVignettes(\textquotesingle{}celldex\textquotesingle{}) for documentation}
-\CommentTok{\#\textgreater{} loading from cache}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1988,8 +1959,7 @@ Keep any types that have more than 10 cells to the label, and put those labels b
 
 It is nice to see that even though SingleR does not use the clusters we computed earlier, the labels do seem to match those clusters reasonably well.
 
-\hypertarget{de2}{%
-\chapter{Differential Expression}\label{de2}}
+\chapter{Differential Expression}\label{de2}
 
 There are many different methods for calculating differential expression between groups in scRNAseq data. There are a number of review papers worth consulting on this topic.
 
@@ -2115,17 +2085,14 @@ And for each sample, how many of each cell type has been classified?
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{prefiltering}{%
-\section{Prefiltering}\label{prefiltering}}
+\section{Prefiltering}\label{prefiltering}
 
-\hypertarget{why-do-we-need-to-do-this-7}{%
-\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-7}}
+\subsubsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-7}
 \addcontentsline{toc}{subsubsection}{Why do we need to do this?}
 
 If expression is below a certain level, it will be almost impossible to see any differential expression.
 
-\hypertarget{section-11}{%
-\subsubsection*{}\label{section-11}}
+\subsubsection*{}\label{section-11}
 \addcontentsline{toc}{subsubsection}{}
 
 When doing differential expression, you generally ignore genes with low expression.
@@ -2199,8 +2166,7 @@ An easy way is to subset the object.
 
 \includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-51-2.pdf}
 
-\hypertarget{default-wilcox-test}{%
-\section{Default Wilcox test}\label{default-wilcox-test}}
+\section{Default Wilcox test}\label{default-wilcox-test}
 
 To run this test, we change the Idents to the factor(column) we want to test. In this case, that's `stim'.
 
@@ -2228,12 +2194,12 @@ Look at the top differentially expressed genes.
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(de\_result\_wilcox)}
 \CommentTok{\#\textgreater{}                 p\_val avg\_log2FC pct.1 pct.2     p\_val\_adj}
-\CommentTok{\#\textgreater{} RSAD2   5.541857e{-}197   4.928403 0.975 0.043 3.999004e{-}193}
-\CommentTok{\#\textgreater{} CXCL10  9.648067e{-}197   6.963650 0.973 0.038 6.962045e{-}193}
-\CommentTok{\#\textgreater{} IFIT3   4.988121e{-}196   4.736979 0.979 0.050 3.599428e{-}192}
-\CommentTok{\#\textgreater{} TNFSF10 1.116418e{-}195   4.847351 0.977 0.055 8.056075e{-}192}
-\CommentTok{\#\textgreater{} IFIT1   8.116699e{-}190   4.766009 0.950 0.026 5.857010e{-}186}
-\CommentTok{\#\textgreater{} ISG15   1.524836e{-}187   6.143242 0.998 0.320 1.100322e{-}183}
+\CommentTok{\#\textgreater{} RSAD2   5.541857e{-}197   6.807428 0.975 0.043 3.999004e{-}193}
+\CommentTok{\#\textgreater{} CXCL10  9.648067e{-}197   8.043584 0.973 0.038 6.962045e{-}193}
+\CommentTok{\#\textgreater{} IFIT3   4.988121e{-}196   6.232966 0.979 0.050 3.599428e{-}192}
+\CommentTok{\#\textgreater{} TNFSF10 1.116418e{-}195   6.567507 0.977 0.055 8.056075e{-}192}
+\CommentTok{\#\textgreater{} IFIT1   8.116699e{-}190   6.764859 0.950 0.026 5.857010e{-}186}
+\CommentTok{\#\textgreater{} ISG15   1.524836e{-}187   6.373685 0.998 0.320 1.100322e{-}183}
 \CommentTok{\#\textgreater{}          AveExpr}
 \CommentTok{\#\textgreater{} RSAD2   1.686530}
 \CommentTok{\#\textgreater{} CXCL10  2.388462}
@@ -2265,8 +2231,7 @@ Look at the top differentially expressed genes.
 
 \includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-54-1.pdf}
 
-\hypertarget{seurat-negative-binomial}{%
-\section{Seurat Negative binomial}\label{seurat-negative-binomial}}
+\section{Seurat Negative binomial}\label{seurat-negative-binomial}
 
 Negative binonial test is run almost the same way - just need to specify it under `test.use'
 
@@ -2295,13 +2260,13 @@ Look at the top differentially expressed genes.
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(de\_result\_negbinom)}
-\CommentTok{\#\textgreater{}        p\_val avg\_log2FC pct.1 pct.2 p\_val\_adj  AveExpr}
-\CommentTok{\#\textgreater{} ISG15      0   5.787224 0.998 0.320         0 3.239774}
-\CommentTok{\#\textgreater{} IFI6       0   2.578840 0.979 0.253         0 1.820140}
-\CommentTok{\#\textgreater{} CXCL10     0   5.750807 0.973 0.038         0 2.388462}
-\CommentTok{\#\textgreater{} LY6E       0   2.900314 0.973 0.133         0 1.736931}
-\CommentTok{\#\textgreater{} IFITM3     0   3.401677 0.994 0.267         0 2.190185}
-\CommentTok{\#\textgreater{} ISG20      0   3.659844 0.994 0.272         0 2.319655}
+\CommentTok{\#\textgreater{}          p\_val avg\_log2FC pct.1 pct.2 p\_val\_adj  AveExpr}
+\CommentTok{\#\textgreater{} CXCL10       0   8.043584 0.973 0.038         0 2.388462}
+\CommentTok{\#\textgreater{} CCL8         0   8.166731 0.909 0.022         0 2.071022}
+\CommentTok{\#\textgreater{} LY6E         0   4.891032 0.973 0.133         0 1.736931}
+\CommentTok{\#\textgreater{} APOBEC3A     0   4.755297 0.992 0.258         0 2.311961}
+\CommentTok{\#\textgreater{} IFITM3       0   4.683573 0.994 0.267         0 2.190185}
+\CommentTok{\#\textgreater{} IFI6         0   3.950817 0.979 0.253         0 1.820140}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2326,8 +2291,7 @@ Look at the top differentially expressed genes.
 
 \includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-57-1.pdf}
 
-\hypertarget{pseudobulk}{%
-\section{Pseudobulk}\label{pseudobulk}}
+\section{Pseudobulk}\label{pseudobulk}
 
 Pseudobulk analysis is an option where you have biological replicates. It is essentially pooling the individual cell counts and treating your expreiment like a bulk RNAseq.
 
@@ -2357,15 +2321,18 @@ First, you need to build a pseudobulk matrix - the \texttt{AggregateExpression()
 \CommentTok{\# THen pool together counts in those groups}
 \CommentTok{\# AggregateExperssion returns a list of matricies {-} one for each assay requested (even just requesting one)}
 \NormalTok{pseudobulk\_matrix\_list }\OtherTok{\textless{}{-}} \FunctionTok{AggregateExpression}\NormalTok{( kang.celltype,  }\AttributeTok{slot =} \StringTok{\textquotesingle{}counts\textquotesingle{}}\NormalTok{, }\AttributeTok{assays=}\StringTok{\textquotesingle{}RNA\textquotesingle{}}\NormalTok{ )}
+\CommentTok{\#\textgreater{} Names of identity class contain underscores (\textquotesingle{}\_\textquotesingle{}), replacing with dashes (\textquotesingle{}{-}\textquotesingle{})}
+\CommentTok{\#\textgreater{} This message is displayed once every 8 hours.}
 \NormalTok{pseudobulk\_matrix      }\OtherTok{\textless{}{-}}\NormalTok{ pseudobulk\_matrix\_list[[}\StringTok{\textquotesingle{}RNA\textquotesingle{}}\NormalTok{]]}
 \FunctionTok{colnames}\NormalTok{(pseudobulk\_matrix) }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(pseudobulk\_matrix)) }\CommentTok{\# Changes colnames to simple text}
 \NormalTok{pseudobulk\_matrix[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
-\CommentTok{\#\textgreater{}          ctrl\_101 ctrl\_1015 ctrl\_1016 ctrl\_1039}
-\CommentTok{\#\textgreater{} NOC2L           2         7         0         0}
-\CommentTok{\#\textgreater{} HES4            0         3         2         1}
+\CommentTok{\#\textgreater{} 5 x 4 sparse Matrix of class "dgCMatrix"}
+\CommentTok{\#\textgreater{}          ctrl{-}101 ctrl{-}1015 ctrl{-}1016 ctrl{-}1039}
+\CommentTok{\#\textgreater{} NOC2L           2         7         .         .}
+\CommentTok{\#\textgreater{} HES4            .         3         2         1}
 \CommentTok{\#\textgreater{} ISG15          31       185       236        41}
-\CommentTok{\#\textgreater{} TNFRSF18        0         3         4         2}
-\CommentTok{\#\textgreater{} TNFRSF4         0         2         0         0}
+\CommentTok{\#\textgreater{} TNFRSF18        .         3         4         2}
+\CommentTok{\#\textgreater{} TNFRSF4         .         2         .         .}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2442,18 +2409,15 @@ Look at the significantly differentially expressed genes:
 
 \includegraphics{scRNAseqInR_Doco_files/figure-latex/unnamed-chunk-61-1.pdf}
 
-\hypertarget{discussion}{%
-\subsubsection*{Discussion}\label{discussion}}
+\subsubsection*{Discussion}\label{discussion}
 \addcontentsline{toc}{subsubsection}{Discussion}
 
 These methods give different results. How would you decide which to use? How could you check an individual gene?
 
-\hypertarget{section-12}{%
-\subsubsection*{}\label{section-12}}
+\subsubsection*{}\label{section-12}
 \addcontentsline{toc}{subsubsection}{}
 
-\hypertarget{CellCycle}{%
-\chapter{Cell cycle Assignment}\label{CellCycle}}
+\chapter{Cell cycle Assignment}\label{CellCycle}
 
 In some datasets, the phase of cell cycle that a cell is in (G1/G2M/S) can account for
 alot of the observed transcriptomic variation. There may be clustering by phase, or
@@ -2601,17 +2565,14 @@ Where a bias \emph{is} present, your course of action depends on the task at han
 
 If you are working with non-human data, you will need to convert these gene lists, or find new cell cycle associated genes in your species.
 
-\hypertarget{Harmony}{%
-\chapter{Data set integration with Harmony}\label{Harmony}}
+\chapter{Data set integration with Harmony}\label{Harmony}
 
-\hypertarget{why-do-we-need-to-do-this-8}{%
-\subsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-8}}
+\subsection*{Why do we need to do this?}\label{why-do-we-need-to-do-this-8}
 \addcontentsline{toc}{subsection}{Why do we need to do this?}
 
 You can have data coming from different samples, batches or experiments and you will need to combine them.
 
-\hypertarget{section-13}{%
-\subsection*{}\label{section-13}}
+\subsection*{}\label{section-13}
 \addcontentsline{toc}{subsection}{}
 
 When data is collected from multiple samples, multiple runs of the single cell sequencing library preparation, or multiple conditions, cells of the same type may become separated in the UMAP and be put into several different clusters.
@@ -2716,11 +2677,7 @@ Harmony operates only on the PCA scores. The original gene expression levels rem
 \CommentTok{\#\textgreater{} Harmony 3/10}
 \CommentTok{\#\textgreater{} Harmony 4/10}
 \CommentTok{\#\textgreater{} Harmony 5/10}
-\CommentTok{\#\textgreater{} Harmony 6/10}
-\CommentTok{\#\textgreater{} Harmony 7/10}
-\CommentTok{\#\textgreater{} Harmony 8/10}
-\CommentTok{\#\textgreater{} Harmony 9/10}
-\CommentTok{\#\textgreater{} Harmony 10/10}
+\CommentTok{\#\textgreater{} Harmony converged after 5 iterations}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2747,25 +2704,20 @@ We can use \texttt{harmony} the same way we used the \texttt{pca} reduction to c
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{kang }\OtherTok{\textless{}{-}} \FunctionTok{RunUMAP}\NormalTok{(kang, }\AttributeTok{reduction=}\StringTok{"harmony"}\NormalTok{, }\AttributeTok{dims=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\AttributeTok{reduction.name=}\StringTok{"umap\_harmony"}\NormalTok{)}
-\CommentTok{\#\textgreater{} 10:09:26 UMAP embedding parameters a = 0.9922 b = 1.112}
-\CommentTok{\#\textgreater{} Found more than one class "dist" in cache; using the first, from namespace \textquotesingle{}spam\textquotesingle{}}
-\CommentTok{\#\textgreater{} Also defined by \textquotesingle{}BiocGenerics\textquotesingle{}}
-\CommentTok{\#\textgreater{} 10:09:26 Read 5000 rows and found 10 numeric columns}
-\CommentTok{\#\textgreater{} 10:09:26 Using Annoy for neighbor search, n\_neighbors = 30}
-\CommentTok{\#\textgreater{} Found more than one class "dist" in cache; using the first, from namespace \textquotesingle{}spam\textquotesingle{}}
-\CommentTok{\#\textgreater{} Also defined by \textquotesingle{}BiocGenerics\textquotesingle{}}
-\CommentTok{\#\textgreater{} 10:09:26 Building Annoy index with metric = cosine, n\_trees = 50}
+\CommentTok{\#\textgreater{} 23:16:42 UMAP embedding parameters a = 0.9922 b = 1.112}
+\CommentTok{\#\textgreater{} 23:16:42 Read 5000 rows and found 10 numeric columns}
+\CommentTok{\#\textgreater{} 23:16:42 Using Annoy for neighbor search, n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 23:16:42 Building Annoy index with metric = cosine, n\_trees = 50}
 \CommentTok{\#\textgreater{} 0\%   10   20   30   40   50   60   70   80   90   100\%}
 \CommentTok{\#\textgreater{} [{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|{-}{-}{-}{-}|}
 \CommentTok{\#\textgreater{} **************************************************|}
-\CommentTok{\#\textgreater{} 10:09:26 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//RtmpYdVDsb/file1e432289c9c7}
-\CommentTok{\#\textgreater{} 10:09:26 Searching Annoy index using 1 thread, search\_k = 3000}
-\CommentTok{\#\textgreater{} 10:09:27 Annoy recall = 100\%}
-\CommentTok{\#\textgreater{} 10:09:28 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
-\CommentTok{\#\textgreater{} 10:09:29 Initializing from normalized Laplacian + noise (using irlba)}
-\CommentTok{\#\textgreater{} 10:09:29 Commencing optimization for 500 epochs, with 210560 positive edges}
-\CommentTok{\#\textgreater{} 10:09:33 Optimization finished}
-\CommentTok{\#\textgreater{} Warning: Key \textquotesingle{}UMAP\_\textquotesingle{} taken, using \textquotesingle{}umapharmony\_\textquotesingle{} instead}
+\CommentTok{\#\textgreater{} 23:16:42 Writing NN index file to temp file /var/folders/my/cwpwt\_rd1znflqb8gm8py418lslkvl/T//Rtmp6BVxEL/file111d61cd49c4d}
+\CommentTok{\#\textgreater{} 23:16:42 Searching Annoy index using 1 thread, search\_k = 3000}
+\CommentTok{\#\textgreater{} 23:16:43 Annoy recall = 100\%}
+\CommentTok{\#\textgreater{} 23:16:44 Commencing smooth kNN distance calibration using 1 thread with target n\_neighbors = 30}
+\CommentTok{\#\textgreater{} 23:16:45 Initializing from normalized Laplacian + noise (using RSpectra)}
+\CommentTok{\#\textgreater{} 23:16:45 Commencing optimization for 500 epochs, with 210396 positive edges}
+\CommentTok{\#\textgreater{} 23:16:49 Optimization finished}
 
 \FunctionTok{DimPlot}\NormalTok{(kang, }\AttributeTok{reduction=}\StringTok{"umap\_harmony"}\NormalTok{, }\AttributeTok{group.by=}\StringTok{"stim"}\NormalTok{)}
 \end{Highlighting}
@@ -2783,10 +2735,10 @@ We can use \texttt{harmony} the same way we used the \texttt{pca} reduction to c
 \CommentTok{\#\textgreater{} Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck}
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Number of nodes: 5000}
-\CommentTok{\#\textgreater{} Number of edges: 171031}
+\CommentTok{\#\textgreater{} Number of edges: 171049}
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Running Louvain algorithm...}
-\CommentTok{\#\textgreater{} Maximum modularity in 10 random starts: 0.9327}
+\CommentTok{\#\textgreater{} Maximum modularity in 10 random starts: 0.9323}
 \CommentTok{\#\textgreater{} Number of communities: 9}
 \CommentTok{\#\textgreater{} Elapsed time: 0 seconds}
 \NormalTok{kang}\SpecialCharTok{$}\NormalTok{harmony\_clusters }\OtherTok{\textless{}{-}}\NormalTok{ kang}\SpecialCharTok{$}\NormalTok{seurat\_clusters}
@@ -2807,16 +2759,13 @@ We can use \texttt{harmony} the same way we used the \texttt{pca} reduction to c
 
 Having found a good set of clusters, we would usually perform differential expression analysis on the original data and include batches/runs/individuals as predictors in the linear model. In this example we could now compare un-stimulated and stimulated cells within each cluster. A particularly nice statistical approach that is possible here would be to convert the counts to pseudo-bulk data for the eight individuals, and then apply a bulk RNA-Seq differential expression analysis method. However there is still the problem that unstimulated and stimulated cells were processed in separate batches.
 
-\hypertarget{part-other-resources}{%
-\part{Other Resources}\label{part-other-resources}}
+\part{Other Resources}\label{part-other-resources}
 
-\hypertarget{resources}{%
-\chapter{Resources}\label{resources}}
+\chapter{Resources}\label{resources}
 
 Useful resources for next steps.
 
-\hypertarget{suggested-further-reading-material}{%
-\subsection{Suggested Further Reading Material}\label{suggested-further-reading-material}}
+\subsection{Suggested Further Reading Material}\label{suggested-further-reading-material}
 
 \begin{itemize}
 \tightlist
@@ -2834,8 +2783,7 @@ Useful resources for next steps.
   \href{https://immcantation.readthedocs.io/en/stable/}{VDJ analysis with Immcantation}
 \end{itemize}
 
-\hypertarget{useful-links-arising-from-the-discussion-during-the-previous-workshop}{%
-\subsection{Useful links arising from the discussion during the previous workshop}\label{useful-links-arising-from-the-discussion-during-the-previous-workshop}}
+\subsection{Useful links arising from the discussion during the previous workshop}\label{useful-links-arising-from-the-discussion-during-the-previous-workshop}
 
 \begin{itemize}
 \tightlist
@@ -2847,8 +2795,7 @@ Useful resources for next steps.
   \href{https://www.scrna-tools.org/}{scRNA Tools, catalogue of tools for scRNA Seq analysis}
 \end{itemize}
 
-\hypertarget{data-interpretation}{%
-\subsubsection{Data interpretation}\label{data-interpretation}}
+\subsubsection{Data interpretation}\label{data-interpretation}
 
 \begin{itemize}
 \tightlist
@@ -2860,8 +2807,7 @@ Useful resources for next steps.
   \href{https://logarithmic.net/2023/dimred.html}{A simple description of what PCA and UMAP do, with a 3D example.}
 \end{itemize}
 
-\hypertarget{data-tools-and-visualisation}{%
-\subsubsection{Data tools and visualisation}\label{data-tools-and-visualisation}}
+\subsubsection{Data tools and visualisation}\label{data-tools-and-visualisation}
 
 \begin{itemize}
 \tightlist
@@ -2880,8 +2826,7 @@ Useful resources for next steps.
   *\href{https://logarithmic.net/langevitour/}{Projections of a high-dimensional dataset with an animated scatter-plot}
 \end{itemize}
 
-\hypertarget{papers}{%
-\subsubsection{Papers}\label{papers}}
+\subsubsection{Papers}\label{papers}
 
 \begin{itemize}
 \tightlist
@@ -2891,8 +2836,7 @@ Useful resources for next steps.
   \href{https://www.nature.com/articles/s41598-019-41695-z}{From Louvain to Leiden: guaranteeing well-connected communities}
 \end{itemize}
 
-\hypertarget{reference-data-and-databases}{%
-\subsubsection{Reference data and databases}\label{reference-data-and-databases}}
+\subsubsection{Reference data and databases}\label{reference-data-and-databases}
 
 \begin{itemize}
 \tightlist
@@ -2910,11 +2854,9 @@ Useful resources for next steps.
   \href{https://www.bioconductor.org/packages/release/bioc/html/celaref.html}{Celaref, cell reference annotation tool}
 \end{itemize}
 
-\hypertarget{help-and-fruther-resources}{%
-\section{Help and fruther Resources}\label{help-and-fruther-resources}}
+\section{Help and fruther Resources}\label{help-and-fruther-resources}
 
-\hypertarget{seurat-vignettes}{%
-\subsection*{Seurat Vignettes}\label{seurat-vignettes}}
+\subsection*{Seurat Vignettes}\label{seurat-vignettes}
 \addcontentsline{toc}{subsection}{Seurat Vignettes}
 
 \url{https://satijalab.org/seurat/index.html}
@@ -2931,16 +2873,14 @@ There are a good many Seurat vigettes for different aspects of the Seurat packag
   \href{https://satijalab.org/seurat/articles/integration_introduction.html}{Data integration} : Seurat's data integration is a popular method to combine different datasets into one joint analysis.
 \end{itemize}
 
-\hypertarget{seurat-cheatsheet}{%
-\subsection*{Seurat Cheatsheet}\label{seurat-cheatsheet}}
+\subsection*{Seurat Cheatsheet}\label{seurat-cheatsheet}
 \addcontentsline{toc}{subsection}{Seurat Cheatsheet}
 
 \url{https://satijalab.org/seurat/articles/essential_commands.html}
 
 A useful resource for asking; How can I do `X' with my seurat object?
 
-\hypertarget{osca}{%
-\subsection*{OSCA}\label{osca}}
+\subsection*{OSCA}\label{osca}
 \addcontentsline{toc}{subsection}{OSCA}
 
 \url{https://bioconductor.org/books/release/OSCA/}
@@ -2950,8 +2890,7 @@ This uses the SingleCellExperiment bioconductor ecosystem, but alot of the same 
 
 This includes a good discussion of useing \href{http://bioconductor.org/books/3.15/OSCA.multisample/multi-sample-comparisons.html\#creating-pseudo-bulk-samples}{pseudobulk approaches}, worth checking out for differential expression analyses.
 
-\hypertarget{mbp-training-reading-list}{%
-\subsection*{MBP training Reading list}\label{mbp-training-reading-list}}
+\subsection*{MBP training Reading list}\label{mbp-training-reading-list}
 \addcontentsline{toc}{subsection}{MBP training Reading list}
 
 \url{https://monashbioinformaticsplatform.github.io/Single-Cell-Workshop/}
@@ -2959,8 +2898,7 @@ This includes a good discussion of useing \href{http://bioconductor.org/books/3.
 A workshop page for a previous workshop (upon which this one is based) run by Monash Bioinformatics Platform - down the bottom there
 is an extensive list of useful single cell links and resources.
 
-\hypertarget{biocommons-single-cell-omics}{%
-\subsection*{Biocommons Single Cell Omics}\label{biocommons-single-cell-omics}}
+\subsection*{Biocommons Single Cell Omics}\label{biocommons-single-cell-omics}
 \addcontentsline{toc}{subsection}{Biocommons Single Cell Omics}
 
 \url{https://www.biocommons.org.au/single-cell-omics}
@@ -2969,11 +2907,9 @@ Join the single cell omics community resources being setup by biocommons.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{data}{%
-\section{Data}\label{data}}
+\section{Data}\label{data}
 
-\hypertarget{demo-10x-data}{%
-\subsection*{Demo 10X data}\label{demo-10x-data}}
+\subsection*{Demo 10X data}\label{demo-10x-data}
 \addcontentsline{toc}{subsection}{Demo 10X data}
 
 \url{https://www.10xgenomics.com/resources/datasets}
@@ -2981,8 +2917,7 @@ Join the single cell omics community resources being setup by biocommons.
 10X genomics have quite a few example datasets availble for download (including PBMC3k).
 This is a useful resource if you want to see what the `raw' data looks like for a particular technology.
 
-\hypertarget{geo}{%
-\subsection*{GEO}\label{geo}}
+\subsection*{GEO}\label{geo}
 \addcontentsline{toc}{subsection}{GEO}
 
 \url{https://www.ncbi.nlm.nih.gov/geo/}
@@ -2990,8 +2925,7 @@ This is a useful resource if you want to see what the `raw' data looks like for 
 Many papers publish their raw single cell data in GEO. Formats vary, but often you can find the counts matrix.
 \# (PART) Other resources \{-\}
 
-\hypertarget{seurat-data}{%
-\subsection*{Seurat data}\label{seurat-data}}
+\subsection*{Seurat data}\label{seurat-data}
 \addcontentsline{toc}{subsection}{Seurat data}
 
 \url{https://github.com/satijalab/seurat-data}
@@ -3000,13 +2934,11 @@ Package for obtaining a few datasets as seurat objects.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{analysis-tools}{%
-\section{Analysis Tools}\label{analysis-tools}}
+\section{Analysis Tools}\label{analysis-tools}
 
 A handful of the many tools that might be worth checking out for next steps.
 
-\hypertarget{cyclone}{%
-\subsection*{Cyclone}\label{cyclone}}
+\subsection*{Cyclone}\label{cyclone}
 \addcontentsline{toc}{subsection}{Cyclone}
 
 \url{https://pubmed.ncbi.nlm.nih.gov/26142758/}
@@ -3014,48 +2946,42 @@ A handful of the many tools that might be worth checking out for next steps.
 Part of the scran package, cyclone is a(nother) method for determining cell phase.
 \href{https://rdrr.io/bioc/scran/man/cyclone.html}{Doco}
 
-\hypertarget{harmony}{%
-\subsection*{Harmony}\label{harmony}}
+\subsection*{Harmony}\label{harmony}
 \addcontentsline{toc}{subsection}{Harmony}
 
 \url{https://portals.broadinstitute.org/harmony/articles/quickstart.html}
 
 Method for integration of multiple single cell datasets.
 
-\hypertarget{singler-1}{%
-\subsection*{SingleR}\label{singler-1}}
+\subsection*{SingleR}\label{singler-1}
 \addcontentsline{toc}{subsection}{SingleR}
 
 \url{http://bioconductor.org/books/release/SingleRBook/}
 
 There is extensive documentation for the singleR package in the `singleR' book.
 
-\hypertarget{scrublet}{%
-\subsection*{Scrublet}\label{scrublet}}
+\subsection*{Scrublet}\label{scrublet}
 \addcontentsline{toc}{subsection}{Scrublet}
 
 \url{https://github.com/swolock/scrublet}
 
 A python based tool for doublet detection. One of many tools in this space.
 
-\hypertarget{scvelo}{%
-\subsection*{ScVelo}\label{scvelo}}
+\subsection*{ScVelo}\label{scvelo}
 \addcontentsline{toc}{subsection}{ScVelo}
 
 \url{https://scvelo.readthedocs.io/}
 
 A package for single cell RNA velocity analysis, useful for developmental/pseudotime trajectories. Python/scanpy based.
 
-\hypertarget{monocle}{%
-\subsection*{Monocle}\label{monocle}}
+\subsection*{Monocle}\label{monocle}
 \addcontentsline{toc}{subsection}{Monocle}
 
 \url{https://cole-trapnell-lab.github.io/monocle3/}
 
 A package for single cell developmental//pseudotime trajectory analysis.
 
-\hypertarget{tidyseurat}{%
-\subsection*{TidySeurat}\label{tidyseurat}}
+\subsection*{TidySeurat}\label{tidyseurat}
 \addcontentsline{toc}{subsection}{TidySeurat}
 
 \url{https://stemangiola.github.io/tidyseurat/}
@@ -3064,32 +2990,27 @@ For fans of tidyverse-everything, there's tidyseurat. Example workflow \href{htt
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{preprocessing-tools}{%
-\section{Preprocessing Tools}\label{preprocessing-tools}}
+\section{Preprocessing Tools}\label{preprocessing-tools}
 
 Tooks that process raw sequencing data into counts matricies
 
-\hypertarget{cell-ranger}{%
-\subsection*{Cell Ranger}\label{cell-ranger}}
+\subsection*{Cell Ranger}\label{cell-ranger}
 \addcontentsline{toc}{subsection}{Cell Ranger}
 
 \url{https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger}
 
 CellRanger is the 10X tool that takes raw fastq sequence files and produces the counts matricies that are the starting point for today's analysis. It only works for 10X data.
 
-\hypertarget{starsolo}{%
-\subsection*{STARSolo}\label{starsolo}}
+\subsection*{STARSolo}\label{starsolo}
 \addcontentsline{toc}{subsection}{STARSolo}
 
 STAR is an aligner (which is actually used within cell ranger). STARSolo is a tool for producing counts matricies, and is configurable enough for use with multiple technologies.
 
 \url{https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md}
 
-\hypertarget{solutions}{%
-\chapter{Solutions}\label{solutions}}
+\chapter{Solutions}\label{solutions}
 
-\hypertarget{discussion-the-seurat-object-in-r-1}{%
-\section{Discussion: The Seurat Object in R}\label{discussion-the-seurat-object-in-r-1}}
+\section{Discussion: The Seurat Object in R}\label{discussion-the-seurat-object-in-r-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3119,8 +3040,7 @@ STAR is an aligner (which is actually used within cell ranger). STARSolo is a to
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{challenge-the-meta.data-slot-in-the-seurat-object-1}{%
-\section{Challenge: The meta.data slot in the Seurat object}\label{challenge-the-meta.data-slot-in-the-seurat-object-1}}
+\section{Challenge: The meta.data slot in the Seurat object}\label{challenge-the-meta.data-slot-in-the-seurat-object-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3129,8 +3049,7 @@ STAR is an aligner (which is actually used within cell ranger). STARSolo is a to
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{challenge-ribosomal-gene-expression-as-a-qc-metric}{%
-\section{Challenge: Ribosomal gene expression as a QC metric}\label{challenge-ribosomal-gene-expression-as-a-qc-metric}}
+\section{Challenge: Ribosomal gene expression as a QC metric}\label{challenge-ribosomal-gene-expression-as-a-qc-metric}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3169,8 +3088,7 @@ ribosomal gene perentage.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{challenge-labelling-genes-of-interest}{%
-\section{Challenge: Labelling Genes of Interest}\label{challenge-labelling-genes-of-interest}}
+\section{Challenge: Labelling Genes of Interest}\label{challenge-labelling-genes-of-interest}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3187,8 +3105,7 @@ ribosomal gene perentage.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{challenge-try-different-cluster-settings-1}{%
-\section{Challenge: Try different cluster settings}\label{challenge-try-different-cluster-settings-1}}
+\section{Challenge: Try different cluster settings}\label{challenge-try-different-cluster-settings-1}
 
 Setting the resolution to 0.05 produces less clusters:
 
@@ -3211,8 +3128,7 @@ Using only the first two principal components, the clusters look muddled in the 
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{challenge-reference-based-annotation}{%
-\section{Challenge: Reference Based Annotation}\label{challenge-reference-based-annotation}}
+\section{Challenge: Reference Based Annotation}\label{challenge-reference-based-annotation}
 
 See if you can annotate the data with the fine labels from the Monoco reference dataset and whether it improves the cell type annotation resolution.
 
@@ -3241,15 +3157,13 @@ Do you lose any groups?
   The platelet cells that were previously identified are no longer being annotated as platelets. The Monoco reference doesn't contain any information about platelets and so SingleR doesn't label them as such. This is a weakness of reference based methods - they are only as good as your reference
 \end{itemize}
 
-\hypertarget{acknowledgements}{%
-\chapter{Acknowledgements}\label{acknowledgements}}
+\chapter{Acknowledgements}\label{acknowledgements}
 
 This material is mostly based on the \href{https://satijalab.org/seurat/articles/pbmc3k_tutorial.html}{Seurat introductory tutorial.}
 
 It also draws from material for a \href{https://swbioinf.github.io/scRNAseqInR_Doco/index.html}{workshop provided by QCIF} developed by Sarah Williams and Ahmed Mehdi for the Australian Biocommons.
 
-\hypertarget{session-info}{%
-\chapter{Session info}\label{session-info}}
+\chapter{Session info}\label{session-info}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3260,9 +3174,9 @@ It also draws from material for a \href{https://swbioinf.github.io/scRNAseqInR_D
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{R version 4.3.2 (2023-10-31)}
+\textbf{R version 4.4.1 (2024-06-14)}
 
-\textbf{Platform:} aarch64-apple-darwin20 (64-bit)
+\textbf{Platform:} aarch64-apple-darwin20
 
 \textbf{locale:}
 en\_US.UTF-8\textbar\textbar en\_US.UTF-8\textbar\textbar en\_US.UTF-8\textbar\textbar C\textbar\textbar en\_US.UTF-8\textbar\textbar en\_US.UTF-8
@@ -3271,10 +3185,10 @@ en\_US.UTF-8\textbar\textbar en\_US.UTF-8\textbar\textbar en\_US.UTF-8\textbar\t
 \emph{stats4}, \emph{stats}, \emph{graphics}, \emph{grDevices}, \emph{utils}, \emph{datasets}, \emph{methods} and \emph{base}
 
 \textbf{other attached packages:}
-\emph{pander(v.0.6.5)}, \emph{harmony(v.1.1.0)}, \emph{Rcpp(v.1.0.11)}, \emph{edgeR(v.4.0.1)}, \emph{limma(v.3.58.1)}, \emph{celldex(v.1.12.0)}, \emph{SingleR(v.2.4.0)}, \emph{SingleCellExperiment(v.1.24.0)}, \emph{SummarizedExperiment(v.1.32.0)}, \emph{Biobase(v.2.62.0)}, \emph{GenomicRanges(v.1.54.1)}, \emph{GenomeInfoDb(v.1.38.1)}, \emph{IRanges(v.2.36.0)}, \emph{S4Vectors(v.0.40.1)}, \emph{BiocGenerics(v.0.48.1)}, \emph{MatrixGenerics(v.1.14.0)}, \emph{matrixStats(v.1.1.0)}, \emph{clustree(v.0.5.0)}, \emph{ggraph(v.2.1.0)}, \emph{patchwork(v.1.1.3)}, \emph{ggplot2(v.3.4.4)}, \emph{dplyr(v.1.1.3)}, \emph{SeuratObject(v.5.0.0)} and \emph{Seurat(v.4.4.0)}
+\emph{pander(v.0.6.5)}, \emph{harmony(v.1.2.1)}, \emph{Rcpp(v.1.0.13)}, \emph{edgeR(v.4.2.2)}, \emph{limma(v.3.60.6)}, \emph{celldex(v.1.14.0)}, \emph{SingleR(v.2.6.0)}, \emph{SingleCellExperiment(v.1.26.0)}, \emph{SummarizedExperiment(v.1.34.0)}, \emph{Biobase(v.2.64.0)}, \emph{GenomicRanges(v.1.56.2)}, \emph{GenomeInfoDb(v.1.40.1)}, \emph{IRanges(v.2.38.1)}, \emph{S4Vectors(v.0.42.1)}, \emph{BiocGenerics(v.0.50.0)}, \emph{MatrixGenerics(v.1.16.0)}, \emph{matrixStats(v.1.4.1)}, \emph{clustree(v.0.5.1)}, \emph{ggraph(v.2.2.1)}, \emph{patchwork(v.1.3.0)}, \emph{ggplot2(v.3.5.1)}, \emph{dplyr(v.1.1.4)}, \emph{Seurat(v.5.1.0)}, \emph{SeuratObject(v.5.0.2)} and \emph{sp(v.2.1-4)}
 
 \textbf{loaded via a namespace (and not attached):}
-\emph{spatstat.sparse(v.3.0-3)}, \emph{bitops(v.1.0-7)}, \emph{httr(v.1.4.7)}, \emph{RColorBrewer(v.1.1-3)}, \emph{tools(v.4.3.2)}, \emph{sctransform(v.0.4.1)}, \emph{backports(v.1.4.1)}, \emph{utf8(v.1.2.4)}, \emph{R6(v.2.5.1)}, \emph{lazyeval(v.0.2.2)}, \emph{uwot(v.0.1.16)}, \emph{withr(v.2.5.2)}, \emph{sp(v.2.1-1)}, \emph{gridExtra(v.2.3)}, \emph{progressr(v.0.14.0)}, \emph{cli(v.3.6.1)}, \emph{textshaping(v.0.3.7)}, \emph{spatstat.explore(v.3.2-5)}, \emph{labeling(v.0.4.3)}, \emph{spatstat.data(v.3.0-3)}, \emph{ggridges(v.0.5.4)}, \emph{pbapply(v.1.7-2)}, \emph{systemfonts(v.1.0.5)}, \emph{R.utils(v.2.12.2)}, \emph{parallelly(v.1.36.0)}, \emph{rstudioapi(v.0.15.0)}, \emph{RSQLite(v.2.3.3)}, \emph{generics(v.0.1.3)}, \emph{ica(v.1.0-3)}, \emph{spatstat.random(v.3.2-1)}, \emph{Matrix(v.1.6-1.1)}, \emph{ggbeeswarm(v.0.7.2)}, \emph{fansi(v.1.0.5)}, \emph{abind(v.1.4-5)}, \emph{R.methodsS3(v.1.8.2)}, \emph{lifecycle(v.1.0.4)}, \emph{yaml(v.2.3.7)}, \emph{SparseArray(v.1.2.2)}, \emph{BiocFileCache(v.2.10.1)}, \emph{Rtsne(v.0.16)}, \emph{grid(v.4.3.2)}, \emph{blob(v.1.2.4)}, \emph{promises(v.1.2.1)}, \emph{ExperimentHub(v.2.10.0)}, \emph{crayon(v.1.5.2)}, \emph{miniUI(v.0.1.1.1)}, \emph{lattice(v.0.21-9)}, \emph{beachmat(v.2.18.0)}, \emph{cowplot(v.1.1.1)}, \emph{KEGGREST(v.1.42.0)}, \emph{pillar(v.1.9.0)}, \emph{knitr(v.1.45)}, \emph{future.apply(v.1.11.0)}, \emph{codetools(v.0.2-19)}, \emph{leiden(v.0.4.3)}, \emph{glue(v.1.6.2)}, \emph{data.table(v.1.14.8)}, \emph{vctrs(v.0.6.4)}, \emph{png(v.0.1-8)}, \emph{spam(v.2.10-0)}, \emph{gtable(v.0.3.4)}, \emph{cachem(v.1.0.8)}, \emph{xfun(v.0.41)}, \emph{S4Arrays(v.1.2.0)}, \emph{mime(v.0.12)}, \emph{tidygraph(v.1.2.3)}, \emph{survival(v.3.5-7)}, \emph{statmod(v.1.5.0)}, \emph{interactiveDisplayBase(v.1.40.0)}, \emph{ellipsis(v.0.3.2)}, \emph{fitdistrplus(v.1.1-11)}, \emph{ROCR(v.1.0-11)}, \emph{nlme(v.3.1-163)}, \emph{bit64(v.4.0.5)}, \emph{filelock(v.1.0.2)}, \emph{RcppAnnoy(v.0.0.21)}, \emph{irlba(v.2.3.5.1)}, \emph{vipor(v.0.4.5)}, \emph{KernSmooth(v.2.23-22)}, \emph{colorspace(v.2.1-0)}, \emph{DBI(v.1.1.3)}, \emph{ggrastr(v.1.0.2)}, \emph{tidyselect(v.1.2.0)}, \emph{bit(v.4.0.5)}, \emph{compiler(v.4.3.2)}, \emph{curl(v.5.1.0)}, \emph{DelayedArray(v.0.28.0)}, \emph{plotly(v.4.10.3.9000)}, \emph{bookdown(v.0.36)}, \emph{checkmate(v.2.3.0)}, \emph{scales(v.1.2.1)}, \emph{lmtest(v.0.9-40)}, \emph{rappdirs(v.0.3.3)}, \emph{stringr(v.1.5.0)}, \emph{digest(v.0.6.33)}, \emph{goftest(v.1.2-3)}, \emph{spatstat.utils(v.3.0-4)}, \emph{rmarkdown(v.2.25)}, \emph{RhpcBLASctl(v.0.23-42)}, \emph{XVector(v.0.42.0)}, \emph{htmltools(v.0.5.7.9000)}, \emph{pkgconfig(v.2.0.3)}, \emph{sparseMatrixStats(v.1.14.0)}, \emph{highr(v.0.10)}, \emph{dbplyr(v.2.4.0)}, \emph{fastmap(v.1.1.1)}, \emph{rlang(v.1.1.2)}, \emph{htmlwidgets(v.1.6.2)}, \emph{shiny(v.1.7.5.1)}, \emph{DelayedMatrixStats(v.1.24.0)}, \emph{farver(v.2.1.1)}, \emph{zoo(v.1.8-12)}, \emph{jsonlite(v.1.8.7)}, \emph{BiocParallel(v.1.36.0)}, \emph{R.oo(v.1.25.0)}, \emph{BiocSingular(v.1.18.0)}, \emph{RCurl(v.1.98-1.13)}, \emph{magrittr(v.2.0.3)}, \emph{GenomeInfoDbData(v.1.2.11)}, \emph{dotCall64(v.1.1-0)}, \emph{munsell(v.0.5.0)}, \emph{viridis(v.0.6.4)}, \emph{reticulate(v.1.34.0)}, \emph{stringi(v.1.7.12)}, \emph{zlibbioc(v.1.48.0)}, \emph{MASS(v.7.3-60)}, \emph{AnnotationHub(v.3.10.0)}, \emph{plyr(v.1.8.9)}, \emph{parallel(v.4.3.2)}, \emph{listenv(v.0.9.0)}, \emph{ggrepel(v.0.9.4)}, \emph{deldir(v.1.0-9)}, \emph{Biostrings(v.2.70.1)}, \emph{graphlayouts(v.1.0.2)}, \emph{splines(v.4.3.2)}, \emph{tensor(v.1.5)}, \emph{locfit(v.1.5-9.8)}, \emph{igraph(v.1.5.1)}, \emph{spatstat.geom(v.3.2-7)}, \emph{reshape2(v.1.4.4)}, \emph{ScaledMatrix(v.1.10.0)}, \emph{BiocVersion(v.3.18.0)}, \emph{evaluate(v.0.23)}, \emph{BiocManager(v.1.30.22)}, \emph{tweenr(v.2.0.2)}, \emph{httpuv(v.1.6.12)}, \emph{RANN(v.2.6.1)}, \emph{tidyr(v.1.3.0)}, \emph{purrr(v.1.0.2)}, \emph{polyclip(v.1.10-6)}, \emph{future(v.1.33.0)}, \emph{scattermore(v.1.2)}, \emph{ggforce(v.0.4.1)}, \emph{rsvd(v.1.0.5)}, \emph{xtable(v.1.8-4)}, \emph{later(v.1.3.1)}, \emph{viridisLite(v.0.4.2)}, \emph{ragg(v.1.2.6)}, \emph{tibble(v.3.2.1)}, \emph{memoise(v.2.0.1)}, \emph{beeswarm(v.0.4.0)}, \emph{AnnotationDbi(v.1.64.1)}, \emph{cluster(v.2.1.4)} and \emph{globals(v.0.16.2)}
+\emph{spatstat.sparse(v.3.1-0)}, \emph{httr(v.1.4.7)}, \emph{RColorBrewer(v.1.1-3)}, \emph{tools(v.4.4.1)}, \emph{sctransform(v.0.4.1)}, \emph{backports(v.1.5.0)}, \emph{alabaster.base(v.1.4.2)}, \emph{utf8(v.1.2.4)}, \emph{R6(v.2.5.1)}, \emph{HDF5Array(v.1.32.1)}, \emph{lazyeval(v.0.2.2)}, \emph{uwot(v.0.2.2)}, \emph{rhdf5filters(v.1.16.0)}, \emph{withr(v.3.0.1)}, \emph{gridExtra(v.2.3)}, \emph{progressr(v.0.14.0)}, \emph{cli(v.3.6.3)}, \emph{spatstat.explore(v.3.3-3)}, \emph{fastDummies(v.1.7.4)}, \emph{alabaster.se(v.1.4.1)}, \emph{labeling(v.0.4.3)}, \emph{spatstat.data(v.3.1-2)}, \emph{ggridges(v.0.5.6)}, \emph{pbapply(v.1.7-2)}, \emph{R.utils(v.2.12.3)}, \emph{parallelly(v.1.38.0)}, \emph{RSQLite(v.2.3.7)}, \emph{generics(v.0.1.3)}, \emph{ica(v.1.0-3)}, \emph{spatstat.random(v.3.3-2)}, \emph{Matrix(v.1.7-0)}, \emph{fansi(v.1.0.6)}, \emph{abind(v.1.4-8)}, \emph{R.methodsS3(v.1.8.2)}, \emph{lifecycle(v.1.0.4)}, \emph{yaml(v.2.3.10)}, \emph{rhdf5(v.2.48.0)}, \emph{SparseArray(v.1.4.8)}, \emph{BiocFileCache(v.2.12.0)}, \emph{Rtsne(v.0.17)}, \emph{grid(v.4.4.1)}, \emph{blob(v.1.2.4)}, \emph{promises(v.1.3.0)}, \emph{ExperimentHub(v.2.12.0)}, \emph{crayon(v.1.5.3)}, \emph{miniUI(v.0.1.1.1)}, \emph{lattice(v.0.22-6)}, \emph{beachmat(v.2.20.0)}, \emph{cowplot(v.1.1.3)}, \emph{KEGGREST(v.1.44.1)}, \emph{pillar(v.1.9.0)}, \emph{knitr(v.1.48)}, \emph{future.apply(v.1.11.2)}, \emph{codetools(v.0.2-20)}, \emph{leiden(v.0.4.3.1)}, \emph{glue(v.1.7.0)}, \emph{spatstat.univar(v.3.0-1)}, \emph{data.table(v.1.16.2)}, \emph{vctrs(v.0.6.5)}, \emph{png(v.0.1-8)}, \emph{gypsum(v.1.0.1)}, \emph{spam(v.2.11-0)}, \emph{gtable(v.0.3.6)}, \emph{cachem(v.1.1.0)}, \emph{xfun(v.0.48)}, \emph{S4Arrays(v.1.4.1)}, \emph{mime(v.0.12)}, \emph{tidygraph(v.1.3.1)}, \emph{survival(v.3.6-4)}, \emph{tinytex(v.0.53)}, \emph{statmod(v.1.5.0)}, \emph{fitdistrplus(v.1.2-1)}, \emph{ROCR(v.1.0-11)}, \emph{nlme(v.3.1-164)}, \emph{bit64(v.4.5.2)}, \emph{alabaster.ranges(v.1.4.2)}, \emph{filelock(v.1.0.3)}, \emph{RcppAnnoy(v.0.0.22)}, \emph{irlba(v.2.3.5.1)}, \emph{KernSmooth(v.2.23-24)}, \emph{colorspace(v.2.1-1)}, \emph{DBI(v.1.2.3)}, \emph{tidyselect(v.1.2.1)}, \emph{bit(v.4.5.0)}, \emph{compiler(v.4.4.1)}, \emph{curl(v.5.2.3)}, \emph{httr2(v.1.0.5)}, \emph{DelayedArray(v.0.30.1)}, \emph{plotly(v.4.10.4)}, \emph{bookdown(v.0.41)}, \emph{checkmate(v.2.3.2)}, \emph{scales(v.1.3.0)}, \emph{lmtest(v.0.9-40)}, \emph{rappdirs(v.0.3.3)}, \emph{stringr(v.1.5.1)}, \emph{digest(v.0.6.37)}, \emph{goftest(v.1.2-3)}, \emph{spatstat.utils(v.3.1-0)}, \emph{alabaster.matrix(v.1.4.2)}, \emph{rmarkdown(v.2.28)}, \emph{RhpcBLASctl(v.0.23-42)}, \emph{XVector(v.0.44.0)}, \emph{htmltools(v.0.5.8.1)}, \emph{pkgconfig(v.2.0.3)}, \emph{sparseMatrixStats(v.1.16.0)}, \emph{highr(v.0.11)}, \emph{dbplyr(v.2.5.0)}, \emph{fastmap(v.1.2.0)}, \emph{rlang(v.1.1.4)}, \emph{htmlwidgets(v.1.6.4)}, \emph{UCSC.utils(v.1.0.0)}, \emph{shiny(v.1.9.1)}, \emph{DelayedMatrixStats(v.1.26.0)}, \emph{farver(v.2.1.2)}, \emph{zoo(v.1.8-12)}, \emph{jsonlite(v.1.8.8)}, \emph{BiocParallel(v.1.38.0)}, \emph{R.oo(v.1.26.0)}, \emph{BiocSingular(v.1.20.0)}, \emph{magrittr(v.2.0.3)}, \emph{GenomeInfoDbData(v.1.2.12)}, \emph{dotCall64(v.1.2)}, \emph{Rhdf5lib(v.1.26.0)}, \emph{munsell(v.0.5.1)}, \emph{viridis(v.0.6.5)}, \emph{reticulate(v.1.39.0)}, \emph{stringi(v.1.8.4)}, \emph{alabaster.schemas(v.1.4.0)}, \emph{zlibbioc(v.1.50.0)}, \emph{MASS(v.7.3-60.2)}, \emph{AnnotationHub(v.3.12.0)}, \emph{plyr(v.1.8.9)}, \emph{parallel(v.4.4.1)}, \emph{listenv(v.0.9.1)}, \emph{ggrepel(v.0.9.6)}, \emph{deldir(v.2.0-4)}, \emph{Biostrings(v.2.72.1)}, \emph{graphlayouts(v.1.2.0)}, \emph{splines(v.4.4.1)}, \emph{tensor(v.1.5)}, \emph{locfit(v.1.5-9.10)}, \emph{igraph(v.2.1.1)}, \emph{spatstat.geom(v.3.3-3)}, \emph{RcppHNSW(v.0.6.0)}, \emph{reshape2(v.1.4.4)}, \emph{ScaledMatrix(v.1.12.0)}, \emph{BiocVersion(v.3.19.1)}, \emph{evaluate(v.1.0.0)}, \emph{BiocManager(v.1.30.25)}, \emph{tweenr(v.2.0.3)}, \emph{httpuv(v.1.6.15)}, \emph{RANN(v.2.6.2)}, \emph{tidyr(v.1.3.1)}, \emph{purrr(v.1.0.2)}, \emph{polyclip(v.1.10-7)}, \emph{future(v.1.34.0)}, \emph{scattermore(v.1.2)}, \emph{ggforce(v.0.4.2)}, \emph{rsvd(v.1.0.5)}, \emph{xtable(v.1.8-4)}, \emph{RSpectra(v.0.16-2)}, \emph{later(v.1.3.2)}, \emph{viridisLite(v.0.4.2)}, \emph{tibble(v.3.2.1)}, \emph{memoise(v.2.0.1)}, \emph{AnnotationDbi(v.1.66.0)}, \emph{cluster(v.2.1.6)} and \emph{globals(v.0.16.3)}
 
   \bibliography{book.bib,packages.bib}
 

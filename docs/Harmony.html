@@ -7,7 +7,7 @@
 <title>Chapter 15 Data set integration with Harmony | scRNAseq Analysis in R with Seurat</title>
 <meta name="author" content="Monash Genomics and Bioinformatics Platform (MGBP)">
 <meta name="description" content="Why do we need to do this? You can have data coming from different samples, batches or experiments and you will need to combine them.  When data is collected from multiple samples, multiple runs...">
-<meta name="generator" content="bookdown 0.36 with bs4_book()">
+<meta name="generator" content="bookdown 0.41 with bs4_book()">
 <meta property="og:title" content="Chapter 15 Data set integration with Harmony | scRNAseq Analysis in R with Seurat">
 <meta property="og:type" content="book">
 <meta property="og:description" content="Why do we need to do this? You can have data coming from different samples, batches or experiments and you will need to combine them.  When data is collected from multiple samples, multiple runs...">
@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="Why do we need to do this? You can have data coming from different samples, batches or experiments and you will need to combine them.  When data is collected from multiple samples, multiple runs...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1.9000/transition.js"></script><script src="libs/bs3compat-0.5.1.9000/tabs.js"></script><script src="libs/bs3compat-0.5.1.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -69,7 +69,7 @@
 </ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/MonashBioinformaticsPlatform/Nov2023_scRNAseq_workshop">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="https://monashbioinformaticsplatform.github.io/scRNAseq_Workshop_ABACBS_2024/">View book source <i class="fab fa-gitlab"></i></a></p>
         </div>
       </nav>
 </div>
@@ -146,7 +146,7 @@
 <p>We will use <a href="https://github.com/immunogenomics/harmony">Harmony</a>, which can remove non-uniform effects. We will try to remove both the small differences between individuals and the large difference between the unstimulated and stimulated cells.</p>
 <p>Harmony operates only on the PCA scores. The original gene expression levels remain unaltered.</p>
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">harmony</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/immunogenomics/harmony">harmony</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: Rcpp</span></span>
 <span></span>
 <span><span class="va">kang</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/harmony/man/RunHarmony.html">RunHarmony</a></span><span class="op">(</span><span class="va">kang</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"stim"</span>, <span class="st">"ind"</span><span class="op">)</span>, reduction<span class="op">=</span><span class="st">"pca"</span>,reduction.save<span class="op">=</span><span class="st">"harmony"</span><span class="op">)</span></span>
@@ -157,11 +157,7 @@
 <span><span class="co">#&gt; Harmony 3/10</span></span>
 <span><span class="co">#&gt; Harmony 4/10</span></span>
 <span><span class="co">#&gt; Harmony 5/10</span></span>
-<span><span class="co">#&gt; Harmony 6/10</span></span>
-<span><span class="co">#&gt; Harmony 7/10</span></span>
-<span><span class="co">#&gt; Harmony 8/10</span></span>
-<span><span class="co">#&gt; Harmony 9/10</span></span>
-<span><span class="co">#&gt; Harmony 10/10</span></span></code></pre></div>
+<span><span class="co">#&gt; Harmony converged after 5 iterations</span></span></code></pre></div>
 <p>This has added a new set of reduced dimensions to the Seurat object, <code>kang$harmony</code> which is a modified version of the existing <code>kang$pca</code> reduced dimensions. The PCA plot shows a large difference between ‘ctrl’ and ‘stim’, but this has been removed in the harmony reduction.</p>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">kang</span>, reduction<span class="op">=</span><span class="st">"pca"</span>, group.by<span class="op">=</span><span class="st">"stim"</span><span class="op">)</span></span></code></pre></div>
@@ -172,25 +168,20 @@
 <p>We can use <code>harmony</code> the same way we used the <code>pca</code> reduction to compute a UMAP layout or to find clusters.</p>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kang</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html">RunUMAP</a></span><span class="op">(</span><span class="va">kang</span>, reduction<span class="op">=</span><span class="st">"harmony"</span>, dims<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, reduction.name<span class="op">=</span><span class="st">"umap_harmony"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 10:03:48 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
-<span><span class="co">#&gt; Found more than one class "dist" in cache; using the first, from namespace 'spam'</span></span>
-<span><span class="co">#&gt; Also defined by 'BiocGenerics'</span></span>
-<span><span class="co">#&gt; 10:03:48 Read 5000 rows and found 10 numeric columns</span></span>
-<span><span class="co">#&gt; 10:03:48 Using Annoy for neighbor search, n_neighbors = 30</span></span>
-<span><span class="co">#&gt; Found more than one class "dist" in cache; using the first, from namespace 'spam'</span></span>
-<span><span class="co">#&gt; Also defined by 'BiocGenerics'</span></span>
-<span><span class="co">#&gt; 10:03:48 Building Annoy index with metric = cosine, n_trees = 50</span></span>
+<span><span class="co">#&gt; 23:10:55 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
+<span><span class="co">#&gt; 23:10:55 Read 5000 rows and found 10 numeric columns</span></span>
+<span><span class="co">#&gt; 23:10:55 Using Annoy for neighbor search, n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 23:10:55 Building Annoy index with metric = cosine, n_trees = 50</span></span>
 <span><span class="co">#&gt; 0%   10   20   30   40   50   60   70   80   90   100%</span></span>
 <span><span class="co">#&gt; [----|----|----|----|----|----|----|----|----|----|</span></span>
 <span><span class="co">#&gt; **************************************************|</span></span>
-<span><span class="co">#&gt; 10:03:48 Writing NN index file to temp file /var/folders/my/cwpwt_rd1znflqb8gm8py418lslkvl/T//RtmpuSh7H9/file1bee908d6a1</span></span>
-<span><span class="co">#&gt; 10:03:48 Searching Annoy index using 1 thread, search_k = 3000</span></span>
-<span><span class="co">#&gt; 10:03:49 Annoy recall = 100%</span></span>
-<span><span class="co">#&gt; 10:03:50 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
-<span><span class="co">#&gt; 10:03:50 Initializing from normalized Laplacian + noise (using irlba)</span></span>
-<span><span class="co">#&gt; 10:03:51 Commencing optimization for 500 epochs, with 210560 positive edges</span></span>
-<span><span class="co">#&gt; 10:03:55 Optimization finished</span></span>
-<span><span class="co">#&gt; Warning: Key 'UMAP_' taken, using 'umapharmony_' instead</span></span>
+<span><span class="co">#&gt; 23:10:55 Writing NN index file to temp file /var/folders/my/cwpwt_rd1znflqb8gm8py418lslkvl/T//RtmpJB6xjI/file10fb970989f5d</span></span>
+<span><span class="co">#&gt; 23:10:55 Searching Annoy index using 1 thread, search_k = 3000</span></span>
+<span><span class="co">#&gt; 23:10:56 Annoy recall = 100%</span></span>
+<span><span class="co">#&gt; 23:10:57 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 23:10:58 Initializing from normalized Laplacian + noise (using RSpectra)</span></span>
+<span><span class="co">#&gt; 23:10:58 Commencing optimization for 500 epochs, with 210396 positive edges</span></span>
+<span><span class="co">#&gt; 23:11:02 Optimization finished</span></span>
 <span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">kang</span>, reduction<span class="op">=</span><span class="st">"umap_harmony"</span>, group.by<span class="op">=</span><span class="st">"stim"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-70-1.png" width="672"></div>
@@ -203,10 +194,10 @@
 <span><span class="co">#&gt; Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Number of nodes: 5000</span></span>
-<span><span class="co">#&gt; Number of edges: 171031</span></span>
+<span><span class="co">#&gt; Number of edges: 171049</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Running Louvain algorithm...</span></span>
-<span><span class="co">#&gt; Maximum modularity in 10 random starts: 0.9327</span></span>
+<span><span class="co">#&gt; Maximum modularity in 10 random starts: 0.9323</span></span>
 <span><span class="co">#&gt; Number of communities: 9</span></span>
 <span><span class="co">#&gt; Elapsed time: 0 seconds</span></span>
 <span><span class="va">kang</span><span class="op">$</span><span class="va">harmony_clusters</span> <span class="op">&lt;-</span> <span class="va">kang</span><span class="op">$</span><span class="va">seurat_clusters</span></span>
@@ -237,8 +228,8 @@
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/MonashBioinformaticsPlatform/Nov2023_scRNAseq_workshop/blob/master/04-12-Harmony.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/MonashBioinformaticsPlatform/Nov2023_scRNAseq_workshop/edit/master/04-12-Harmony.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://monashbioinformaticsplatform.github.io/scRNAseq_Workshop_ABACBS_2024//blob/master/04-12-Harmony.Rmd">View source <i class="fab fa-gitlab"></i></a></li>
+          <li><a id="book-edit" href="https://monashbioinformaticsplatform.github.io/scRNAseq_Workshop_ABACBS_2024//edit/master/04-12-Harmony.Rmd">Edit this page <i class="fab fa-gitlab"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -250,7 +241,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 16, 2023.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: October 27, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
