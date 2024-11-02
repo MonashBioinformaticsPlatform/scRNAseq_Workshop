@@ -1,4 +1,4 @@
-book_filename: "scRNAseqInR_Doco"
+book_filename: "scRNAseqInR_ABACBS_2024_Doco"
 new_session: false
 before_chapter_script: _common.R
 delete_merged_file: true
@@ -6,4 +6,20 @@ output_dir: "docs"
 language:
   ui:
     chapter_name: "Chapter "
-#rmd_files: ["index.Rmd", "04-01-seuratobject.Rmd",  "04-02-load.Rmd", "04-03-qc.Rmd"]
+rmd_files: ["index.Rmd",
+"01-01-setup.Rmd",
+"02-schedual.Rmd",
+"03-01-load.Rmd",
+"04-01-qc.Rmd",
+"04-02-norm.Rmd",
+"04-05-reducedims.Rmd",
+"04-05-01-Harmony.Rmd",
+"04-06-clustering.Rmd",
+"04-07-clustermarkers.Rmd",
+"04-08-singleR.Rmd",
+"04-10-de2.Rmd",
+"04-11-CellCycle.Rmd",
+"05-01-resources.Rmd",
+"07-01-seuratobject.Rmd",
+"07-Acknowledgements.Rmd",
+"08-session_info.Rmd"]

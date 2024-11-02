@@ -19,11 +19,11 @@ We next calculate a subset of features that exhibit high cell-to-cell variation 
 Our procedure in Seurat is described in detail [here](https://doi.org/10.1016/j.cell.2019.05.031), and improves on previous versions by directly modeling the mean-variance relationship inherent in single-cell data, and is implemented in the `FindVariableFeatures()` function. By default, we return 2,000 features per dataset. These will be used in downstream analysis, like PCA.
 
 ```{r var_features, fig.height=5, fig.width=11}
-pbmc <- FindVariableFeatures(pbmc, selection.method = 'vst', nfeatures = 2000)
+seurat_object <- FindVariableFeatures(seurat_object, selection.method = 'vst', nfeatures = 2000)
 # Identify the 10 most highly variable genes
-top10 <- head(VariableFeatures(pbmc), 10)
+top10 <- head(VariableFeatures(seurat_object), 10)
 # plot variable features with and without labels
-plot1 <- VariableFeaturePlot(pbmc)
+plot1 <- VariableFeaturePlot(seurat_object)
 plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
 plot1 + plot2
 ```
@@ -51,18 +51,18 @@ Next, we apply a linear transformation ('scaling') that is a standard pre-proces
 * Shifts the expression of each gene, so that the mean expression across cells is 0
 * Scales the expression of each gene, so that the variance across cells is 1
     + This step gives equal weight in downstream analyses, so that highly-expressed genes do not dominate
-* The results of this are stored in `pbmc$RNA@scale.data`
+* The results of this are stored in `seurat_object$RNA@scale.data`
 
 ```{r regress, fig.height=7, fig.width=11, results='hide'}
-all.genes <- rownames(pbmc)
-pbmc <- ScaleData(pbmc, features = all.genes)
+all.genes <- rownames(seurat_object)
+seurat_object <- ScaleData(seurat_object, features = all.genes)
 ```
 <details>
   <summary>**This step takes too long! Can I make it faster?**</summary>
 
 Scaling is an essential step in the Seurat workflow, but only on genes that will be used as input to PCA. Therefore, the default in `ScaleData()` is only to perform scaling on the previously identified variable features (2,000 by default). To do this, omit the `features` argument in the previous function call, i.e.
 ```{r regressvar, fig.height=7, fig.width=11, results='hide',eval = FALSE}
-# pbmc <- ScaleData(pbmc)
+# seurat_object <- ScaleData(seurat_object)
 ```
 Your PCA and clustering results will be unaffected. However, Seurat heatmaps (produced as shown below with `DoHeatmap()`) require genes in the heatmap to be scaled, to make sure highly-expressed genes don't dominate the heatmap. To make sure we don't leave any genes out of the heatmap later, we are scaling all genes in this tutorial. 
 </details>
@@ -72,7 +72,7 @@ Your PCA and clustering results will be unaffected. However, Seurat heatmaps (pr
 
 In `Seurat v2` we also use the `ScaleData()` function to remove unwanted sources of variation from a single-cell dataset. For example, we could 'regress out' heterogeneity associated with (for example) cell cycle stage, or mitochondrial contamination. These features are still supported in `ScaleData()` in `Seurat v3`, i.e.: 
 ```{r regressvarmt, fig.height=7, fig.width=11, results='hide',eval = FALSE}
-# pbmc <- ScaleData(pbmc, vars.to.regress = 'percent.mt')
+# seurat_object <- ScaleData(seurat_object, vars.to.regress = 'percent.mt')
 ```
 However, particularly for advanced users who would like to use this functionality, we strongly recommend the use of our new normalization workflow, `SCTransform()`. The method is described in our [paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1), with a separate vignette using Seurat v3 [here](sctransform_vignette.html). As with `ScaleData()`, the function `SCTransform()` also includes a `vars.to.regress` parameter.
 </details>
@@ -96,26 +96,26 @@ Imagine each gene represents a dimension - or an axis on a plot. We could plot t
 Next we perform PCA on the scaled data. By default, only the previously determined variable features are used as input, but can be defined using `features` argument if you wish to choose a different subset.
 
 ```{r pca,results='hide'}
-pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+seurat_object <- RunPCA(seurat_object, features = VariableFeatures(object = seurat_object))
 ```
 
 Seurat provides several useful ways of visualizing both cells and features that define the PCA, including `VizDimReduction()`, `DimPlot()`, and `DimHeatmap()`
 
 ```{r pca_viz, message=TRUE}
 # Examine and visualize PCA results a few different ways
-print(pbmc$pca, dims = 1:5, nfeatures = 5)
-VizDimLoadings(pbmc, dims = 1:2, reduction = 'pca')
-DimPlot(pbmc, reduction = 'pca')
+print(seurat_object$pca, dims = 1:5, nfeatures = 5)
+VizDimLoadings(seurat_object, dims = 1:2, reduction = 'pca')
+DimPlot(seurat_object, reduction = 'pca')
 ```
 
 In particular `DimHeatmap()` allows for easy exploration of the primary sources of heterogeneity in a dataset, and can be useful when trying to decide which PCs to include for further downstream analyses. Both cells and features are ordered according to their PCA scores. Setting `cells` to a number plots the 'extreme' cells on both ends of the spectrum, which dramatically speeds plotting for large datasets. Though clearly a supervised analysis, we find this to be a valuable tool for exploring correlated feature sets.
 
 ```{r single-heatmap}
-DimHeatmap(pbmc, dims = 1, cells = 500, balanced = TRUE)
+DimHeatmap(seurat_object, dims = 1, cells = 500, balanced = TRUE)
 ```
 
 ```{r multi-heatmap, fig.height=15, fig.width=9}
-DimHeatmap(pbmc, dims = 1:15, cells = 500, balanced = TRUE)
+DimHeatmap(seurat_object, dims = 1:15, cells = 500, balanced = TRUE)
 ```
 
 
@@ -126,14 +126,14 @@ To overcome the extensive technical noise in any single feature for scRNA-seq da
 
 -----
 
-*Note*: The Seurat developers suggest using a JackStraw resampling test to determine this. See [Macosko *et  al*](http://www.cell.com/abstract/S0092-8674(15)00549-8), and the original [pbmc3 vignette](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html#determine-the-dimensionality-of-the-dataset-1). We're going to use an Elbow Plot instead here, because its much quicker.
+*Note*: The Seurat developers suggest using a JackStraw resampling test to determine this. See [Macosko *et  al*](http://www.cell.com/abstract/S0092-8674(15)00549-8), and the original [seurat_object3 vignette](https://satijalab.org/seurat/articles/seurat_object3k_tutorial.html#determine-the-dimensionality-of-the-dataset-1). We're going to use an Elbow Plot instead here, because its much quicker.
 
 -----
 
 An alternative heuristic method generates an 'Elbow plot': a ranking of principle components based on the percentage of variance explained by each one (`ElbowPlot()` function). In this example, we can observe an 'elbow' around PC9-10, suggesting that the majority of true signal is captured in the first 10 PCs. 
 
 ```{r elbow_plot}
-ElbowPlot(pbmc)
+ElbowPlot(seurat_object)
 ```
 
 Identifying the true dimensionality of a dataset -- can be challenging/uncertain for the user. We therefore suggest these three approaches to consider. The first is more supervised, exploring PCs to determine relevant sources of heterogeneity, and could be used in conjunction with GSEA for example. The second implements a statistical test based on a random null model, but is time-consuming for large datasets, and may not return a clear PC cutoff. The third is a heuristic that is commonly used, and can be calculated instantly. In this example, all three approaches yielded similar results, but we might have been justified in choosing anything between PC 7-12 as a cutoff. 
@@ -153,12 +153,12 @@ Seurat offers several non-linear dimensional reduction techniques, such as tSNE 
 
 ```{r tsne, fig.height=5, fig.width=7}
 # If you haven't installed UMAP, you can do so via reticulate::py_install(packages = "umap-learn")
-pbmc <- RunUMAP(pbmc, dims = 1:10)
+seurat_object <- RunUMAP(seurat_object, dims = 1:10)
 ```
 
-```{r tsneplot, fig.height=5, fig.width=7}
+```{r Umapplot, fig.height=5, fig.width=7}
 # note that you can set `label = TRUE` or use the LabelClusters function to help label individual clusters
-DimPlot(pbmc, reduction = 'umap')
+DimPlot(seurat_object, reduction = 'umap')
 ```
 
 
@@ -177,7 +177,7 @@ Try out some genes that were highly weighted in the principal component analysis
 You can save the object at this point so that it can easily be loaded back in without having to rerun the computationally intensive steps performed above, or easily shared with collaborators.
 
 ```{r saveobject, eval=FALSE}
-saveRDS(pbmc, file = "pbmc_tutorial_saved.rds") 
+saveRDS(seurat_object, file = "seurat_object_tutorial_saved.rds") 
 ```
 
 

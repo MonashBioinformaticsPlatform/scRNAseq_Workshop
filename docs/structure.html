@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 4 Structure | scRNAseq Analysis in R with Seurat</title>
+<title>Chapter 16 Structure | scRNAseq Analysis in R with Seurat</title>
 <meta name="author" content="Monash Genomics and Bioinformatics Platform (MGBP)">
-<meta name="description" content="Most of todays workshop will be following the Seurat PBMC tutorial (reproduced in the next section). We’ll load raw counts data, do some QC and setup various useful information in a Seurat object....">
+<meta name="description" content="16.1 Load an existing Seurat object The data we’re working with today is a small dataset of about 5000 PBMCs (peripheral blood mononuclear cells) from a healthy donor. First, load Seurat package....">
 <meta name="generator" content="bookdown 0.41 with bs4_book()">
-<meta property="og:title" content="Chapter 4 Structure | scRNAseq Analysis in R with Seurat">
+<meta property="og:title" content="Chapter 16 Structure | scRNAseq Analysis in R with Seurat">
 <meta property="og:type" content="book">
-<meta property="og:description" content="Most of todays workshop will be following the Seurat PBMC tutorial (reproduced in the next section). We’ll load raw counts data, do some QC and setup various useful information in a Seurat object....">
+<meta property="og:description" content="16.1 Load an existing Seurat object The data we’re working with today is a small dataset of about 5000 PBMCs (peripheral blood mononuclear cells) from a healthy donor. First, load Seurat package....">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 4 Structure | scRNAseq Analysis in R with Seurat">
-<meta name="twitter:description" content="Most of todays workshop will be following the Seurat PBMC tutorial (reproduced in the next section). We’ll load raw counts data, do some QC and setup various useful information in a Seurat object....">
+<meta name="twitter:title" content="Chapter 16 Structure | scRNAseq Analysis in R with Seurat">
+<meta name="twitter:description" content="16.1 Load an existing Seurat object The data we’re working with today is a small dataset of about 5000 PBMCs (peripheral blood mononuclear cells) from a healthy donor. First, load Seurat package....">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -46,26 +46,25 @@
 <li><a class="" href="index.html"><span class="header-section-number">1</span> Getting started</a></li>
 <li><a class="" href="set-up.html"><span class="header-section-number">2</span> Set up</a></li>
 <li><a class="" href="schedule.html"><span class="header-section-number">3</span> Schedule</a></li>
-<li class="book-part">Seurat Object</li>
-<li><a class="active" href="structure.html"><span class="header-section-number">4</span> Structure</a></li>
-<li><a class="" href="load.html"><span class="header-section-number">5</span> Load data</a></li>
+<li><a class="" href="load.html"><span class="header-section-number">4</span> Load data</a></li>
 <li class="book-part">Single Cell Analysis</li>
-<li><a class="" href="qc.html"><span class="header-section-number">6</span> QC Filtering</a></li>
-<li><a class="" href="norm.html"><span class="header-section-number">7</span> Normalisation</a></li>
-<li><a class="" href="reducedims.html"><span class="header-section-number">8</span> PCAs and UMAPs</a></li>
-<li><a class="" href="dimensionality-reduction.html"><span class="header-section-number">9</span> Dimensionality reduction</a></li>
+<li><a class="" href="qc.html"><span class="header-section-number">5</span> QC Filtering</a></li>
+<li><a class="" href="norm.html"><span class="header-section-number">6</span> Normalisation</a></li>
+<li><a class="" href="reducedims.html"><span class="header-section-number">7</span> PCAs and UMAPs</a></li>
+<li><a class="" href="dimensionality-reduction.html"><span class="header-section-number">8</span> Dimensionality reduction</a></li>
+<li><a class="" href="Harmony.html"><span class="header-section-number">9</span> Data set integration with Harmony</a></li>
 <li><a class="" href="clustering.html"><span class="header-section-number">10</span> Clustering</a></li>
 <li><a class="" href="clustermarkers.html"><span class="header-section-number">11</span> Cluster Markers</a></li>
 <li class="book-part">Futher Analysis</li>
 <li><a class="" href="singler.html"><span class="header-section-number">12</span> SingleR</a></li>
 <li><a class="" href="de2.html"><span class="header-section-number">13</span> Differential Expression</a></li>
 <li><a class="" href="CellCycle.html"><span class="header-section-number">14</span> Cell cycle Assignment</a></li>
-<li><a class="" href="Harmony.html"><span class="header-section-number">15</span> Data set integration with Harmony</a></li>
 <li class="book-part">Other Resources</li>
-<li><a class="" href="resources.html"><span class="header-section-number">16</span> Resources</a></li>
-<li><a class="" href="solutions.html"><span class="header-section-number">17</span> Solutions</a></li>
-<li><a class="" href="acknowledgements.html"><span class="header-section-number">18</span> Acknowledgements</a></li>
-<li><a class="" href="session-info.html"><span class="header-section-number">19</span> Session info</a></li>
+<li><a class="" href="resources.html"><span class="header-section-number">15</span> Resources</a></li>
+<li class="book-part">Seurat Object</li>
+<li><a class="active" href="structure.html"><span class="header-section-number">16</span> Structure</a></li>
+<li><a class="" href="acknowledgements.html"><span class="header-section-number">17</span> Acknowledgements</a></li>
+<li><a class="" href="session-info.html"><span class="header-section-number">18</span> Session info</a></li>
 </ul>
 
         <div class="book-extra">
@@ -73,39 +72,28 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="structure" class="section level1" number="4">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="structure" class="section level1" number="16">
 <h1>
-<span class="header-section-number">4</span> Structure<a class="anchor" aria-label="anchor" href="#structure"><i class="fas fa-link"></i></a>
+<span class="header-section-number">16</span> Structure<a class="anchor" aria-label="anchor" href="#structure"><i class="fas fa-link"></i></a>
 </h1>
-<p>Most of todays workshop will be following the Seurat PBMC tutorial (reproduced in the next section).
-We’ll load raw counts data, do some QC and setup various useful information in a Seurat object.</p>
-<p>But before that - what does a Seurat object look like, and what can we do with it once we’ve made one?</p>
-<p>Lets have a look at a Seurat object that’s already setup.</p>
-<div id="load-an-existing-seurat-object" class="section level2" number="4.1">
+<div id="load-an-existing-seurat-object" class="section level2" number="16.1">
 <h2>
-<span class="header-section-number">4.1</span> Load an existing Seurat object<a class="anchor" aria-label="anchor" href="#load-an-existing-seurat-object"><i class="fas fa-link"></i></a>
+<span class="header-section-number">16.1</span> Load an existing Seurat object<a class="anchor" aria-label="anchor" href="#load-an-existing-seurat-object"><i class="fas fa-link"></i></a>
 </h2>
-<p>The data we’re working with today is a small dataset of about 3000 PBMCs (peripheral blood mononuclear cells) from a healthy donor. Just one sample.</p>
-<p>This is an early demo dataset from 10X genomics (called pbmc3k) - you can find more information like qc reports <a href="https://www.10xgenomics.com/resources/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0">here</a>.</p>
+<p>The data we’re working with today is a small dataset of about 5000 PBMCs (peripheral blood mononuclear cells) from a healthy donor.</p>
 <p>First, load Seurat package.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat">Seurat</a></span><span class="op">)</span></span></code></pre></div>
 <p>And here’s the one we prepared earlier. Seurat objects are usually saved as ‘.rds’ files, which is an R format for storing binary data (not-text or human-readable). The functions <code><a href="https://rdrr.io/r/base/readRDS.html">readRDS()</a></code> can load it.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pbmc_processed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"data/pbmc_tutorial.rds"</span><span class="op">)</span></span>
-<span><span class="va">pbmc_processed</span></span>
-<span><span class="co">#&gt; An object of class Seurat </span></span>
-<span><span class="co">#&gt; 13714 features across 2700 samples within 1 assay </span></span>
-<span><span class="co">#&gt; Active assay: RNA (13714 features, 2000 variable features)</span></span>
-<span><span class="co">#&gt;  3 layers present: counts, data, scale.data</span></span>
-<span><span class="co">#&gt;  2 dimensional reductions calculated: pca, umap</span></span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"data/kang2018.rds"</span><span class="op">)</span></span></code></pre></div>
 <div id="discussion-the-seurat-object-in-r" class="section level4 unnumbered rational">
 <h4>Discussion: The Seurat Object in R<a class="anchor" aria-label="anchor" href="#discussion-the-seurat-object-in-r"><i class="fas fa-link"></i></a>
 </h4>
-<p>Lets take a look at the seurat object we have just created in R, <code>pbmc_processed</code></p>
+<p>Lets take a look at the seurat object we have just created in R, <code>seurat_object</code></p>
 <p>To accomodate the complexity of data arising from a single cell RNA seq experiment, the seurat object keeps this as a container of multiple data tables that are linked.</p>
 <div class="inline-figure"><img src="images/seuratobject.png" style="width:80.0%"></div>
-<p>The functions in seurat can access parts of the data object for analysis and visualisation, we will cover this later on.</p>
+<p>The functions in seurat can access parts of the data object for analysis and visualization, we will cover this later on.</p>
 There are a couple of concepts to discuss here.
 <details><summary><strong>Class</strong>
 </summary><p>These are essentially data containers in R as a class, and can accessed as a variable in the R environment.</p>
@@ -120,105 +108,99 @@ There are a couple of concepts to discuss here.
 </summary><p>Many of the functions in Seurat operate on the data class and slots within them seamlessly. There maybe occasion to access these separately to <code>hack</code> them, however this is an advanced analysis method.</p>
 The ways to access the slots can be through methods for the class (functions) or with standard R accessor nomenclature.
 </details><p><strong>Examples of accessing a Seurat object</strong></p>
-<p>The <code>assays</code> slot in <code>pbmc_processed</code> can be accessed with <code>pbmc_processed@assays</code>.</p>
-<p>The <code>RNA</code> assay can be accessed from this with <code>pbmc_processed@assays$RNA</code>.</p>
-<p>We often want to access assays, so Seurat nicely gives us a shortcut <code>pbmc_processed$RNA</code>. You may sometimes see an alternative notation <code>pbmc_processed[["RNA"]]</code>.</p>
+<p>The <code>assays</code> slot in <code>seurat_object</code> can be accessed with <code>seurat_object@assays</code>.</p>
+<p>The <code>RNA</code> assay can be accessed from this with <code>seurat_object@assays$RNA</code>.</p>
+<p>We often want to access assays, so Seurat nicely gives us a shortcut <code>seurat_object$RNA</code>. You may sometimes see an alternative notation <code>seurat_object[["RNA"]]</code>.</p>
 <p>In general, slots that are always in an object are accessed with <code>@</code> and things that may be different in different data sets are accessed with <code>$</code>.</p>
 <p><strong>Have a go</strong></p>
-<p>Use <code>str</code> to look at the structure of the Seurat object <code>pbmc_processed</code>.</p>
+<p>Use <code>str</code> to look at the structure of the Seurat object <code>seurat_object</code>.</p>
 <p>What is in the <code>meta.data</code> slot within your Seurat object currently? What type of data is contained here?</p>
 <p>Where is our count data within the Seurat object?</p>
 </div>
 </div>
-<div id="whats-in-there" class="section level2" number="4.2">
+<div id="whats-in-there" class="section level2" number="16.2">
 <h2>
-<span class="header-section-number">4.2</span> What’s in there?<a class="anchor" aria-label="anchor" href="#whats-in-there"><i class="fas fa-link"></i></a>
+<span class="header-section-number">16.2</span> What’s in there?<a class="anchor" aria-label="anchor" href="#whats-in-there"><i class="fas fa-link"></i></a>
 </h2>
 <p>Some of the most important information for working with Seurat objects is in the metadata.
 This is cell level information - each row is one cell, identified by its barcode.
 Extra information gets added to this table as analysis progresses.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pbmc_processed</span><span class="op">@</span><span class="va">meta.data</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                  orig.ident nCount_RNA nFeature_RNA</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1     pbmc3k       2419          779</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1     pbmc3k       4903         1352</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1     pbmc3k       3147         1129</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1     pbmc3k       2639          960</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1     pbmc3k        980          521</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1     pbmc3k       2163          781</span></span>
-<span><span class="co">#&gt;                  percent.mt RNA_snn_res.0.5 seurat_clusters</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1  3.0177759               0               0</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1  3.7935958               3               3</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1  0.8897363               2               2</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1  1.7430845               5               5</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1  1.2244898               6               6</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1  1.6643551               2               2</span></span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">@</span><span class="va">meta.data</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                     orig.ident nCount_RNA nFeature_RNA  ind</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1 SeuratProject       2020          523 1256</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1 SeuratProject        840          381 1256</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1 SeuratProject       3097          995 1016</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1 SeuratProject       1011          540 1488</span></span>
+<span><span class="co">#&gt; TGACGCCTTGCTTT-1 SeuratProject        570          367  101</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1 SeuratProject       2399          770 1244</span></span>
+<span><span class="co">#&gt;                  stim              cell multiplets</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1 stim   CD14+ Monocytes    singlet</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1 stim       CD4 T cells    singlet</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1 ctrl FCGR3A+ Monocytes    singlet</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1 stim           B cells    singlet</span></span>
+<span><span class="co">#&gt; TGACGCCTTGCTTT-1 ctrl       CD4 T cells       ambs</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1 stim       CD4 T cells    singlet</span></span></code></pre></div>
 <p>That doesn’t have any gene expression though, that’s stored in an ‘Assay’.
 The Assay structure has some nuances (see discussion below), but there are functions that get the assay data out for you.</p>
 <p>By default this object will return the normalised data (from the only assay in this object, called RNA). Every ‘.’ is a zero.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">pbmc_processed</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">15</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">15</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="co">#&gt; 15 x 2 sparse Matrix of class "dgCMatrix"</span></span>
-<span><span class="co">#&gt;               AAACATACAACCAC-1 AAACATTGAGCTAC-1</span></span>
-<span><span class="co">#&gt; AL627309.1                   .         .       </span></span>
-<span><span class="co">#&gt; AP006222.2                   .         .       </span></span>
-<span><span class="co">#&gt; RP11-206L10.2                .         .       </span></span>
-<span><span class="co">#&gt; RP11-206L10.9                .         .       </span></span>
-<span><span class="co">#&gt; LINC00115                    .         .       </span></span>
-<span><span class="co">#&gt; NOC2L                        .         .       </span></span>
-<span><span class="co">#&gt; KLHL17                       .         .       </span></span>
-<span><span class="co">#&gt; PLEKHN1                      .         .       </span></span>
-<span><span class="co">#&gt; RP11-54O7.17                 .         .       </span></span>
-<span><span class="co">#&gt; HES4                         .         .       </span></span>
-<span><span class="co">#&gt; RP11-54O7.11                 .         .       </span></span>
-<span><span class="co">#&gt; ISG15                        .         .       </span></span>
-<span><span class="co">#&gt; AGRN                         .         .       </span></span>
-<span><span class="co">#&gt; C1orf159                     .         .       </span></span>
-<span><span class="co">#&gt; TNFRSF18                     .         1.625141</span></span></code></pre></div>
-<p>But the raw counts data is accessible too.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">pbmc_processed</span>, slot<span class="op">=</span><span class="st">'counts'</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">15</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
-<span><span class="co">#&gt; Warning: The `slot` argument of `GetAssayData()` is deprecated as of</span></span>
-<span><span class="co">#&gt; SeuratObject 5.0.0.</span></span>
-<span><span class="co">#&gt; ℹ Please use the `layer` argument instead.</span></span>
-<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
-<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where</span></span>
-<span><span class="co">#&gt; this warning was generated.</span></span>
-<span><span class="co">#&gt; 15 x 2 sparse Matrix of class "dgCMatrix"</span></span>
-<span><span class="co">#&gt;               AAACATACAACCAC-1 AAACATTGAGCTAC-1</span></span>
+<span><span class="co">#&gt;               AGGGCGCTATTTCC-1 GGAGACGATTCGTT-1</span></span>
+<span><span class="co">#&gt; MIR1302-10                   .                .</span></span>
+<span><span class="co">#&gt; FAM138A                      .                .</span></span>
+<span><span class="co">#&gt; OR4F5                        .                .</span></span>
+<span><span class="co">#&gt; RP11-34P13.7                 .                .</span></span>
+<span><span class="co">#&gt; RP11-34P13.8                 .                .</span></span>
 <span><span class="co">#&gt; AL627309.1                   .                .</span></span>
+<span><span class="co">#&gt; RP11-34P13.14                .                .</span></span>
+<span><span class="co">#&gt; RP11-34P13.9                 .                .</span></span>
 <span><span class="co">#&gt; AP006222.2                   .                .</span></span>
-<span><span class="co">#&gt; RP11-206L10.2                .                .</span></span>
-<span><span class="co">#&gt; RP11-206L10.9                .                .</span></span>
-<span><span class="co">#&gt; LINC00115                    .                .</span></span>
-<span><span class="co">#&gt; NOC2L                        .                .</span></span>
-<span><span class="co">#&gt; KLHL17                       .                .</span></span>
-<span><span class="co">#&gt; PLEKHN1                      .                .</span></span>
-<span><span class="co">#&gt; RP11-54O7.17                 .                .</span></span>
-<span><span class="co">#&gt; HES4                         .                .</span></span>
-<span><span class="co">#&gt; RP11-54O7.11                 .                .</span></span>
-<span><span class="co">#&gt; ISG15                        .                .</span></span>
-<span><span class="co">#&gt; AGRN                         .                .</span></span>
-<span><span class="co">#&gt; C1orf159                     .                .</span></span>
-<span><span class="co">#&gt; TNFRSF18                     .                2</span></span></code></pre></div>
+<span><span class="co">#&gt; RP4-669L17.10                .                .</span></span>
+<span><span class="co">#&gt; OR4F29                       .                .</span></span>
+<span><span class="co">#&gt; RP4-669L17.2                 .                .</span></span>
+<span><span class="co">#&gt; RP5-857K21.15                .                .</span></span>
+<span><span class="co">#&gt; RP5-857K21.1                 .                .</span></span>
+<span><span class="co">#&gt; RP5-857K21.2                 .                .</span></span></code></pre></div>
+<p>But the raw counts data is accessible too.</p>
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">seurat_object</span>, slot<span class="op">=</span><span class="st">'counts'</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">15</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<span><span class="co">#&gt; 15 x 2 sparse Matrix of class "dgCMatrix"</span></span>
+<span><span class="co">#&gt;               AGGGCGCTATTTCC-1 GGAGACGATTCGTT-1</span></span>
+<span><span class="co">#&gt; MIR1302-10                   .                .</span></span>
+<span><span class="co">#&gt; FAM138A                      .                .</span></span>
+<span><span class="co">#&gt; OR4F5                        .                .</span></span>
+<span><span class="co">#&gt; RP11-34P13.7                 .                .</span></span>
+<span><span class="co">#&gt; RP11-34P13.8                 .                .</span></span>
+<span><span class="co">#&gt; AL627309.1                   .                .</span></span>
+<span><span class="co">#&gt; RP11-34P13.14                .                .</span></span>
+<span><span class="co">#&gt; RP11-34P13.9                 .                .</span></span>
+<span><span class="co">#&gt; AP006222.2                   .                .</span></span>
+<span><span class="co">#&gt; RP4-669L17.10                .                .</span></span>
+<span><span class="co">#&gt; OR4F29                       .                .</span></span>
+<span><span class="co">#&gt; RP4-669L17.2                 .                .</span></span>
+<span><span class="co">#&gt; RP5-857K21.15                .                .</span></span>
+<span><span class="co">#&gt; RP5-857K21.1                 .                .</span></span>
+<span><span class="co">#&gt; RP5-857K21.2                 .                .</span></span></code></pre></div>
 
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="schedule.html"><span class="header-section-number">3</span> Schedule</a></div>
-<div class="next"><a href="load.html"><span class="header-section-number">5</span> Load data</a></div>
+<div class="prev"><a href="resources.html"><span class="header-section-number">15</span> Resources</a></div>
+<div class="next"><a href="acknowledgements.html"><span class="header-section-number">17</span> Acknowledgements</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#structure"><span class="header-section-number">4</span> Structure</a></li>
-<li><a class="nav-link" href="#load-an-existing-seurat-object"><span class="header-section-number">4.1</span> Load an existing Seurat object</a></li>
-<li><a class="nav-link" href="#whats-in-there"><span class="header-section-number">4.2</span> What’s in there?</a></li>
+<li><a class="nav-link" href="#structure"><span class="header-section-number">16</span> Structure</a></li>
+<li><a class="nav-link" href="#load-an-existing-seurat-object"><span class="header-section-number">16.1</span> Load an existing Seurat object</a></li>
+<li><a class="nav-link" href="#whats-in-there"><span class="header-section-number">16.2</span> What’s in there?</a></li>
 </ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://monashbioinformaticsplatform.github.io/scRNAseq_Workshop_ABACBS_2024//blob/master/04-01-seuratobject.Rmd">View source <i class="fab fa-gitlab"></i></a></li>
-          <li><a id="book-edit" href="https://monashbioinformaticsplatform.github.io/scRNAseq_Workshop_ABACBS_2024//edit/master/04-01-seuratobject.Rmd">Edit this page <i class="fab fa-gitlab"></i></a></li>
+<li><a id="book-source" href="https://monashbioinformaticsplatform.github.io/scRNAseq_Workshop_ABACBS_2024//blob/master/07-01-seuratobject.Rmd">View source <i class="fab fa-gitlab"></i></a></li>
+          <li><a id="book-edit" href="https://monashbioinformaticsplatform.github.io/scRNAseq_Workshop_ABACBS_2024//edit/master/07-01-seuratobject.Rmd">Edit this page <i class="fab fa-gitlab"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -230,7 +212,7 @@ The Assay structure has some nuances (see discussion below), but there are funct
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: October 27, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 02, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

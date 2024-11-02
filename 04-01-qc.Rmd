@@ -9,7 +9,7 @@
 <!-- everyone pick a threshold and go filter -->
 <!-- check numbers of cells. -->
 <!-- save your object -->
-<!-- (other qc metrics = Mt gene content, cell cycle asignment, low seq diversity e.t.c) -->
+<!-- (other qc metrics = Mt gene content, cell cycle assignment, low seq diversity e.t.c) -->
 
 
 
@@ -38,7 +38,7 @@ Seurat allows you to easily explore QC metrics and filter cells based on any use
 ```{r mito, fig.height=7, fig.width=13}
 # The $ operator can add columns to object metadata. 
 # This is a great place to stash QC stats
-pbmc$percent.mt <- PercentageFeatureSet(pbmc, pattern = "^MT-")
+seurat_object$percent.mt <- PercentageFeatureSet(seurat_object, pattern = "^MT-")
 ```
 
   
@@ -67,26 +67,26 @@ In the example below, we visualize QC metrics, and use these to filter cells.
     
 ```{r qc2}
 #Visualize QC metrics as a violin plot
-VlnPlot(pbmc, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+VlnPlot(seurat_object, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 
 
 # visualize the max and min 
-VlnPlot(pbmc, features = "nFeature_RNA")+ scale_y_continuous(limits = c(1000,3000))
-VlnPlot(pbmc, features = "nFeature_RNA",y.max =1000)
+VlnPlot(seurat_object, features = "nFeature_RNA")+ scale_y_continuous(limits = c(1000,3000))
+VlnPlot(seurat_object, features = "nFeature_RNA",y.max =1000)
 
 
 # FeatureScatter is typically used to visualize feature-feature relationships, 
 # but can be used for anything calculated by the object, 
 # i.e. columns in object metadata, PC scores etc.
-plot1 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "percent.mt") 
-plot2 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") 
+plot1 <- FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "percent.mt") 
+plot2 <- FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") 
 plot1 + plot2
 ```
 
 Lets look at the number of features (genes) to the percent mitochondrial genes plot.
 
 ```{r}
-plot3 <- FeatureScatter(pbmc, feature1 = "nFeature_RNA", feature2 = "percent.mt") 
+plot3 <- FeatureScatter(seurat_object, feature1 = "nFeature_RNA", feature2 = "percent.mt") 
 plot3
 ```
 
@@ -121,14 +121,13 @@ you can check different thresholds of mito percentage
 
 ```{r}
 #Number of cells left after filters
-# percentage of cell with less than 10% mito
-round(sum(pbmc$percent.mt < 10)/dim(pbmc)[2]*100,2) 
+# percentage of cell with less than 5% mito
+round(sum(seurat_object$percent.mt < 5)/dim(seurat_object)[2]*100,2) 
 
-# percentage of cell with less than 20% mito
-round((sum(pbmc$percent.mt < 20)/dim(pbmc)[2])*100,2)
+# percentage of cell with less than 2% mito
+round((sum(seurat_object$percent.mt < 2)/dim(seurat_object)[2])*100,2)
 
-# percentage of cell with less than 30% mito
-round((sum(pbmc$percent.mt < 30)/dim(pbmc)[2])*100,2) 
+
 
 
 ```
@@ -136,7 +135,7 @@ round((sum(pbmc$percent.mt < 30)/dim(pbmc)[2])*100,2)
 Okay we are happy with our thresholds for mitochondrial percentage in cells, lets apply them and subset our data. This will remove the cells we think are of poor quality. 
 
 ```{r}
-pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
+seurat_object <- subset(seurat_object, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
 ```
 
 
@@ -144,25 +143,13 @@ pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent
 Lets replot the feature scatters and see what they look like. 
 
 ```{r qc2_sidebar, fig.height=7, fig.width=13}
-plot5 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "percent.mt") 
-plot6 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") 
+plot5 <- FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "percent.mt") 
+plot6 <- FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") 
 plot5 + plot6
 ```
 
 #### Challenge: Filter the cells {- .challenge}
 
-Apply the filtering thresolds defined above. 
-
-* How many cells survived filtering?
-
-The PBMC3k dataset we're working with in this tutorial is quite old. There are a number of other example datasets available from the 10X website, including [this one](https://www.10xgenomics.com/resources/datasets/10k-human-pbmcs-3-v3-1-chromium-x-with-intronic-reads-3-1-high) - published in 2022, sequencing 10k PBMCs with a newer chemistry and counting method.
- 
-* What thresholds would you chose to apply to this modern dataset?
-
-```{r eval=FALSE}
-pbmc10k_unfiltered <- readRDS("data/10k_PBMC_v3.1ChromiumX_Intronic.rds")
-VlnPlot(pbmc10k_unfiltered, features = c("nFeature_RNA", "nCount_RNA"), ncol = 2)
-```
-
+WE COULD PUT THE BLOOD GENES  AS A CHALLENGE HERE
 
 

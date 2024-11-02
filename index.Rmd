@@ -20,15 +20,13 @@ Instructors: [Adele Barugahare,](https://www.monash.edu/researchinfrastructure/b
 
 ## Summary
 
-This workshop, conducted by the Monash Genomics and Bioinformatics Platform, will cover how to extend analysis to contemporary third-party tools, Seurat and SingleR. We will be walking through the Seurat 3K PBMC Dataset Tutorial and extend this to cell annotation using SingleR.   
-Material for scRNAseq analysis in R with Seurat workshop.This workshop follows the introductory [Guided Clustering Tutorial](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) tutorial from Seurat.
+This workshop, conducted by the Monash Genomics and Bioinformatics Platform, will cover how to extend analysis to contemporary third-party tools, Seurat and SingleR. We will be walking through the Single Cell analysis using seurat package and extend this to cell annotation using SingleR.  
 
 
 Important links:
 
 * [Installation and Setup instructions](set-up.html)
 * [Slideshow introduction](../slides)
-* [Challenge solutions](solutions.html) (no peeking!)
 
 
 ### Recommended Computer Requirements:

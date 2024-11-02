@@ -46,7 +46,7 @@ getwd()
 ## Download and untar the data
 options(timeout=3600)
 download.file(
-    "https://bioinformatics.erc.monash.edu/home/lper0012/SingleCellWorkshopData/data.tar","data.tar")
+    "https://bioinformatics.erc.monash.edu/home/lper0012/SingleCellWorkshopData/singlecell_2024/data.tar","data.tar")
 
 untar("data.tar")
 

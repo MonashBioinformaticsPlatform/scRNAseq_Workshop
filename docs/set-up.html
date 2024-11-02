@@ -46,26 +46,25 @@
 <li><a class="" href="index.html"><span class="header-section-number">1</span> Getting started</a></li>
 <li><a class="active" href="set-up.html"><span class="header-section-number">2</span> Set up</a></li>
 <li><a class="" href="schedule.html"><span class="header-section-number">3</span> Schedule</a></li>
-<li class="book-part">Seurat Object</li>
-<li><a class="" href="structure.html"><span class="header-section-number">4</span> Structure</a></li>
-<li><a class="" href="load.html"><span class="header-section-number">5</span> Load data</a></li>
+<li><a class="" href="load.html"><span class="header-section-number">4</span> Load data</a></li>
 <li class="book-part">Single Cell Analysis</li>
-<li><a class="" href="qc.html"><span class="header-section-number">6</span> QC Filtering</a></li>
-<li><a class="" href="norm.html"><span class="header-section-number">7</span> Normalisation</a></li>
-<li><a class="" href="reducedims.html"><span class="header-section-number">8</span> PCAs and UMAPs</a></li>
-<li><a class="" href="dimensionality-reduction.html"><span class="header-section-number">9</span> Dimensionality reduction</a></li>
+<li><a class="" href="qc.html"><span class="header-section-number">5</span> QC Filtering</a></li>
+<li><a class="" href="norm.html"><span class="header-section-number">6</span> Normalisation</a></li>
+<li><a class="" href="reducedims.html"><span class="header-section-number">7</span> PCAs and UMAPs</a></li>
+<li><a class="" href="dimensionality-reduction.html"><span class="header-section-number">8</span> Dimensionality reduction</a></li>
+<li><a class="" href="Harmony.html"><span class="header-section-number">9</span> Data set integration with Harmony</a></li>
 <li><a class="" href="clustering.html"><span class="header-section-number">10</span> Clustering</a></li>
 <li><a class="" href="clustermarkers.html"><span class="header-section-number">11</span> Cluster Markers</a></li>
 <li class="book-part">Futher Analysis</li>
 <li><a class="" href="singler.html"><span class="header-section-number">12</span> SingleR</a></li>
 <li><a class="" href="de2.html"><span class="header-section-number">13</span> Differential Expression</a></li>
 <li><a class="" href="CellCycle.html"><span class="header-section-number">14</span> Cell cycle Assignment</a></li>
-<li><a class="" href="Harmony.html"><span class="header-section-number">15</span> Data set integration with Harmony</a></li>
 <li class="book-part">Other Resources</li>
-<li><a class="" href="resources.html"><span class="header-section-number">16</span> Resources</a></li>
-<li><a class="" href="solutions.html"><span class="header-section-number">17</span> Solutions</a></li>
-<li><a class="" href="acknowledgements.html"><span class="header-section-number">18</span> Acknowledgements</a></li>
-<li><a class="" href="session-info.html"><span class="header-section-number">19</span> Session info</a></li>
+<li><a class="" href="resources.html"><span class="header-section-number">15</span> Resources</a></li>
+<li class="book-part">Seurat Object</li>
+<li><a class="" href="structure.html"><span class="header-section-number">16</span> Structure</a></li>
+<li><a class="" href="acknowledgements.html"><span class="header-section-number">17</span> Acknowledgements</a></li>
+<li><a class="" href="session-info.html"><span class="header-section-number">18</span> Session info</a></li>
 </ul>
 
         <div class="book-extra">
@@ -92,7 +91,7 @@
 </h2>
 <p>For this workshop, several packages need to be installed.</p>
 <p>BiocManager likes to update installed packages, but we have disabled this in the R code below. If your installation fails, then you might need to turn updates on. Note that if there are a large number of packages that BiocManager wants to update it can take several hours.</p>
-<p>These instructions have been tested with R version 4.2.1 and Bioconductor version 3.16.</p>
+<p>These instructions have been tested with R version 4.4.1 and Bioconductor version 3.16.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Install required packages for Seurat:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Seurat"</span>, <span class="st">"dplyr"</span>, <span class="st">"remotes"</span>, <span class="st">"R.utils"</span>,<span class="st">"harmony"</span><span class="op">)</span><span class="op">)</span></span>
@@ -118,12 +117,12 @@
 <code class="sourceCode R"><span><span class="co"># where are you? what folder are you working in</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/Users/lper0012/Library/CloudStorage/Dropbox/BioPlatform/Teaching/scRNAseq_Workshop_ABACBS_2024"</span></span>
+<span><span class="co">#&gt; [1] "/mnt/ceph/mbp/servers/bioinformatics-platform/home/lper0012/tasks/training/scRNAseq_Workshop_ABACBS_2024"</span></span>
 <span></span>
 <span><span class="co">## Download and untar the data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>timeout<span class="op">=</span><span class="fl">3600</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span></span>
-<span>    <span class="st">"https://bioinformatics.erc.monash.edu/home/lper0012/SingleCellWorkshopData/data.tar"</span>,<span class="st">"data.tar"</span><span class="op">)</span></span>
+<span>    <span class="st">"https://bioinformatics.erc.monash.edu/home/lper0012/SingleCellWorkshopData/singlecell_2024/data.tar"</span>,<span class="st">"data.tar"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/untar.html">untar</a></span><span class="op">(</span><span class="st">"data.tar"</span><span class="op">)</span></span></code></pre></div>
 
@@ -156,7 +155,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: October 27, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 02, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

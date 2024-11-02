@@ -15,20 +15,20 @@ s.genes   <- cc.genes$s.genes
 g2m.genes <- cc.genes$g2m.genes
 
 # Use those lists with the cell cycle scoring function in Seurat.
-pbmc <- CellCycleScoring(pbmc, s.features = s.genes, g2m.features = g2m.genes)
+seurat_object <- CellCycleScoring(seurat_object, s.features = s.genes, g2m.features = g2m.genes)
 ```
 
 
 Which adds S.Score, G2M.Score and Phase calls to the metadata.
 ```{r}
-head(pbmc@meta.data)
+head(seurat_object@meta.data)
 ```
 
 
 We can then check the cell phase on the UMAP. In this dataset, phase isn't driving the clustering, and would not require any further handling. 
 
 ```{r}
-DimPlot(pbmc, reduction = 'umap', group.by = "Phase")
+DimPlot(seurat_object, reduction = 'umap_harmony', group.by = "Phase")
 ```
 
 Where a bias _is_ present, your course of action depends on the task at hand. It might involve 'regressing out' the cell cycle variation when scaling data `ScaleData(kang, vars.to.regress="Phase")`, omitting cell-cycle dominated clusters, or just accounting for it in your differential expression calculations.

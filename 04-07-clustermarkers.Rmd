@@ -16,33 +16,33 @@ The `min.pct` argument requires a feature to be detected at a minimum percentage
 
 ```{r markers1, fig.height=8, fig.width=15}
 # find all markers of cluster 2
-cluster2.markers <- FindMarkers(pbmc, ident.1 = 2, min.pct = 0.25)
+cluster2.markers <- FindMarkers(seurat_object, ident.1 = 2, min.pct = 0.25)
 head(cluster2.markers, n = 5)
 # find all markers distinguishing cluster 5 from clusters 0 and 3
-cluster5.markers <- FindMarkers(pbmc, ident.1 = 5, ident.2 = c(0, 3), min.pct = 0.25)
+cluster5.markers <- FindMarkers(seurat_object, ident.1 = 5, ident.2 = c(0, 3), min.pct = 0.25)
 head(cluster5.markers, n = 5)
 # find markers for every cluster compared to all remaining cells, report only the positive ones
-pbmc.markers <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
-pbmc.markers %>% group_by(cluster) %>% slice_max(n = 2, order_by = avg_log2FC)
+seurat_object.markers <- FindAllMarkers(seurat_object, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+seurat_object.markers %>% group_by(cluster) %>% slice_max(n = 2, order_by = avg_log2FC)
 ```
 
 Seurat has several tests for differential expression which can be set with the test.use parameter (see our [DE vignette](de_vignette.html) for details). For example, the ROC test returns the 'classification power' `abs(AUC-0.5)*2` for any individual marker, ranging from 0 = random to 1 = perfect.
 
 ```{r markersroc, fig.height=8, fig.width=15}
-cluster0.markers <- FindMarkers(pbmc, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
+cluster0.markers <- FindMarkers(seurat_object, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
 ```
 
 We include several tools for visualizing marker expression. `VlnPlot()` (shows expression probability distributions across clusters), and `FeaturePlot()` (visualizes feature expression on a tSNE or PCA plot) are our most commonly used visualizations. We also suggest exploring `RidgePlot()`, `CellScatter()`, and `DotPlot()` as additional methods to view your dataset.
 
 ```{r}
-VlnPlot(pbmc, features = c("MS4A1", "CD79A"))
+VlnPlot(seurat_object, features = c("MS4A1", "CD79A"))
 # you can plot raw counts as well
-VlnPlot(pbmc, features = c("NKG7", "PF4"), slot = 'counts', log = TRUE)
+VlnPlot(seurat_object, features = c("NKG7", "PF4"), slot = 'counts', log = TRUE)
 ```
 
 ```{r markerplots}
-FeaturePlot(pbmc, features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A"))
-FeaturePlot(pbmc, features = c("FCGR3A", "LYZ", "PPBP", "CD8A"))
+FeaturePlot(seurat_object, features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A"))
+FeaturePlot(seurat_object, features = c("FCGR3A", "LYZ", "PPBP", "CD8A"))
 ```
 
 <details>
@@ -50,19 +50,25 @@ FeaturePlot(pbmc, features = c("FCGR3A", "LYZ", "PPBP", "CD8A"))
 These are ridgeplots, cell scatter plots and dotplots. Replace `FeaturePlot` with the other functions.
 
 ```{r ridgeplots}
-RidgePlot(pbmc, features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A"))
-RidgePlot(pbmc, features = c("FCGR3A", "LYZ", "PPBP", "CD8A"))
+RidgePlot(seurat_object, features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A"))
+RidgePlot(seurat_object, features = c("FCGR3A", "LYZ", "PPBP", "CD8A"))
 ```
-For CellScatter plots, will need the cell id of the cells you want to look at. You can get this from the cell metadata (`pbmc@meta.data`).
+For CellScatter plots, will need the cell id of the cells you want to look at. You can get this from the cell metadata (`seurat_object@meta.data`).
 ```{r}
-head( pbmc@meta.data )
-CellScatter(pbmc, cell1 = "AAACATACAACCAC-1", cell2 = "AAACATTGAGCTAC-1")
+head( seurat_object@meta.data )
+
+CellScatter(seurat_object, cell1 = "AGGGCGCTATTTCC-1", cell2 = "GGAGACGATTCGTT-1")
+
+CellScatter(seurat_object, cell1 = "GGAGACGATTCGTT-1", cell2 = "TACGAGACCTATTC-1")
+
+
+
 ```
 
 DotPlots
 
 ```{r}
-DotPlot(pbmc, features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A", "FCGR3A", "LYZ", "PPBP", "CD8A"))
+DotPlot(seurat_object, features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A", "FCGR3A", "LYZ", "PPBP", "CD8A"))
 ```
 
 </details>
@@ -70,9 +76,9 @@ DotPlot(pbmc, features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A", "FCGR3A", 
 
 `DoHeatmap()` generates an expression heatmap for given cells and features. In this case, we are plotting the top 10 markers (or all markers if less than 10) for each cluster.
 
-```{r clusterHeatmap, fig.height=8, fig.width=15}
-top10 <- pbmc.markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_log2FC)
-DoHeatmap(pbmc, features = top10$gene) + NoLegend()
+```{r clusterHeatmap, fig.height=12, fig.width=15}
+top10 <- seurat_object.markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_log2FC)
+DoHeatmap(seurat_object, features = top10$gene) + NoLegend()
 ```
 
 
@@ -84,21 +90,21 @@ If you know markers for your cell types, use AddModuleScore to label them.
 ```{r}
 genes_markers <- list(Naive_CD4_T = c("IL7R", "CCR7"))
 
-pbmc <- AddModuleScore(object = pbmc, features = genes_markers, ctrl = 5, name = "Naive_CD4_T",
+seurat_object <- AddModuleScore(object = seurat_object, features = genes_markers, ctrl = 5, name = "Naive_CD4_T",
     search = TRUE)
 
 
 # notice the name of the cluster has a 1 at the end
-names(pbmc@meta.data)
+names(seurat_object@meta.data)
 
 # label that cell type
-pbmc$cell_label = NA
-pbmc$cell_label[pbmc$Naive_CD4_T1 > 1] = "Naive_CD4_T"
-Idents(pbmc) = pbmc$cell_label
+seurat_object$cell_label = NA
+seurat_object$cell_label[seurat_object$Naive_CD4_T1 > 1] = "Naive_CD4_T"
+Idents(seurat_object) = seurat_object$cell_label
 
 # plot
 # Using a custom colour scale 
-FeaturePlot(pbmc, features = "Naive_CD4_T1", label = TRUE, repel = TRUE, ) + scale_colour_gradientn(colours = c("lightblue","beige","red"))
+FeaturePlot(seurat_object, features = "Naive_CD4_T1", label = TRUE, repel = TRUE, reduction = "umap_harmony") + scale_colour_gradientn(colours = c("lightblue","beige","red"))
 ```
 
 
@@ -107,35 +113,56 @@ FeaturePlot(pbmc, features = "Naive_CD4_T1", label = TRUE, repel = TRUE, ) + sca
 
 Fortunately in the case of this dataset, we can use canonical markers to easily match the unbiased clustering to known cell types:
 
-Cluster ID | Markers       | Cell Type
------------|---------------|----------
-0          | IL7R, CCR7    | Naive CD4+ T 
-1          | CD14, LYZ     | CD14+ Mono
-2          | IL7R, S100A4  | Memory CD4+ 
-3          | MS4A1         | B 
-4          | CD8A          | CD8+ T 
-5          | FCGR3A, MS4A7 | FCGR3A+ Mono
-6          | GNLY, NKG7    | NK 
-7          | FCER1A, CST3  | DC
-8          | PPBP          | Platelet
+| Markers       | Cell Type
+|---------------|----------
+| IL7R, CCR7    | Naive CD4+ T 
+| CD14, LYZ     | CD14+ Mono
+| IL7R, S100A4  | Memory CD4+ 
+| MS4A1         | B 
+| CD8A          | CD8+ T 
+| FCGR3A, MS4A7 | FCGR3A+ Mono
+| GNLY, NKG7    | NK 
+| FCER1A, CST3  | DC
+| PPBP          | Platelet
 
 
 ```{r labelplot}
-Idents(pbmc) <- pbmc$RNA_snn_res.0.5
-new.cluster.ids <- c("Naive CD4 T", "CD14+ Mono", "Memory CD4 T", "B", "CD8 T", "FCGR3A+ Mono", "NK", "DC", "Platelet")
-names(new.cluster.ids) <- levels(pbmc)
-pbmc <- RenameIdents(pbmc, new.cluster.ids)
-DimPlot(pbmc, reduction = 'umap', label = TRUE, pt.size = 0.5) + NoLegend()
+
+
+DimPlot(seurat_object,group.by = "RNA_snn_res.0.2",reduction = "umap_harmony")|FeaturePlot(seurat_object, features = c( "MS4A1"),reduction = "umap_harmony")
 ```
+
+
+#### Challenge: Match cluster numbers with cell labels  {- .challenge}
+
+Use the markers provided and the resolution 0.2 to identity the cell labels
+
+
+<details>
+  <summary>**code ideas?**</summary>
+```
+Idents(seurat_object) <- seurat_object$RNA_snn_res.0.2
+# this is not the proper order. Make sure the labels are in the same order that the numers they should replace
+new.cluster.ids <- c("Naive CD4 T","B cells","CD14+ Monocytes","CD4 T cells","CD8 T cells", "Dendritic cells", "FCGR3A+ Monocytes","Megakaryocytes" )
+names(new.cluster.ids) <- levels(seurat_object)
+seurat_object <- RenameIdents(seurat_object, new.cluster.ids)
+DimPlot(seurat_object, reduction = 'umap_harmony', label = TRUE, pt.size = 0.5) + NoLegend()
+```
+#### {-}
+
+
+#### save the plots
 
 ```{r save.img, include=FALSE}
-plot <- DimPlot(pbmc, reduction = "umap", label = TRUE, label.size = 4.5) + xlab("UMAP 1") + ylab("UMAP 2") + 
+plot <- DimPlot(seurat_object, reduction = 'umap_harmony', label = TRUE, label.size = 4.5) + xlab("UMAP 1") + ylab("UMAP 2") + 
   theme(axis.title = element_text(size = 18), legend.text = element_text(size = 18)) + 
   guides(colour = guide_legend(override.aes = list(size = 10)))
-ggsave(filename = "pbmc3k_umap.jpg", height = 7, width = 12, plot = plot, quality = 50)
+ggsave(filename = "seurat_object3k_umap.jpg", height = 7, width = 12, plot = plot, quality = 50)
 ```
 
+#### save the seurat object
+
 ```{r save.rds, eval=FALSE}
-saveRDS(pbmc, file = "pbmc3k_final.rds")
+saveRDS(seurat_object, file = "seurat_object3k_final.rds")
 ```
 

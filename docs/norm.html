@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 7 Normalisation | scRNAseq Analysis in R with Seurat</title>
+<title>Chapter 6 Normalisation | scRNAseq Analysis in R with Seurat</title>
 <meta name="author" content="Monash Genomics and Bioinformatics Platform (MGBP)">
 <meta name="description" content="Why do we need to do this? The sequencing depth can be different per cell. This can bias the counts of expression showing higher numbers for more sequenced cells leading to the wrong biological...">
 <meta name="generator" content="bookdown 0.41 with bs4_book()">
-<meta property="og:title" content="Chapter 7 Normalisation | scRNAseq Analysis in R with Seurat">
+<meta property="og:title" content="Chapter 6 Normalisation | scRNAseq Analysis in R with Seurat">
 <meta property="og:type" content="book">
 <meta property="og:description" content="Why do we need to do this? The sequencing depth can be different per cell. This can bias the counts of expression showing higher numbers for more sequenced cells leading to the wrong biological...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 7 Normalisation | scRNAseq Analysis in R with Seurat">
+<meta name="twitter:title" content="Chapter 6 Normalisation | scRNAseq Analysis in R with Seurat">
 <meta name="twitter:description" content="Why do we need to do this? The sequencing depth can be different per cell. This can bias the counts of expression showing higher numbers for more sequenced cells leading to the wrong biological...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -46,26 +46,25 @@
 <li><a class="" href="index.html"><span class="header-section-number">1</span> Getting started</a></li>
 <li><a class="" href="set-up.html"><span class="header-section-number">2</span> Set up</a></li>
 <li><a class="" href="schedule.html"><span class="header-section-number">3</span> Schedule</a></li>
-<li class="book-part">Seurat Object</li>
-<li><a class="" href="structure.html"><span class="header-section-number">4</span> Structure</a></li>
-<li><a class="" href="load.html"><span class="header-section-number">5</span> Load data</a></li>
+<li><a class="" href="load.html"><span class="header-section-number">4</span> Load data</a></li>
 <li class="book-part">Single Cell Analysis</li>
-<li><a class="" href="qc.html"><span class="header-section-number">6</span> QC Filtering</a></li>
-<li><a class="active" href="norm.html"><span class="header-section-number">7</span> Normalisation</a></li>
-<li><a class="" href="reducedims.html"><span class="header-section-number">8</span> PCAs and UMAPs</a></li>
-<li><a class="" href="dimensionality-reduction.html"><span class="header-section-number">9</span> Dimensionality reduction</a></li>
+<li><a class="" href="qc.html"><span class="header-section-number">5</span> QC Filtering</a></li>
+<li><a class="active" href="norm.html"><span class="header-section-number">6</span> Normalisation</a></li>
+<li><a class="" href="reducedims.html"><span class="header-section-number">7</span> PCAs and UMAPs</a></li>
+<li><a class="" href="dimensionality-reduction.html"><span class="header-section-number">8</span> Dimensionality reduction</a></li>
+<li><a class="" href="Harmony.html"><span class="header-section-number">9</span> Data set integration with Harmony</a></li>
 <li><a class="" href="clustering.html"><span class="header-section-number">10</span> Clustering</a></li>
 <li><a class="" href="clustermarkers.html"><span class="header-section-number">11</span> Cluster Markers</a></li>
 <li class="book-part">Futher Analysis</li>
 <li><a class="" href="singler.html"><span class="header-section-number">12</span> SingleR</a></li>
 <li><a class="" href="de2.html"><span class="header-section-number">13</span> Differential Expression</a></li>
 <li><a class="" href="CellCycle.html"><span class="header-section-number">14</span> Cell cycle Assignment</a></li>
-<li><a class="" href="Harmony.html"><span class="header-section-number">15</span> Data set integration with Harmony</a></li>
 <li class="book-part">Other Resources</li>
-<li><a class="" href="resources.html"><span class="header-section-number">16</span> Resources</a></li>
-<li><a class="" href="solutions.html"><span class="header-section-number">17</span> Solutions</a></li>
-<li><a class="" href="acknowledgements.html"><span class="header-section-number">18</span> Acknowledgements</a></li>
-<li><a class="" href="session-info.html"><span class="header-section-number">19</span> Session info</a></li>
+<li><a class="" href="resources.html"><span class="header-section-number">15</span> Resources</a></li>
+<li class="book-part">Seurat Object</li>
+<li><a class="" href="structure.html"><span class="header-section-number">16</span> Structure</a></li>
+<li><a class="" href="acknowledgements.html"><span class="header-section-number">17</span> Acknowledgements</a></li>
+<li><a class="" href="session-info.html"><span class="header-section-number">18</span> Session info</a></li>
 </ul>
 
         <div class="book-extra">
@@ -73,9 +72,9 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="norm" class="section level1" number="7">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="norm" class="section level1" number="6">
 <h1>
-<span class="header-section-number">7</span> Normalisation<a class="anchor" aria-label="anchor" href="#norm"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6</span> Normalisation<a class="anchor" aria-label="anchor" href="#norm"><i class="fas fa-link"></i></a>
 </h1>
 <div id="why-do-we-need-to-do-this-1" class="section level4 unnumbered rational">
 <h4>Why do we need to do this?<a class="anchor" aria-label="anchor" href="#why-do-we-need-to-do-this-1"><i class="fas fa-link"></i></a>
@@ -84,27 +83,28 @@
 </div>
 <div id="section-3" class="section level4 unnumbered">
 <h4 class="unnumbered"><a class="anchor" aria-label="anchor" href="#section-3"><i class="fas fa-link"></i></a></h4>
-<p>After removing unwanted cells from the dataset, the next step is to normalize the data. By default, we employ a global-scaling normalization method “LogNormalize” that normalizes the feature expression measurements for each cell by the total expression, multiplies this by a scale factor (10,000 by default), and log-transforms the result. Normalized values are stored in <code>pbmc$RNA@data</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span><span class="va">pbmc</span>, normalization.method <span class="op">=</span> <span class="st">"LogNormalize"</span>, scale.factor <span class="op">=</span> <span class="fl">1e4</span><span class="op">)</span></span>
+<p>After removing unwanted cells from the dataset, the next step is to normalize the data. By default, we employ a global-scaling normalization method “LogNormalize” that normalizes the feature expression measurements for each cell by the total expression, multiplies this by a scale factor (10,000 by default), and log-transforms the result. Normalized values are stored in <code>seurat_object$RNA@data</code>.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span><span class="va">seurat_object</span>, normalization.method <span class="op">=</span> <span class="st">"LogNormalize"</span>, scale.factor <span class="op">=</span> <span class="fl">1e4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Normalizing layer: counts</span></span></code></pre></div>
 <p>For clarity, in this previous line of code (and in future commands), we provide the default values for certain parameters in the function call. However, this isn’t required and the same behavior can be achieved with:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">)</span></span></code></pre></div>
+<p>There are other options for normalization such as <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1">SCTtransform</a> which was popularized in 2019, however Log base normalization continued to be preferred as they perform better <a href="https://www.nature.com/articles/s41592-023-01814-1">see here</a> the for mo details.</p>
 
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="qc.html"><span class="header-section-number">6</span> QC Filtering</a></div>
-<div class="next"><a href="reducedims.html"><span class="header-section-number">8</span> PCAs and UMAPs</a></div>
+<div class="prev"><a href="qc.html"><span class="header-section-number">5</span> QC Filtering</a></div>
+<div class="next"><a href="reducedims.html"><span class="header-section-number">7</span> PCAs and UMAPs</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#norm"><span class="header-section-number">7</span> Normalisation</a></li></ul>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#norm"><span class="header-section-number">6</span> Normalisation</a></li></ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://monashbioinformaticsplatform.github.io/scRNAseq_Workshop_ABACBS_2024//blob/master/04-04-norm.Rmd">View source <i class="fab fa-gitlab"></i></a></li>
-          <li><a id="book-edit" href="https://monashbioinformaticsplatform.github.io/scRNAseq_Workshop_ABACBS_2024//edit/master/04-04-norm.Rmd">Edit this page <i class="fab fa-gitlab"></i></a></li>
+<li><a id="book-source" href="https://monashbioinformaticsplatform.github.io/scRNAseq_Workshop_ABACBS_2024//blob/master/04-02-norm.Rmd">View source <i class="fab fa-gitlab"></i></a></li>
+          <li><a id="book-edit" href="https://monashbioinformaticsplatform.github.io/scRNAseq_Workshop_ABACBS_2024//edit/master/04-02-norm.Rmd">Edit this page <i class="fab fa-gitlab"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -116,7 +116,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: October 27, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 02, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

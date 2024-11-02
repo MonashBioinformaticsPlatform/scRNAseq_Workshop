@@ -7,18 +7,18 @@ The sequencing depth can be different per cell. This can bias the counts of expr
 ####  {-}
 
 
-After removing unwanted cells from the dataset, the next step is to normalize the data. By default, we employ a global-scaling normalization method "LogNormalize" that normalizes the feature expression measurements for each cell by the total expression, multiplies this by a scale factor (10,000 by default), and log-transforms the result. Normalized values are stored in `pbmc$RNA@data`.
+After removing unwanted cells from the dataset, the next step is to normalize the data. By default, we employ a global-scaling normalization method "LogNormalize" that normalizes the feature expression measurements for each cell by the total expression, multiplies this by a scale factor (10,000 by default), and log-transforms the result. Normalized values are stored in `seurat_object$RNA@data`.
 
 ```{r normalize}
-pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e4)
+seurat_object <- NormalizeData(seurat_object, normalization.method = "LogNormalize", scale.factor = 1e4)
 ```
 For clarity, in this previous line of code (and in future commands), we provide the default values for certain parameters in the function call. However, this isn't required and the same behavior can be achieved with:
 
 ```{r normalize.default, eval = FALSE}
-pbmc <- NormalizeData(pbmc)
+seurat_object <- NormalizeData(seurat_object)
 ```
 
-
+There are other options for normalization such as [SCTtransform]( https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) which was popularized in 2019, however Log base normalization continued to be preferred as they perform better [see here](https://www.nature.com/articles/s41592-023-01814-1) the for mo details. 
 
 
 

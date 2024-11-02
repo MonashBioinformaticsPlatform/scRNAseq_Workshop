@@ -7,33 +7,25 @@ There is the [Seurat differential expression Vignette](https://satijalab.org/seu
 
 There is also a good discussion of useing [pseudobulk approaches](http://bioconductor.org/books/3.15/OSCA.multisample/multi-sample-comparisons.html#creating-pseudo-bulk-samples) which is worth checking out if youre planning differential expression analyses.
 
----
 
-We will now look at [GSE96583](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE96583), another PBMC dataset. For speed, we will be looking at a subset of 5000 cells from this data. The cells in this dataset were pooled from eight individual donors. This data contains two batches of single cell sequencing. One of the batches was stimulated with IFN-beta.
-
-
-
-
-The data has already been processed as we have done with the first PBMC dataset, and can be loaded from the `kang2018.rds` file in the data folder.
 
 ```{r }
-kang <- readRDS("data/kang2018.rds")
-head(kang@meta.data)
+head(seurat_object@meta.data)
 ```
 
 How cells from each condition do we have?
 ```{r}
-table(kang$stim)
+table(seurat_object$stim)
 ```
 
 How many cells per individuals per group?
 ```{r}
-table(kang$ind, kang$stim)
+table(seurat_object$ind, seurat_object$stim)
 ```
 And for each sample, how many of each cell type has been classified?
 
 ```{r}
-table(paste(kang$ind,kang$stim), kang$cell)
+table(paste(seurat_object$ind,seurat_object$stim), seurat_object$cell)
 ```
 
 
@@ -52,13 +44,13 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 
 How many genes before filtering?
 ```{r}
-kang
+seurat_object
 ```
 
 
 How many copies of each gene are there?
 ```{R}
-total_per_gene <- rowSums(GetAssayData(kang, assay='RNA', slot='counts'))
+total_per_gene <- rowSums(GetAssayData(seurat_object, assay='RNA', slot='counts'))
 hist(log10(total_per_gene))
 ```
 
@@ -66,13 +58,13 @@ hist(log10(total_per_gene))
 
 Lets keep only those genes with at least 50 copies across the entire experiment.
 ```{r}
-kang <- kang[total_per_gene >= 50, ] 
+seurat_object<- seurat_object[total_per_gene >= 50, ] 
 ```
 
 
 How many genes after filtering?
 ```{r}
-kang
+seurat_object
 ```
 
 
@@ -83,10 +75,10 @@ An easy way is to subset the object.
 
 ```{r}
 # Set idents to 'cell' column.
-Idents(kang) <- kang$cell
-DimPlot(kang)
-kang.celltype <- kang[, kang$cell == "CD14+ Monocytes" ]
-DimPlot(kang.celltype)
+Idents(seurat_object) <- seurat_object$cell
+DimPlot(seurat_object, reduction = "umap_harmony")
+seurat_object_celltype <- seurat_object[, seurat_object$cell == "CD14+ Monocytes" ]
+DimPlot(seurat_object_celltype, reduction = "umap_harmony")
 ```
 
 
@@ -98,10 +90,10 @@ To run this test, we change the Idents to the factor(column) we want to test. In
 
 ```{r}
 # Change Ident to Condition
-Idents(kang.celltype) <- kang.celltype$stim
+Idents(seurat_object_celltype) <- seurat_object_celltype$stim
 
 # default, wilcox test
-de_result_wilcox <- FindMarkers(kang.celltype, 
+de_result_wilcox <- FindMarkers(seurat_object_celltype, 
             ident.1 = 'stim',
             ident.2 = 'ctrl',
             logfc.threshold = 0, # Give me ALL results
@@ -109,7 +101,7 @@ de_result_wilcox <- FindMarkers(kang.celltype,
             )
 
 # Add average expression for plotting
-de_result_wilcox$AveExpr<- rowMeans(kang.celltype[["RNA"]]@data[rownames(de_result_wilcox),])
+de_result_wilcox$AveExpr<- rowMeans(seurat_object_celltype[rownames(de_result_wilcox),])
 ```
 
 Look at the top differentially expressed genes.
@@ -142,10 +134,10 @@ Negative binonial test is run almost the same way - just need to specify it unde
 ```{r results='hide', warning=FALSE, message=FALSE}
 
 # Change Ident to Condition
-Idents(kang.celltype) <- kang.celltype$stim
+Idents(seurat_object_celltype) <- seurat_object_celltype$stim
 
 # default, wilcox test
-de_result_negbinom <- FindMarkers(kang.celltype, 
+de_result_negbinom <- FindMarkers(seurat_object_celltype, 
             test.use="negbinom", # Choose a different test.
             ident.1 = 'stim',
             ident.2 = 'ctrl',
@@ -154,7 +146,7 @@ de_result_negbinom <- FindMarkers(kang.celltype,
 )
 
 # Add average expression for plotting
-de_result_negbinom$AveExpr<- rowMeans(kang.celltype[["RNA"]]@data[rownames(de_result_negbinom),])
+de_result_negbinom$AveExpr<- rowMeans(seurat_object_celltype[rownames(de_result_negbinom),])
 ```
 
 
@@ -196,12 +188,12 @@ library(edgeR)
 
 
 # Change idents to ind for grouping.
-kang.celltype$sample <- factor(paste(kang.celltype$stim, kang.celltype$ind, sep="_"))
-Idents(kang.celltype) <- kang.celltype$sample
+seurat_object_celltype$sample <- factor(paste(seurat_object_celltype$stim, seurat_object_celltype$ind, sep="_"))
+Idents(seurat_object_celltype) <- seurat_object_celltype$sample
 
 # THen pool together counts in those groups
 # AggregateExperssion returns a list of matricies - one for each assay requested (even just requesting one)
-pseudobulk_matrix_list <- AggregateExpression( kang.celltype,  slot = 'counts', assays='RNA' )
+pseudobulk_matrix_list <- AggregateExpression( seurat_object_celltype,  slot = 'counts', assays='RNA' )
 pseudobulk_matrix      <- pseudobulk_matrix_list[['RNA']]
 colnames(pseudobulk_matrix) <- as.character(colnames(pseudobulk_matrix)) # Changes colnames to simple text
 pseudobulk_matrix[1:5,1:4]

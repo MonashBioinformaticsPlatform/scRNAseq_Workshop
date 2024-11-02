@@ -6,11 +6,10 @@ get-the-workshop-material-and-data
 package-installation
 raw-data
 schedule
-structure
-load-an-existing-seurat-object
-whats-in-there
 load
 setup-the-seurat-object
+the-data-set
+different-ways-of-loading-the-data
 qc
 qc-and-selecting-cells-for-further-analysis
 norm
@@ -22,6 +21,7 @@ perform-linear-dimensional-reduction
 determine-the-dimensionality-of-the-dataset
 run-non-linear-dimensional-reduction-umaptsne
 save
+Harmony
 clustering
 cluster-cells
 choosing-a-cluster-resolution
@@ -29,6 +29,8 @@ clustermarkers
 finding-differentially-expressed-features-cluster-biomarkers
 use-makers-to-label-or-find-a-cluster
 assigning-cell-type-identity-to-clusters
+save-the-plots
+save-the-seurat-object
 singler
 de2
 prefiltering
@@ -36,7 +38,6 @@ default-wilcox-test
 seurat-negative-binomial
 pseudobulk
 CellCycle
-Harmony
 resources
 suggested-further-reading-material
 useful-links-arising-from-the-discussion-during-the-previous-workshop
@@ -48,12 +49,8 @@ help-and-fruther-resources
 data
 analysis-tools
 preprocessing-tools
-solutions
-discussion-the-seurat-object-in-r-1
-challenge-the-meta.data-slot-in-the-seurat-object-1
-challenge-ribosomal-gene-expression-as-a-qc-metric
-challenge-labelling-genes-of-interest
-challenge-try-different-cluster-settings-1
-challenge-reference-based-annotation
+structure
+load-an-existing-seurat-object
+whats-in-there
 acknowledgements
 session-info

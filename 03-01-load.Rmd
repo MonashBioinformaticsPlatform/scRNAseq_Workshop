@@ -2,10 +2,6 @@
 
 # Load data {#load}
 
-
-
-
-
 ## Setup the Seurat Object
 
 ## The data set
@@ -33,7 +29,7 @@ What do the input files look like? It varies, but this is the output of the Cell
 │   ├── barcodes.tsv.gz
 │   ├── features.tsv.gz
 │   └── matrix.mtx.gz
-├── filtered_feature_bc_matrix.h5
+├── filtered_feature_bc_matrix.h5.  --> matrix to read in h5 format
 ├── metrics_summary.csv
 ├── molecule_info.h5
 ├── possorted_genome_bam.bam
@@ -42,7 +38,7 @@ What do the input files look like? It varies, but this is the output of the Cell
 │   ├── barcodes.tsv.gz
 │   ├── features.tsv.gz
 │   └── matrix.mtx.gz
-├── raw_feature_bc_matrix.h5
+├── raw_feature_bc_matrix.h5 
 └── web_summary.html
 ```
 
@@ -62,19 +58,25 @@ library(Seurat)
 library(patchwork)
 ```
 
-```{r init, warning=FALSE}
+## Different ways of loading the data
+
+Example 1. Load your data using the path to the folder: ```filtered_feature_bc_matrix``` that is in the output folder of your cellranger run using the ```Read10X``` function.
+
+```{}
 # Load the PBMC dataset
-pbmc.data <- Read10X(data.dir = "data/pbmc3k/filtered_gene_bc_matrices/hg19/")
+pbmc.data <- Read10X(data.dir = "outs/filtered_feature_bc_matrix")
 # Initialize the Seurat object with the raw (non-normalized data).
-pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 3, min.features = 200)
-pbmc
+seurat_object <- CreateSeuratObject(counts = pbmc.data, min.cells = 3, min.features = 200)
+
 ```
 
-```{r, eval=FALSE}
+Example 2. Load your data directing the ```ReadMtx``` function to each of the relevant files in the ```filtered_feature_bc_matrix``` folder in the outputs from your cellranger run.
+
+```{}
 
 expression_matrix <- ReadMtx(
-  mtx = "count_matrix.mtx.gz", features = "features.tsv.gz",
-  cells = "barcodes.tsv.gz"
+  mtx = "outs/filtered_feature_bc_matrix/count_matrix.mtx.gz", features = "outs/filtered_feature_bc_matrix/features.tsv.gz",
+  cells = "outs/filtered_feature_bc_matrix/barcodes.tsv.gz"
 )
 
 seurat_object <- CreateSeuratObject(counts = expression_matrix)
@@ -82,12 +84,23 @@ seurat_object <- CreateSeuratObject(counts = expression_matrix)
 ```
 
 
-```{r, eval=FALSE}
-raw.lib <- Read10X_h5("filtered_feature_bc_matrix.h5")
+Example 3. Load your data from the directing the ```ReadMtx``` function to each of the relevant files in the ```filtered_feature_bc_matrix``` folder in the outputs from your cellranger run.
 
-seurat_object <- CreateSeuratObject(counts = raw.lib,
-                                 assay = "RNA",
-                           names.delim = "-", names.field = 2)
+
+```{r}
+pbmc.data <- Read10X_h5("data/filtered_feature_bc_matrix.h5")
+metadata <- read.table("data/metadata.txt")
+
+  
+  
+seurat_object <- CreateSeuratObject(counts = pbmc.data ,
+                                 assay = "RNA", project = 'pbmc')
+
+
+
+# Use AddMetaData to add new meta data to object
+seurat_object  <- AddMetaData(object = seurat_object, metadata = metadata)
+
 
 ```
 

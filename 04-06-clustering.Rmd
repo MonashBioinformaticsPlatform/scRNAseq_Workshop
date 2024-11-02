@@ -22,19 +22,19 @@ To cluster the cells, we next apply modularity optimization techniques such as t
 
 
 ```{r cluster, fig.height=5, fig.width=7}
-pbmc <- FindNeighbors(pbmc, dims = 1:10)
-pbmc <- FindClusters(pbmc, resolution = 0.5)
+seurat_object <- FindNeighbors(seurat_object, dims = 1:10)
+seurat_object <- FindClusters(seurat_object, resolution = 0.5)
 # Look at cluster IDs of the first 5 cells
-head(Idents(pbmc), 5)
+head(Idents(seurat_object), 5)
 ```
 
 
 Check out the clusters.
 ```{r}
-DimPlot(pbmc)
+DimPlot(seurat_object,reduction = "umap_harmony")
 # Equivalent to
-# DimPlot(pbmc,reduction="umap", group.by="seurat_clusters")
-# DimPlot(pbmc,reduction="umap", group.by="RNA_snn_res.0.5")
+# DimPlot(seurat_object,reduction="umap", group.by="seurat_clusters")
+# DimPlot(seurat_object,reduction="umap", group.by="RNA_snn_res.0.5")
 ```
 
 ***
@@ -44,7 +44,7 @@ DimPlot(pbmc)
 
 Run `FindNeighbours` and `FindClusters` again, with a different number of dimensions or with a different resolution. Examine the resulting clusters using `DimPlot`.
 
-To maintain the flow of this tutorial, please put the output of this exploration in a different variable, such as `pbmc2`!
+To maintain the flow of this tutorial, please put the output of this exploration in a different variable, such as `seurat_object2`!
 
 
 ####  {-}
@@ -53,35 +53,35 @@ To maintain the flow of this tutorial, please put the output of this exploration
 ## Choosing a cluster resolution
 
 
-Its a good idea to try different resolutions when clustering to identify the varibility of your data. 
+Its a good idea to try different resolutions when clustering to identify the variability of your data. 
 
-```{r}
+```{r message=FALSE, warning=FALSE,eval=TRUE, echo=TRUE,results='hide'}
 resolution = 2
-pbmc <- FindClusters(object = pbmc, reduction = "umap", resolution = seq(0.1, resolution, 0.1),
+seurat_object <- FindClusters(object = seurat_object, reduction = "umap_harmony", resolution = seq(0.1, resolution, 0.1),
     dims = 1:10)
 
 # the different clustering created
-names(pbmc@meta.data)
+names(seurat_object@meta.data)
 
 # Look at cluster IDs of the first 5 cells
-head(Idents(pbmc), 5)
+head(Idents(seurat_object), 5)
 ```
 
 Plot a clustree to decide how many clusters you have and what resolution capture them.
 
 ```{r fig.height=12}
 library(clustree)
-clustree(pbmc, prefix = "RNA_snn_res.") + theme(legend.key.size = unit(0.05, "cm"))
+clustree(seurat_object, prefix = "RNA_snn_res.",show_axis=TRUE) + theme(legend.key.size = unit(0.05, "cm"))
 ```
 
 Name cells with the corresponding cluster name at the resolution you pick. This case we are happy with 0.5.
 ```{r}
 # The name of the cluster is prefixed with 'RNA_snn_res' and the number of the resolution
-Idents(pbmc) <- pbmc$RNA_snn_res.0.5
+Idents(seurat_object) <- seurat_object$RNA_snn_res.0.5
 ```
 
 Plot the UMAP with colored clusters with Dimplot
 
 ```{r}
-DimPlot(pbmc, label = TRUE, repel = TRUE, label.box = TRUE) + NoLegend()
+DimPlot(seurat_object, reduction = "umap_harmony", label = TRUE, repel = TRUE, label.box = TRUE) + NoLegend()
 ```

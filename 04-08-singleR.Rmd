@@ -16,7 +16,7 @@ In this workshop we have focused on the Seurat package.  However, there is anoth
 For now, we'll just convert our Seurat object into an object called SingleCellExperiment.  Some popular packages from Bioconductor that work with this type are Slingshot, Scran, Scater.
 
 ```{r}
-sce <- as.SingleCellExperiment(pbmc)
+sce <- as.SingleCellExperiment(seurat_object)
 sce
 ```
 
@@ -57,9 +57,17 @@ Keep any types that have more than 10 cells to the label, and put those labels b
 
 ```{r}
 lbls.keep <- table(pred.cnts$labels)>10
-pbmc$SingleR.labels <- ifelse(lbls.keep[pred.cnts$labels], pred.cnts$labels, 'Other')
-DimPlot(pbmc, reduction='umap', group.by='SingleR.labels')
+seurat_object$SingleR.labels <- ifelse(lbls.keep[pred.cnts$labels], pred.cnts$labels, 'Other')
+DimPlot(seurat_object, reduction='umap_harmony', group.by='SingleR.labels')
 ```
 
-It is nice to see that even though SingleR does not use the clusters we computed earlier, the labels do seem to match those clusters reasonably well.
+Compare cell labels by different annotation methods:
 
+```{r}
+DimPlot(seurat_object,group.by = "RNA_snn_res.0.2",reduction = "umap_harmony")
+
+DimPlot(seurat_object,group.by = "cell",reduction = "umap_harmony")
+
+
+
+```

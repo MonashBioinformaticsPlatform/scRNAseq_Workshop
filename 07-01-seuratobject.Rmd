@@ -9,9 +9,7 @@
 
 ## Load an existing Seurat object
 
-The data we're working with today is a small dataset of about 3000 PBMCs (peripheral blood mononuclear cells) from a healthy donor. Just one sample.
-
-This is an early demo dataset from 10X genomics (called pbmc3k) - you can find more information like qc reports [here](https://www.10xgenomics.com/resources/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0).
+The data we're working with today is a small dataset of about 5000 PBMCs (peripheral blood mononuclear cells) from a healthy donor.  
 
 
 First, load Seurat package.
@@ -23,20 +21,20 @@ library(Seurat)
 And here's the one we prepared earlier. Seurat objects are usually saved as '.rds' files, which is an R format for storing binary data (not-text or human-readable). The functions `readRDS()` can load it.
 
 ```{r}
-seurat_obj <- readRDS("data/kang2018.rds")
+seurat_object <- readRDS("data/kang2018.rds")
 
 ```
 
 #### Discussion: The Seurat Object in R { - .rational}
 
-Lets take a look at the seurat object we have just created in R, `seurat_obj`
+Lets take a look at the seurat object we have just created in R, `seurat_object`
 
 To accomodate the complexity of data arising from a single cell RNA seq experiment, the seurat object keeps this as a container of multiple data tables that are linked.
 
 ![](images/seuratobject.png){width=80%}
 
 
-The functions in seurat can access parts of the data object for analysis and visualisation, we will cover this later on. 
+The functions in seurat can access parts of the data object for analysis and visualization, we will cover this later on. 
 
 There are a couple of concepts to discuss here.
 <details>
@@ -70,17 +68,17 @@ The ways to access the slots can be through methods for the class (functions) or
 
 **Examples of accessing a Seurat object**
 
-The `assays` slot in `seurat_obj` can be accessed with `seurat_obj@assays`.
+The `assays` slot in `seurat_object` can be accessed with `seurat_object@assays`.
 
-The `RNA` assay can be accessed from this with `seurat_obj@assays$RNA`. 
+The `RNA` assay can be accessed from this with `seurat_object@assays$RNA`. 
 
-We often want to access assays, so Seurat nicely gives us a shortcut `seurat_obj$RNA`. You may sometimes see an alternative notation `seurat_obj[["RNA"]]`.
+We often want to access assays, so Seurat nicely gives us a shortcut `seurat_object$RNA`. You may sometimes see an alternative notation `seurat_object[["RNA"]]`.
 
 In general, slots that are always in an object are accessed with `@` and things that may be different in different data sets are accessed with `$`.
 
 **Have a go**
 
-Use `str` to look at the structure of the Seurat object `seurat_obj`.
+Use `str` to look at the structure of the Seurat object `seurat_object`.
 
 What is in the `meta.data` slot within your Seurat object currently? What type of data is contained here?
 
@@ -98,7 +96,7 @@ This is cell level information - each row is one cell, identified by its barcode
 Extra information gets added to this table as analysis progresses.
 
 ```{r}
-head(seurat_obj@meta.data)
+head(seurat_object@meta.data)
 ```
 
 
@@ -109,13 +107,13 @@ The Assay structure has some nuances (see discussion below), but there are funct
 By default this object will return the normalised data (from the only assay in this object, called RNA). Every '.' is a zero.
 
 ```{r}
-GetAssayData(seurat_obj)[1:15,1:2]
+GetAssayData(seurat_object)[1:15,1:2]
 ```
 
 
 But the raw counts data is accessible too.
 ```{r}
-GetAssayData(seurat_obj, slot='counts')[1:15,1:2]
+GetAssayData(seurat_object, slot='counts')[1:15,1:2]
 ```
 
 

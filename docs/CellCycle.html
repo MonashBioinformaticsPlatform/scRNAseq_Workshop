@@ -46,26 +46,25 @@
 <li><a class="" href="index.html"><span class="header-section-number">1</span> Getting started</a></li>
 <li><a class="" href="set-up.html"><span class="header-section-number">2</span> Set up</a></li>
 <li><a class="" href="schedule.html"><span class="header-section-number">3</span> Schedule</a></li>
-<li class="book-part">Seurat Object</li>
-<li><a class="" href="structure.html"><span class="header-section-number">4</span> Structure</a></li>
-<li><a class="" href="load.html"><span class="header-section-number">5</span> Load data</a></li>
+<li><a class="" href="load.html"><span class="header-section-number">4</span> Load data</a></li>
 <li class="book-part">Single Cell Analysis</li>
-<li><a class="" href="qc.html"><span class="header-section-number">6</span> QC Filtering</a></li>
-<li><a class="" href="norm.html"><span class="header-section-number">7</span> Normalisation</a></li>
-<li><a class="" href="reducedims.html"><span class="header-section-number">8</span> PCAs and UMAPs</a></li>
-<li><a class="" href="dimensionality-reduction.html"><span class="header-section-number">9</span> Dimensionality reduction</a></li>
+<li><a class="" href="qc.html"><span class="header-section-number">5</span> QC Filtering</a></li>
+<li><a class="" href="norm.html"><span class="header-section-number">6</span> Normalisation</a></li>
+<li><a class="" href="reducedims.html"><span class="header-section-number">7</span> PCAs and UMAPs</a></li>
+<li><a class="" href="dimensionality-reduction.html"><span class="header-section-number">8</span> Dimensionality reduction</a></li>
+<li><a class="" href="Harmony.html"><span class="header-section-number">9</span> Data set integration with Harmony</a></li>
 <li><a class="" href="clustering.html"><span class="header-section-number">10</span> Clustering</a></li>
 <li><a class="" href="clustermarkers.html"><span class="header-section-number">11</span> Cluster Markers</a></li>
 <li class="book-part">Futher Analysis</li>
 <li><a class="" href="singler.html"><span class="header-section-number">12</span> SingleR</a></li>
 <li><a class="" href="de2.html"><span class="header-section-number">13</span> Differential Expression</a></li>
 <li><a class="active" href="CellCycle.html"><span class="header-section-number">14</span> Cell cycle Assignment</a></li>
-<li><a class="" href="Harmony.html"><span class="header-section-number">15</span> Data set integration with Harmony</a></li>
 <li class="book-part">Other Resources</li>
-<li><a class="" href="resources.html"><span class="header-section-number">16</span> Resources</a></li>
-<li><a class="" href="solutions.html"><span class="header-section-number">17</span> Solutions</a></li>
-<li><a class="" href="acknowledgements.html"><span class="header-section-number">18</span> Acknowledgements</a></li>
-<li><a class="" href="session-info.html"><span class="header-section-number">19</span> Session info</a></li>
+<li><a class="" href="resources.html"><span class="header-section-number">15</span> Resources</a></li>
+<li class="book-part">Seurat Object</li>
+<li><a class="" href="structure.html"><span class="header-section-number">16</span> Structure</a></li>
+<li><a class="" href="acknowledgements.html"><span class="header-section-number">17</span> Acknowledgements</a></li>
+<li><a class="" href="session-info.html"><span class="header-section-number">18</span> Session info</a></li>
 </ul>
 
         <div class="book-extra">
@@ -82,132 +81,163 @@ alot of the observed transcriptomic variation. There may be clustering by phase,
 separation in the UMAP by phase.</p>
 <p>Seurat provides a simple method for assigning cell cycle state to each cell. Other methods are available.</p>
 <p>More information about assigning cell cycle states to cells is in the <a href="https://satijalab.org/seurat/articles/cell_cycle_vignette.html">cell cycle vignette</a></p>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># A list of cell cycle markers, from Tirosh et al, 2015, is loaded with Seurat.  We can</span></span>
 <span><span class="co"># segregate this list into markers of G2/M phase and markers of S phase</span></span>
 <span><span class="va">s.genes</span>   <span class="op">&lt;-</span> <span class="va">cc.genes</span><span class="op">$</span><span class="va">s.genes</span></span>
 <span><span class="va">g2m.genes</span> <span class="op">&lt;-</span> <span class="va">cc.genes</span><span class="op">$</span><span class="va">g2m.genes</span></span>
 <span></span>
 <span><span class="co"># Use those lists with the cell cycle scoring function in Seurat.</span></span>
-<span><span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/CellCycleScoring.html">CellCycleScoring</a></span><span class="op">(</span><span class="va">pbmc</span>, s.features <span class="op">=</span> <span class="va">s.genes</span>, g2m.features <span class="op">=</span> <span class="va">g2m.genes</span><span class="op">)</span></span>
+<span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/CellCycleScoring.html">CellCycleScoring</a></span><span class="op">(</span><span class="va">seurat_object</span>, s.features <span class="op">=</span> <span class="va">s.genes</span>, g2m.features <span class="op">=</span> <span class="va">g2m.genes</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: The following features are not present in the</span></span>
-<span><span class="co">#&gt; object: DTL, UHRF1, MLF1IP, EXO1, CASP8AP2, BRIP1, E2F8,</span></span>
-<span><span class="co">#&gt; not searching for symbol synonyms</span></span>
+<span><span class="co">#&gt; object: TYMS, MCM2, MCM4, UNG, GINS2, CDCA7, DTL, UHRF1,</span></span>
+<span><span class="co">#&gt; MLF1IP, HELLS, RAD51AP1, GMNN, WDR76, CCNE2, ATAD2, RAD51,</span></span>
+<span><span class="co">#&gt; RRM2, CDC45, CDC6, EXO1, DSCC1, BLM, CASP8AP2, CLSPN,</span></span>
+<span><span class="co">#&gt; POLA1, CHAF1B, BRIP1, E2F8, not searching for symbol</span></span>
+<span><span class="co">#&gt; synonyms</span></span>
 <span><span class="co">#&gt; Warning: The following features are not present in the</span></span>
-<span><span class="co">#&gt; object: FAM64A, BUB1, HJURP, CDCA3, TTK, CDC25C, DLGAP5,</span></span>
-<span><span class="co">#&gt; CDCA2, ANLN, GAS2L3, not searching for symbol synonyms</span></span></code></pre></div>
+<span><span class="co">#&gt; object: CDK1, NUSAP1, UBE2C, BIRC5, TPX2, TOP2A, NDC80,</span></span>
+<span><span class="co">#&gt; NUF2, MKI67, FAM64A, CCNB2, CKAP2L, AURKB, BUB1, KIF11,</span></span>
+<span><span class="co">#&gt; GTSE1, HJURP, CDCA3, CDC20, TTK, CDC25C, KIF2C, NCAPD2,</span></span>
+<span><span class="co">#&gt; DLGAP5, CDCA2, CDCA8, ECT2, KIF23, HMMR, AURKA, PSRC1,</span></span>
+<span><span class="co">#&gt; ANLN, CENPE, NEK2, GAS2L3, CENPA, not searching for symbol</span></span>
+<span><span class="co">#&gt; synonyms</span></span></code></pre></div>
 <p>Which adds S.Score, G2M.Score and Phase calls to the metadata.</p>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">@</span><span class="va">meta.data</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                  orig.ident nCount_RNA nFeature_RNA</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1     pbmc3k       2419          779</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1     pbmc3k       4903         1352</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1     pbmc3k       3147         1129</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1     pbmc3k       2639          960</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1     pbmc3k        980          521</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1     pbmc3k       2163          781</span></span>
-<span><span class="co">#&gt;                  percent.mt RNA_snn_res.0.5 seurat_clusters</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1  3.0177759               2               6</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1  3.7935958               3               1</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1  0.8897363               2               0</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1  1.7430845               1               5</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1  1.2244898               6               8</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1  1.6643551               2               0</span></span>
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">@</span><span class="va">meta.data</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                     orig.ident nCount_RNA nFeature_RNA  ind</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1 SeuratProject       2053          532 1256</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1 SeuratProject        881          392 1256</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1 SeuratProject       3130         1005 1016</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1 SeuratProject       1042          549 1488</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1 SeuratProject       2425          777 1244</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1 SeuratProject       3951         1064 1256</span></span>
+<span><span class="co">#&gt;                  stim              cell multiplets</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1 stim   CD14+ Monocytes    singlet</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1 stim       CD4 T cells    singlet</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1 ctrl FCGR3A+ Monocytes    singlet</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1 stim           B cells    singlet</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1 stim       CD4 T cells    singlet</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1 ctrl FCGR3A+ Monocytes    singlet</span></span>
+<span><span class="co">#&gt;                  percent.mt RNA_snn_res.0.25</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1  1.6336634                1</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1  4.8809524                0</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1  1.0655473                4</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1  3.0662710                3</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1  1.0837849                0</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1  0.7137395                4</span></span>
+<span><span class="co">#&gt;                  seurat_clusters pca_clusters</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               1            3</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1              14            0</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1              15            7</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               7            5</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               6            0</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1              15            7</span></span>
+<span><span class="co">#&gt;                  harmony_clusters RNA_snn_res.0.5</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1                1               3</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1                0               0</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1                4               9</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1                3               6</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1                0               0</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1                4               9</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.0.1 RNA_snn_res.0.2</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1               0               0</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1               3               3</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1               0               0</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1               1               1</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1               2               2</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1               0               0</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               3               3</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1               1               0</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1               2               7</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               4               5</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               1               0</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1               2               7</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.0.3 RNA_snn_res.0.4</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1               0               2</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1               3               3</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1               0               2</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1               1               1</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1               2               6</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1               0               2</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               2               3</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1               0               0</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1               9               9</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               6               6</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               0               0</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1               9               9</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.0.6 RNA_snn_res.0.7</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1               1               1</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1               3               3</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1               1               1</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1               2               2</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1               6               6</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1               1               1</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               3               3</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1               0               0</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1               9               9</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               6               6</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               0               0</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1               9               9</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.0.8 RNA_snn_res.0.9</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1               6               1</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1               2               2</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1               1               1</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1               4               4</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1               8               7</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1               1               1</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               3               3</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1               0               0</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1               9               9</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               6               6</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               0               0</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1               9               9</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.1 RNA_snn_res.1.1</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1             6               6</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1             2               2</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1             1               1</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1             4               4</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1             8               8</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1             1               1</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1             3               3</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1            10              10</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1            11              11</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1             6               6</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1             0               0</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1            11              11</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.1.2 RNA_snn_res.1.3</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1               6               8</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1               2               2</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1               1               0</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1               4               5</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1               8               9</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1               1               0</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               3               2</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1              10              12</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1              11              13</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               6               7</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               0               0</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1              11              13</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.1.4 RNA_snn_res.1.5</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1               8               9</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1               2               2</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1               0               1</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1               5               4</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1               9               8</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1               0               1</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               2               2</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1              12              13</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1              13              14</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               7               8</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               0               0</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1              13              14</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.1.6 RNA_snn_res.1.7</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1               8               8</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1               1               1</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1               0               0</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1               3               3</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1               7               7</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1               0               0</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               2               2</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1              13              13</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1              14              14</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               7               8</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               0               0</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1              14              14</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.1.8 RNA_snn_res.1.9</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1               7               6</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1               1               1</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1               0               0</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1               3               3</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1               8               8</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1               0               0</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               1               2</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1              14              14</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1              15              15</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               9              10</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               7               7</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1              15              15</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.2 Naive_CD4_T1  cell_label</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1             6   1.22824523 Naive_CD4_T</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1             1  -0.08111043        &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1             0  -0.37682601        &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1             5  -0.72739714        &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1             8  -1.17396454        &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1             0  -0.63807586        &lt;NA&gt;</span></span>
-<span><span class="co">#&gt;                  SingleR.labels     S.Score    G2M.Score</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1        T_cells  0.09853841 -0.044716507</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1         B_cell -0.02364305 -0.046889929</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1        T_cells -0.02177266  0.074841537</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1       Monocyte  0.03794398  0.006575446</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1        NK_cell -0.03309970  0.027910063</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1        T_cells -0.04814181 -0.078164839</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1             1   -0.3540023        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1            14    2.1376158 Naive_CD4_T</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1            15   -1.1487836        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1             7    0.5557941        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1             6    1.4250065 Naive_CD4_T</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1            15   -0.2082793        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt;                  SingleR.labels     S.Score   G2M.Score</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1       Monocyte -0.06808986 -0.08878508</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1        T_cells  0.09975063 -0.06812238</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1       Monocyte -0.12770457  0.16052598</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1    Neutrophils  0.08685571 -0.08316351</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1        T_cells -0.02572695  0.02074759</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1       Monocyte -0.07294007 -0.01517046</span></span>
 <span><span class="co">#&gt;                  Phase</span></span>
-<span><span class="co">#&gt; AAACATACAACCAC-1     S</span></span>
-<span><span class="co">#&gt; AAACATTGAGCTAC-1    G1</span></span>
-<span><span class="co">#&gt; AAACATTGATCAGC-1   G2M</span></span>
-<span><span class="co">#&gt; AAACCGTGCTTCCG-1     S</span></span>
-<span><span class="co">#&gt; AAACCGTGTATGCG-1   G2M</span></span>
-<span><span class="co">#&gt; AAACGCACTGGTAC-1    G1</span></span></code></pre></div>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1    G1</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1     S</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1   G2M</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1     S</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1   G2M</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1    G1</span></span></code></pre></div>
 <p>We can then check the cell phase on the UMAP. In this dataset, phase isn’t driving the clustering, and would not require any further handling.</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">pbmc</span>, reduction <span class="op">=</span> <span class="st">'umap'</span>, group.by <span class="op">=</span> <span class="st">"Phase"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_Doco_files/figure-html/unnamed-chunk-64-1.png" width="672"></div>
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, reduction <span class="op">=</span> <span class="st">'umap_harmony'</span>, group.by <span class="op">=</span> <span class="st">"Phase"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/unnamed-chunk-61-1.png" width="672"></div>
 <p>Where a bias <em>is</em> present, your course of action depends on the task at hand. It might involve ‘regressing out’ the cell cycle variation when scaling data <code>ScaleData(kang, vars.to.regress="Phase")</code>, omitting cell-cycle dominated clusters, or just accounting for it in your differential expression calculations.</p>
 <p>If you are working with non-human data, you will need to convert these gene lists, or find new cell cycle associated genes in your species.</p>
 
 </div>
+
+
+
   <div class="chapter-nav">
 <div class="prev"><a href="de2.html"><span class="header-section-number">13</span> Differential Expression</a></div>
-<div class="next"><a href="Harmony.html"><span class="header-section-number">15</span> Data set integration with Harmony</a></div>
+<div class="next"><a href="resources.html"><span class="header-section-number">15</span> Resources</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav"><li><a class="nav-link" href="#CellCycle"><span class="header-section-number">14</span> Cell cycle Assignment</a></li></ul>
@@ -227,7 +257,7 @@ separation in the UMAP by phase.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: October 27, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 02, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
