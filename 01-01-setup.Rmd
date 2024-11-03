@@ -19,8 +19,9 @@ BiocManager likes to update installed packages, but we have disabled this in the
 These instructions have been tested with R version 4.4.1 and Bioconductor version 3.16.
 
 ```{r eval=FALSE}
-## Install required packages for Seurat:
-install.packages(c("Seurat", "dplyr", "remotes", "R.utils","harmony"))
+## Install required packages for Seurat and clustree:
+install.packages(c("Seurat", "dplyr", "remotes", "R.utils", "harmony", 
+                   "hdf5r", "clustree", "RColorBrewer"))
 
 ## Install required Bioconductor packages
 install.packages("BiocManager")
@@ -29,11 +30,6 @@ BiocManager::install(c('SingleR', 'celldex',
                        'limma', 'S4Vectors', 'SingleCellExperiment',
                        'SummarizedExperiment','edgeR' ),
                      update=FALSE)
-
-
-## install clustree
-install.packages("clustree")
-install.packages("RColorBrewer")
 ```
 
 ## Raw Data
@@ -50,6 +46,8 @@ download.file(
 
 untar("data.tar")
 
-
+## Download workshop.R script. This file contains all the example code for this workshop.
+download.file(
+    "https://monashbioinformaticsplatform.github.io/scRNAseq_Workshop_ABACBS_2024/workshop.R","workshop.R")
 ```
 
