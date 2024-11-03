@@ -104,20 +104,20 @@
 <span><span class="co">#&gt; This message will be shown once per session</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">cluster2.markers</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          p_val avg_log2FC pct.1 pct.2 p_val_adj</span></span>
-<span><span class="co">#&gt; IL8          0   4.906707 0.866 0.080         0</span></span>
-<span><span class="co">#&gt; S100A8       0   4.888621 0.840 0.079         0</span></span>
-<span><span class="co">#&gt; C15orf48     0   2.264979 0.971 0.221         0</span></span>
-<span><span class="co">#&gt; S100A4       0   2.984441 0.927 0.243         0</span></span>
-<span><span class="co">#&gt; CD14         0   4.446820 0.743 0.060         0</span></span>
+<span><span class="co">#&gt; IL8          0   4.906436 0.866 0.080         0</span></span>
+<span><span class="co">#&gt; S100A8       0   4.872239 0.840 0.079         0</span></span>
+<span><span class="co">#&gt; C15orf48     0   2.261521 0.971 0.221         0</span></span>
+<span><span class="co">#&gt; S100A4       0   2.983846 0.926 0.243         0</span></span>
+<span><span class="co">#&gt; CD14         0   4.442936 0.742 0.060         0</span></span>
 <span><span class="co"># find all markers distinguishing cluster 5 from clusters 0 and 3</span></span>
 <span><span class="va">cluster5.markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindMarkers.html">FindMarkers</a></span><span class="op">(</span><span class="va">seurat_object</span>, ident.1 <span class="op">=</span> <span class="fl">5</span>, ident.2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>, min.pct <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">cluster5.markers</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt;              p_val avg_log2FC pct.1 pct.2     p_val_adj</span></span>
-<span><span class="co">#&gt; NKG7 4.579017e-283   6.232442 0.845 0.042 1.631733e-278</span></span>
-<span><span class="co">#&gt; GZMB 2.084977e-248   6.690074 0.738 0.027 7.429816e-244</span></span>
-<span><span class="co">#&gt; GNLY 2.943011e-231   6.321798 0.753 0.050 1.048742e-226</span></span>
-<span><span class="co">#&gt; PRF1 2.376253e-223   6.073309 0.703 0.036 8.467777e-219</span></span>
-<span><span class="co">#&gt; CCL5 2.223689e-204   4.779416 0.806 0.106 7.924115e-200</span></span>
+<span><span class="co">#&gt; NKG7 1.879762e-282   6.238335 0.843 0.043 6.698531e-278</span></span>
+<span><span class="co">#&gt; GZMB 6.686736e-249   6.681676 0.736 0.027 2.382818e-244</span></span>
+<span><span class="co">#&gt; GNLY 1.517538e-232   6.405572 0.751 0.049 5.407747e-228</span></span>
+<span><span class="co">#&gt; PRF1 1.506816e-222   6.054882 0.699 0.036 5.369539e-218</span></span>
+<span><span class="co">#&gt; CCL5 2.473417e-203   4.789833 0.801 0.106 8.814022e-199</span></span>
 <span><span class="co"># find markers for every cluster compared to all remaining cells, report only the positive ones</span></span>
 <span><span class="va">seurat_object.markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindAllMarkers.html">FindAllMarkers</a></span><span class="op">(</span><span class="va">seurat_object</span>, only.pos <span class="op">=</span> <span class="cn">TRUE</span>, min.pct <span class="op">=</span> <span class="fl">0.25</span>, logfc.threshold <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Calculating cluster 0</span></span>
@@ -138,16 +138,16 @@
 <span><span class="co">#&gt; # Groups:   cluster [13]</span></span>
 <span><span class="co">#&gt;        p_val avg_log2FC pct.1 pct.2 p_val_adj cluster gene  </span></span>
 <span><span class="co">#&gt;        &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt; </span></span>
-<span><span class="co">#&gt;  1 2.02e-174       1.92 0.706 0.276 7.19e-170 0       SELL  </span></span>
-<span><span class="co">#&gt;  2 4.80e-218       1.77 0.873 0.419 1.71e-213 0       GIMAP7</span></span>
-<span><span class="co">#&gt;  3 2.26e- 54       1.98 0.258 0.081 8.06e- 50 1       LEF1  </span></span>
-<span><span class="co">#&gt;  4 1.39e- 79       1.78 0.41  0.143 4.96e- 75 1       LCK   </span></span>
-<span><span class="co">#&gt;  5 0               6.24 0.484 0.01  0         2       CLEC5A</span></span>
+<span><span class="co">#&gt;  1 2.80e-177       1.93 0.71  0.276 9.99e-173 0       SELL  </span></span>
+<span><span class="co">#&gt;  2 1.26e-216       1.77 0.872 0.42  4.48e-212 0       GIMAP7</span></span>
+<span><span class="co">#&gt;  3 1.35e- 55       1.99 0.26  0.081 4.80e- 51 1       LEF1  </span></span>
+<span><span class="co">#&gt;  4 5.70e- 45       1.97 0.25  0.089 2.03e- 40 1       NSMCE1</span></span>
+<span><span class="co">#&gt;  5 0               6.25 0.485 0.01  0         2       CLEC5A</span></span>
 <span><span class="co">#&gt;  6 0               5.76 0.454 0.014 0         2       VCAN  </span></span>
-<span><span class="co">#&gt;  7 0               7.25 0.899 0.068 0         3       CCL8  </span></span>
-<span><span class="co">#&gt;  8 7.57e-136       6.18 0.268 0.024 2.70e-131 3       APOBE…</span></span>
-<span><span class="co">#&gt;  9 4.38e-177       4.29 0.407 0.039 1.56e-172 4       FGFBP2</span></span>
-<span><span class="co">#&gt; 10 0               3.60 0.859 0.118 0         4       NKG7  </span></span>
+<span><span class="co">#&gt;  7 0               7.46 0.894 0.067 0         3       CCL8  </span></span>
+<span><span class="co">#&gt;  8 1.93e-136       6.33 0.265 0.024 6.88e-132 3       APOBE…</span></span>
+<span><span class="co">#&gt;  9 5.97e-176       4.28 0.405 0.039 2.13e-171 4       FGFBP2</span></span>
+<span><span class="co">#&gt; 10 0               3.59 0.859 0.118 0         4       NKG7  </span></span>
 <span><span class="co">#&gt; # ℹ 16 more rows</span></span></code></pre></div>
 <p>Seurat has several tests for differential expression which can be set with the test.use parameter (see our <a href="de_vignette.html">DE vignette</a> for details). For example, the ROC test returns the ‘classification power’ <code>abs(AUC-0.5)*2</code> for any individual marker, ranging from 0 = random to 1 = perfect.</p>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
@@ -159,12 +159,10 @@
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># you can plot raw counts as well</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"NKG7"</span>, <span class="st">"PF4"</span><span class="op">)</span>, slot <span class="op">=</span> <span class="st">'counts'</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The `slot` argument of `VlnPlot()` is deprecated as of</span></span>
-<span><span class="co">#&gt; Seurat 5.0.0.</span></span>
+<span><span class="co">#&gt; Warning: The `slot` argument of `VlnPlot()` is deprecated as of Seurat 5.0.0.</span></span>
 <span><span class="co">#&gt; ℹ Please use the `layer` argument instead.</span></span>
 <span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
-<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where</span></span>
-<span><span class="co">#&gt; this warning was generated.</span></span></code></pre></div>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/unnamed-chunk-25-2.png" width="672"></div>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html">FeaturePlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"MS4A1"</span>, <span class="st">"GNLY"</span>, <span class="st">"CD3E"</span>, <span class="st">"CD14"</span>, <span class="st">"FCER1A"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -177,17 +175,17 @@
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/RidgePlot.html">RidgePlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"MS4A1"</span>, <span class="st">"GNLY"</span>, <span class="st">"CD3E"</span>, <span class="st">"CD14"</span>, <span class="st">"FCER1A"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Picking joint bandwidth of 0.0599</span></span>
-<span><span class="co">#&gt; Picking joint bandwidth of 0.0898</span></span>
-<span><span class="co">#&gt; Picking joint bandwidth of 0.0709</span></span>
+<span><span class="co">#&gt; Picking joint bandwidth of 0.0897</span></span>
+<span><span class="co">#&gt; Picking joint bandwidth of 0.0721</span></span>
 <span><span class="co">#&gt; Picking joint bandwidth of 0.0628</span></span>
 <span><span class="co">#&gt; Picking joint bandwidth of 3.07e-06</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/ridgeplots-1.png" width="672"></div>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/RidgePlot.html">RidgePlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"FCGR3A"</span>, <span class="st">"LYZ"</span>, <span class="st">"PPBP"</span>, <span class="st">"CD8A"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Picking joint bandwidth of 0.0788</span></span>
-<span><span class="co">#&gt; Picking joint bandwidth of 0.152</span></span>
-<span><span class="co">#&gt; Picking joint bandwidth of 0.0607</span></span>
-<span><span class="co">#&gt; Picking joint bandwidth of 0.0492</span></span></code></pre></div>
+<span><span class="co">#&gt; Picking joint bandwidth of 0.0753</span></span>
+<span><span class="co">#&gt; Picking joint bandwidth of 0.15</span></span>
+<span><span class="co">#&gt; Picking joint bandwidth of 0.0606</span></span>
+<span><span class="co">#&gt; Picking joint bandwidth of 0.0491</span></span></code></pre></div>
 <p><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/ridgeplots-2.png" width="672">
 For CellScatter plots, will need the cell id of the cells you want to look at. You can get this from the cell metadata (<code>seurat_object@meta.data</code>).</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
@@ -215,10 +213,10 @@ For CellScatter plots, will need the cell id of the cells you want to look at. Y
 <span><span class="co">#&gt; GTACTACTCATACG-1  0.7137395                4</span></span>
 <span><span class="co">#&gt;                  seurat_clusters pca_clusters</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1               1            3</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1              14            0</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1              12            0</span></span>
 <span><span class="co">#&gt; CACCGTTGTCGTAG-1              15            7</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1               7            5</span></span>
-<span><span class="co">#&gt; TACGAGACCTATTC-1               6            0</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               8            5</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               7            0</span></span>
 <span><span class="co">#&gt; GTACTACTCATACG-1              15            7</span></span>
 <span><span class="co">#&gt;                  harmony_clusters RNA_snn_res.0.5</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1                1               3</span></span>
@@ -250,11 +248,11 @@ For CellScatter plots, will need the cell id of the cells you want to look at. Y
 <span><span class="co">#&gt; GTACTACTCATACG-1               9               9</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.0.8 RNA_snn_res.0.9</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1               3               3</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1               0               0</span></span>
-<span><span class="co">#&gt; CACCGTTGTCGTAG-1               9               9</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1               0               9</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1               9              10</span></span>
 <span><span class="co">#&gt; TATCGTACACGCAT-1               6               6</span></span>
 <span><span class="co">#&gt; TACGAGACCTATTC-1               0               0</span></span>
-<span><span class="co">#&gt; GTACTACTCATACG-1               9               9</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1               9              10</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.1 RNA_snn_res.1.1</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1             3               3</span></span>
 <span><span class="co">#&gt; GGAGACGATTCGTT-1            10              10</span></span>
@@ -263,39 +261,39 @@ For CellScatter plots, will need the cell id of the cells you want to look at. Y
 <span><span class="co">#&gt; TACGAGACCTATTC-1             0               0</span></span>
 <span><span class="co">#&gt; GTACTACTCATACG-1            11              11</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.1.2 RNA_snn_res.1.3</span></span>
-<span><span class="co">#&gt; AGGGCGCTATTTCC-1               3               2</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1              10              12</span></span>
-<span><span class="co">#&gt; CACCGTTGTCGTAG-1              11              13</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               2               2</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1              11              12</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1              12              13</span></span>
 <span><span class="co">#&gt; TATCGTACACGCAT-1               6               7</span></span>
 <span><span class="co">#&gt; TACGAGACCTATTC-1               0               0</span></span>
-<span><span class="co">#&gt; GTACTACTCATACG-1              11              13</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1              12              13</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.1.4 RNA_snn_res.1.5</span></span>
-<span><span class="co">#&gt; AGGGCGCTATTTCC-1               2               2</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1              12              13</span></span>
-<span><span class="co">#&gt; CACCGTTGTCGTAG-1              13              14</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1               7               8</span></span>
-<span><span class="co">#&gt; TACGAGACCTATTC-1               0               0</span></span>
-<span><span class="co">#&gt; GTACTACTCATACG-1              13              14</span></span>
-<span><span class="co">#&gt;                  RNA_snn_res.1.6 RNA_snn_res.1.7</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1               2               2</span></span>
 <span><span class="co">#&gt; GGAGACGATTCGTT-1              13              13</span></span>
 <span><span class="co">#&gt; CACCGTTGTCGTAG-1              14              14</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1               7               8</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               8               8</span></span>
 <span><span class="co">#&gt; TACGAGACCTATTC-1               0               0</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1              14              14</span></span>
+<span><span class="co">#&gt;                  RNA_snn_res.1.6 RNA_snn_res.1.7</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               2               3</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1              13              13</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1              14              14</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               8               8</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               6               1</span></span>
 <span><span class="co">#&gt; GTACTACTCATACG-1              14              14</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.1.8 RNA_snn_res.1.9</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1               1               2</span></span>
 <span><span class="co">#&gt; GGAGACGATTCGTT-1              14              14</span></span>
 <span><span class="co">#&gt; CACCGTTGTCGTAG-1              15              15</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1               9              10</span></span>
-<span><span class="co">#&gt; TACGAGACCTATTC-1               7               7</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               8               8</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               3               1</span></span>
 <span><span class="co">#&gt; GTACTACTCATACG-1              15              15</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.2</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1             1</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1            14</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1            12</span></span>
 <span><span class="co">#&gt; CACCGTTGTCGTAG-1            15</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1             7</span></span>
-<span><span class="co">#&gt; TACGAGACCTATTC-1             6</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1             8</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1             7</span></span>
 <span><span class="co">#&gt; GTACTACTCATACG-1            15</span></span>
 <span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/CellScatter.html">CellScatter</a></span><span class="op">(</span><span class="va">seurat_object</span>, cell1 <span class="op">=</span> <span class="st">"AGGGCGCTATTTCC-1"</span>, cell2 <span class="op">=</span> <span class="st">"GGAGACGATTCGTT-1"</span><span class="op">)</span></span></code></pre></div>
@@ -355,8 +353,7 @@ For CellScatter plots, will need the cell id of the cells you want to look at. Y
 <span><span class="co"># Using a custom colour scale </span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html">FeaturePlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, features <span class="op">=</span> <span class="st">"Naive_CD4_T1"</span>, label <span class="op">=</span> <span class="cn">TRUE</span>, repel <span class="op">=</span> <span class="cn">TRUE</span>, reduction <span class="op">=</span> <span class="st">"umap_harmony"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_colour_gradientn</a></span><span class="op">(</span>colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lightblue"</span>,<span class="st">"beige"</span>,<span class="st">"red"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Scale for colour is already present.</span></span>
-<span><span class="co">#&gt; Adding another scale for colour, which will replace the</span></span>
-<span><span class="co">#&gt; existing scale.</span></span></code></pre></div>
+<span><span class="co">#&gt; Adding another scale for colour, which will replace the existing scale.</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/unnamed-chunk-28-1.png" width="672"></div>
 </div>
 <div id="assigning-cell-type-identity-to-clusters" class="section level2" number="11.3">
@@ -474,7 +471,7 @@ DimPlot(seurat_object, reduction = 'umap_harmony', label = TRUE, pt.size = 0.5) 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 02, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 03, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
