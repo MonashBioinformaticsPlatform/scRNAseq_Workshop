@@ -7,6 +7,7 @@ get_script <- function(filename) {
     lines <- str_trim(lines, "right")
 
     state <- "main"
+    blank <- ""
     need_blank <- FALSE
     output <- c()
     show <- function(...) output[length(output)+1] <<- paste0(...)
@@ -24,6 +25,7 @@ get_script <- function(filename) {
         } else if (state %in% c("code","hidden_code") && str_detect(line,"^```")) {
             state <- "main"
             need_blank <- TRUE
+            blank <- ""
         } else if (state == "main") {
             clean_line <- str_replace_all(line,"`|<details>|</details>|<summary>|</summary>|\\{\\..*\\}","")
             clean_line <- str_trim(clean_line, "right")
@@ -31,24 +33,28 @@ get_script <- function(filename) {
                 need_blank <- TRUE
             } else if (str_detect(clean_line,"^<!--.*-->$")) {
                 # Comment.
-            } else if (str_detect(clean_line,"^#+\\s+(\\w|\\()+")) { # Heading starts with a letter or round bracket
+            } else if (str_detect(clean_line,"^#+")) {
                 # Heading
                 clean_line <- str_replace_all(clean_line,"\\{.*\\}", "")
                 clean_line <- str_trim(clean_line, "right")
                 depth <- nchar(str_match(clean_line, "^#*")[1,1])
                 if (depth == 1) clean_line <- paste0(clean_line, " ================")
                 if (depth == 2) clean_line <- paste0(clean_line, " --------")
-                show("")
-                show("")
+                if (depth <= 2) {
+                    show("")
+                    show("")
+                } else {
+                    show(blank)
+                }
                 show(clean_line)
                 need_blank <- TRUE
-            } else if (str_detect(clean_line,"^#+")) {
-                # Blank heading
+                blank <- "#"
             } else {
                 if (need_blank)
-                    show("")
+                    show(blank)
                 show("# ", clean_line)
                 need_blank <- FALSE
+                blank <- "#"
             }
         } else if (state == "code") {
             show(line)

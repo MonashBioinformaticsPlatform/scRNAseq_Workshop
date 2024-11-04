@@ -50,47 +50,47 @@ Where are QC metrics stored in Seurat?
 * The number of unique genes and total molecules are automatically calculated during `CreateSeuratObject()`
     + You can find them stored in the object meta data
 
-1. What do you notice has changed within the `meta.data` table now that we have calculated mitochondrial gene proportion?
+What do you notice has changed within the `meta.data` table now that we have calculated mitochondrial gene proportion?
 
-2. Imagine that this is the first of 
-several samples in our experiment. Add a `samplename` column to to the `meta.data` table.
+<!-- Imagine that this is the first of several samples in our experiment. Add a `samplename` column to to the `meta.data` table. -->
 
 ####  {-}
 
 
 
 
-In the example below, we visualize QC metrics, and use these to filter cells.
+In the example below, we visualize QC metrics. We will use these to filter cells.
 
-* We filter cells that have unique feature counts over 2,500 or less than 200
-* We filter cells that have >5% mitochondrial counts
     
 ```{r qc2}
-#Visualize QC metrics as a violin plot
+# Visualize QC metrics as a violin plot
 VlnPlot(seurat_object, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+```
 
-
-# visualize the max and min 
-VlnPlot(seurat_object, features = "nFeature_RNA")+ scale_y_continuous(limits = c(1000,3000))
-VlnPlot(seurat_object, features = "nFeature_RNA",y.max =1000)
-
-
+```{r  results="hold"}
 # FeatureScatter is typically used to visualize feature-feature relationships, 
 # but can be used for anything calculated by the object, 
 # i.e. columns in object metadata, PC scores etc.
-plot1 <- FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "percent.mt") 
-plot2 <- FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") 
-plot1 + plot2
-```
-
-Lets look at the number of features (genes) to the percent mitochondrial genes plot.
-
-```{r}
-plot3 <- FeatureScatter(seurat_object, feature1 = "nFeature_RNA", feature2 = "percent.mt") 
-plot3
+FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "percent.mt") 
+FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") 
 ```
 
 
+#### Challenge: Red Blood Cells {- .challenge}
+
+Genes "HBA1", "HBA2", and "HBB" are components of hemoglobin in red blood cells. 
+
+* Use PercentageFeatureSet, passing these genes to the "features" argument, to find cells that might be red blood cells.
+
+* How do cells high in these genes differ from other cells, in terms of number of features or total count?
+
+* How could we filter out these cells? 
+
+* Should we?
+
+You could also look for the gene "PPBP", which is a platelet marker.
+
+####  {-}
 
 
 
@@ -117,39 +117,46 @@ plot3
 <!-- Highlight cells with very low percentage of ribosomal genes, create a new column in the meta.data table and with `FeatureScatter` make a plot of the RNA count and mitochondrial percentage with the cells with very low ribosomal gene perentage. -->
 <!-- </details> -->
 <!-- ### { - } --> 
-you can check different thresholds of mito percentage
+
+Let's look again at the number of features (genes) to the percent mitochondrial genes plot.
 
 ```{r}
-#Number of cells left after filters
-# percentage of cell with less than 5% mito
-round(sum(seurat_object$percent.mt < 5)/dim(seurat_object)[2]*100,2) 
+VlnPlot(seurat_object, features = "nFeature_RNA")
 
-# percentage of cell with less than 2% mito
-round((sum(seurat_object$percent.mt < 2)/dim(seurat_object)[2])*100,2)
+# Zoom in to the max and min 
+VlnPlot(seurat_object, features = "nFeature_RNA") + scale_y_continuous(limits = c(1000,3000))
+VlnPlot(seurat_object, features = "nFeature_RNA", y.max =1000)
 
-
-
-
+FeatureScatter(seurat_object, feature1 = "nFeature_RNA", feature2 = "percent.mt") 
 ```
 
-Okay we are happy with our thresholds for mitochondrial percentage in cells, lets apply them and subset our data. This will remove the cells we think are of poor quality. 
+You can check different thresholds of mito percentage.
+
+```{r}
+#Number of cells that would be left after filters
+# Proportion of cells with less than 5% mito
+mean(seurat_object$percent.mt < 5) 
+
+# Proportion of cells with less than 2% mito
+mean(seurat_object$percent.mt < 2)
+```
+
+Ok, let's go with these filters:
+
+* We filter cells that have unique feature counts over 2,500 or less than 200
+* We filter cells that have >5% mitochondrial counts
+
+Let's apply this and subset our data. This will remove the cells we think are of poor quality. 
 
 ```{r}
 seurat_object <- subset(seurat_object, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
 ```
 
+Let's replot the feature scatters and see what they look like. 
 
-
-Lets replot the feature scatters and see what they look like. 
-
-```{r qc2_sidebar, fig.height=7, fig.width=13}
-plot5 <- FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "percent.mt") 
-plot6 <- FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") 
-plot5 + plot6
+```{r results="hold"}
+FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "percent.mt") 
+FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") 
 ```
-
-#### Challenge: Filter the cells {- .challenge}
-
-WE COULD PUT THE BLOOD GENES  AS A CHALLENGE HERE
 
 

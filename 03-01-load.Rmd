@@ -63,28 +63,28 @@ library(patchwork)
 Example 1. Load your data using the path to the folder: ```filtered_feature_bc_matrix``` that is in the output folder of your cellranger run using the ```Read10X``` function.
 
 ```{}
-# Load the PBMC dataset
-pbmc.data <- Read10X(data.dir = "outs/filtered_feature_bc_matrix")
-# Initialize the Seurat object with the raw (non-normalized data).
-seurat_object <- CreateSeuratObject(counts = pbmc.data, min.cells = 3, min.features = 200)
+## Load the PBMC dataset
+# pbmc.data <- Read10X(data.dir = "outs/filtered_feature_bc_matrix")
+## Initialize the Seurat object with the raw (non-normalized data).
+# seurat_object <- CreateSeuratObject(counts = pbmc.data, min.cells = 3, min.features = 200)
 
 ```
 
-Example 2. Load your data directing the ```ReadMtx``` function to each of the relevant files in the ```filtered_feature_bc_matrix``` folder in the outputs from your cellranger run.
+Example 2. Load your data directing the ```ReadMtx``` function to each of the relevant files in the ```filtered_feature_bc_matrix``` folder in the outputs from your cellranger run. MTX is a simple text format for sparse matrices.
 
 ```{}
 
-expression_matrix <- ReadMtx(
-  mtx = "outs/filtered_feature_bc_matrix/count_matrix.mtx.gz", features = "outs/filtered_feature_bc_matrix/features.tsv.gz",
-  cells = "outs/filtered_feature_bc_matrix/barcodes.tsv.gz"
-)
-
-seurat_object <- CreateSeuratObject(counts = expression_matrix)
+# expression_matrix <- ReadMtx(
+#   mtx = "outs/filtered_feature_bc_matrix/count_matrix.mtx.gz", features = "outs/filtered_feature_bc_matrix/features.tsv.gz",
+#   cells = "outs/filtered_feature_bc_matrix/barcodes.tsv.gz"
+# )
+#
+# seurat_object <- CreateSeuratObject(counts = expression_matrix)
 
 ```
 
 
-Example 3. Load your data from the directing the ```ReadMtx``` function to each of the relevant files in the ```filtered_feature_bc_matrix``` folder in the outputs from your cellranger run.
+Example 3. Load your data using the ```Read10X_h5``` function to each of the relevant HDF5 files. HDF5 is an efficient binary format.
 
 
 ```{r}

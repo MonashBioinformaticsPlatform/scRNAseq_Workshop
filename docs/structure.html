@@ -82,10 +82,10 @@
 </h2>
 <p>The data we’re working with today is a small dataset of about 5000 PBMCs (peripheral blood mononuclear cells) from a healthy donor.</p>
 <p>First, load Seurat package.</p>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat">Seurat</a></span><span class="op">)</span></span></code></pre></div>
 <p>And here’s the one we prepared earlier. Seurat objects are usually saved as ‘.rds’ files, which is an R format for storing binary data (not-text or human-readable). The functions <code><a href="https://rdrr.io/r/base/readRDS.html">readRDS()</a></code> can load it.</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"data/kang2018.rds"</span><span class="op">)</span></span></code></pre></div>
 <div id="discussion-the-seurat-object-in-r" class="section level4 unnumbered rational">
 <h4>Discussion: The Seurat Object in R<a class="anchor" aria-label="anchor" href="#discussion-the-seurat-object-in-r"><i class="fas fa-link"></i></a>
@@ -125,7 +125,7 @@ The ways to access the slots can be through methods for the class (functions) or
 <p>Some of the most important information for working with Seurat objects is in the metadata.
 This is cell level information - each row is one cell, identified by its barcode.
 Extra information gets added to this table as analysis progresses.</p>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">@</span><span class="va">meta.data</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                     orig.ident nCount_RNA nFeature_RNA  ind</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1 SeuratProject       2020          523 1256</span></span>
@@ -144,7 +144,7 @@ Extra information gets added to this table as analysis progresses.</p>
 <p>That doesn’t have any gene expression though, that’s stored in an ‘Assay’.
 The Assay structure has some nuances (see discussion below), but there are functions that get the assay data out for you.</p>
 <p>By default this object will return the normalised data (from the only assay in this object, called RNA). Every ‘.’ is a zero.</p>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">15</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="co">#&gt; 15 x 2 sparse Matrix of class "dgCMatrix"</span></span>
 <span><span class="co">#&gt;               AGGGCGCTATTTCC-1 GGAGACGATTCGTT-1</span></span>
@@ -164,7 +164,7 @@ The Assay structure has some nuances (see discussion below), but there are funct
 <span><span class="co">#&gt; RP5-857K21.1                 .                .</span></span>
 <span><span class="co">#&gt; RP5-857K21.2                 .                .</span></span></code></pre></div>
 <p>But the raw counts data is accessible too.</p>
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">seurat_object</span>, slot<span class="op">=</span><span class="st">'counts'</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">15</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="co">#&gt; 15 x 2 sparse Matrix of class "dgCMatrix"</span></span>
 <span><span class="co">#&gt;               AGGGCGCTATTTCC-1 GGAGACGATTCGTT-1</span></span>
@@ -212,7 +212,7 @@ The Assay structure has some nuances (see discussion below), but there are funct
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 03, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 04, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
