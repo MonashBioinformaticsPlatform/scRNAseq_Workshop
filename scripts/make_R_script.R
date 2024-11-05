@@ -12,11 +12,15 @@ get_script <- function(filename) {
     output <- c()
     show <- function(...) output[length(output)+1] <<- paste0(...)
     for(line in lines) {
-        if (state == "main" && str_detect(line,"^---")) {
+        if (state == "main" && line == "---") {
             state <- "start"
         } else if (state == "start" && str_detect(line,"^---")) {
             state <- "main"
             need_blank <- FALSE
+        } else if (state == "main" && str_detect(line,"<!--omit-begin-->")) {
+            state <- "omit"
+        } else if (state == "omit" && str_detect(line,"<!--omit-end-->")) {
+            state <- "main"
         } else if (state == "main" && str_detect(line,"^```.*include=FALSE")) {
             state <- "hidden_code"
         } else if (state == "main" && str_detect(line,"^```")) {
@@ -52,7 +56,11 @@ get_script <- function(filename) {
             } else {
                 if (need_blank)
                     show(blank)
-                show("# ", clean_line)
+                
+                indent <- nchar(str_match(clean_line, "^ *")[1,1])
+                exdent <- nchar(str_match(clean_line, "^[^A-Za-z0-9]*")[1,1])
+                wrap <- str_wrap(clean_line, indent=indent, exdent=exdent, width=80) |> str_split_1("\n")
+                for(item in wrap) show("# ", item)
                 need_blank <- FALSE
                 blank <- "#"
             }

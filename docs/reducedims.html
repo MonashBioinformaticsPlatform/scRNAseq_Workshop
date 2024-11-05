@@ -94,7 +94,7 @@
 <h4 class="unnumbered"><a class="anchor" aria-label="anchor" href="#section-5"><i class="fas fa-link"></i></a></h4>
 <p>We next calculate a subset of features that exhibit high cell-to-cell variation in the dataset (i.e, they are highly expressed in some cells, and lowly expressed in others). The Seurat authors and <a href="https://www.nature.com/articles/nmeth.2645">others</a> have found that focusing on these genes in downstream analysis helps to highlight biological signal in single-cell datasets.</p>
 <p>The procedure in Seurat is described in detail <a href="https://doi.org/10.1016/j.cell.2019.05.031">here</a>, and improves on previous versions by directly modeling the mean-variance relationship inherent in single-cell data, and is implemented in the <code><a href="https://satijalab.org/seurat/reference/FindVariableFeatures.html">FindVariableFeatures()</a></code> function. By default, Seurat returns 2,000 features per dataset. These will be used in downstream analysis, like PCA.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindVariableFeatures.html">FindVariableFeatures</a></span><span class="op">(</span><span class="va">seurat_object</span>, selection.method <span class="op">=</span> <span class="st">'vst'</span>, nfeatures <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Finding variable features for layer counts</span></span>
 <span><span class="co"># Identify the 10 most highly variable genes</span></span>
@@ -103,10 +103,10 @@
 <span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/VariableFeaturePlot.html">VariableFeaturePlot</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">)</span></span>
 <span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/LabelPoints.html">LabelPoints</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">plot1</span>, points <span class="op">=</span> <span class="va">top10</span>, repel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; When using repel, set xnudge and ynudge to 0 for optimal results</span></span>
-<span><span class="va">plot1</span> <span class="op">+</span> <span class="va">plot2</span></span>
-<span><span class="co">#&gt; Warning in scale_x_log10(): log-10 transformation introduced infinite values.</span></span>
-<span><span class="co">#&gt; log-10 transformation introduced infinite values.</span></span></code></pre></div>
-<div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/var_features-1.png" width="1056"></div>
+<span><span class="va">plot2</span></span>
+<span><span class="co">#&gt; Warning in scale_x_log10(): log-10 transformation</span></span>
+<span><span class="co">#&gt; introduced infinite values.</span></span></code></pre></div>
+<div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/var_features-1.png" width="672"></div>
 <!-- #### Challenge: Labelling Genes of Interest {- .challenge} -->
 <!-- What if we wanted to look at genes we are specifically interested in? We can create a character vector of gene names and apply that to this plot. -->
 <!-- Make a plot with labels for the genes IL8, IDH2 and CXCL3. -->
@@ -134,24 +134,26 @@
 <li>The results of this are stored in <code>seurat_object$RNA@scale.data</code>
 </li>
 </ul>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">)</span></span>
 <span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData</a></span><span class="op">(</span><span class="va">seurat_object</span>, features <span class="op">=</span> <span class="va">all.genes</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Centering and scaling data matrix</span></span></code></pre></div>
+<!--omit-begin-->
 <details><summary><strong>This step takes too long! Can I make it faster?</strong>
 </summary><p>Scaling is an essential step in the Seurat workflow, but only on genes that will be used as input to PCA. Therefore, the default in <code><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData()</a></code> is only to perform scaling on the previously identified variable features (2,000 by default). To do this, omit the <code>features</code> argument in the previous function call, i.e.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># seurat_object &lt;- ScaleData(seurat_object)</span></span></code></pre></div>
 Your PCA and clustering results will be unaffected. However, Seurat heatmaps (produced as shown below with <code><a href="https://satijalab.org/seurat/reference/DoHeatmap.html">DoHeatmap()</a></code>) require genes in the heatmap to be scaled, to make sure highly-expressed genes don’t dominate the heatmap. To make sure we don’t leave any genes out of the heatmap later, we are scaling all genes in this tutorial.
 </details>
  
 <details><summary><strong>How can I remove unwanted sources of variation, as in Seurat v2?</strong>
 </summary><p>In <code>Seurat v2</code> we also use the <code><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData()</a></code> function to remove unwanted sources of variation from a single-cell dataset. For example, we could ‘regress out’ heterogeneity associated with (for example) cell cycle stage, or mitochondrial contamination. These features are still supported in <code><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData()</a></code> in <code>Seurat v3</code>, i.e.:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># seurat_object &lt;- ScaleData(seurat_object, vars.to.regress = 'percent.mt')</span></span></code></pre></div>
-However, particularly for advanced users who would like to use this functionality, we strongly recommend the use of our new normalization workflow, <code><a href="https://satijalab.org/seurat/reference/SCTransform.html">SCTransform()</a></code>. The method is described in our <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1">paper</a>, with a separate vignette using Seurat v3 <a href="sctransform_vignette.html">here</a>. As with <code><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData()</a></code>, the function <code><a href="https://satijalab.org/seurat/reference/SCTransform.html">SCTransform()</a></code> also includes a <code>vars.to.regress</code> parameter.
+However, particularly for advanced users who would like to use this functionality, the Seurat authors strongly recommend the use of their new normalization workflow, <code><a href="https://satijalab.org/seurat/reference/SCTransform.html">SCTransform()</a></code>. The method is described in their <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1">paper</a>, with a separate vignette using Seurat v3 <a href="sctransform_vignette.html">here</a>. As with <code><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData()</a></code>, the function <code><a href="https://satijalab.org/seurat/reference/SCTransform.html">SCTransform()</a></code> also includes a <code>vars.to.regress</code> parameter.
 </details><p> </p>
 <hr>
+<!--omit-end-->
 </div>
 </div>
 </div>
@@ -181,7 +183,7 @@ However, particularly for advanced users who would like to use this functionalit
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 04, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 06, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

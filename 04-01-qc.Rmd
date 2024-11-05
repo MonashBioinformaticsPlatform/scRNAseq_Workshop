@@ -81,14 +81,8 @@ FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "nFeature_RNA"
 Genes "HBA1", "HBA2", and "HBB" are components of hemoglobin in red blood cells. 
 
 * Use PercentageFeatureSet, passing these genes to the "features" argument, to find cells that might be red blood cells.
-
 * How do cells high in these genes differ from other cells, in terms of number of features or total count?
-
-* How could we filter out these cells? 
-
-* Should we?
-
-You could also look for the gene "PPBP", which is a platelet marker.
+* Should we remove these cells?
 
 ####  {-}
 
@@ -135,21 +129,23 @@ You can check different thresholds of mito percentage.
 ```{r}
 #Number of cells that would be left after filters
 # Proportion of cells with less than 5% mito
+
 mean(seurat_object$percent.mt < 5) 
 
 # Proportion of cells with less than 2% mito
+
 mean(seurat_object$percent.mt < 2)
 ```
 
 Ok, let's go with these filters:
 
-* We filter cells that have unique feature counts over 2,500 or less than 200
+* We filter cells to have >200 unique features
 * We filter cells that have >5% mitochondrial counts
 
 Let's apply this and subset our data. This will remove the cells we think are of poor quality. 
 
 ```{r}
-seurat_object <- subset(seurat_object, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
+seurat_object <- subset(seurat_object, subset = nFeature_RNA > 200 & percent.mt < 5)
 ```
 
 Let's replot the feature scatters and see what they look like. 
@@ -160,3 +156,8 @@ FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "nFeature_RNA"
 ```
 
 
+We also wondered if cells with high counts might be doublets. Should we also filter cells with very high counts? With this data, we know for certain some of the doublets!
+
+```{r}
+FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "nFeature_RNA", group.by="multiplets") 
+```

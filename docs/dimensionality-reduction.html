@@ -89,7 +89,7 @@
 <span class="header-section-number">8.1</span> Perform linear dimensional reduction<a class="anchor" aria-label="anchor" href="#perform-linear-dimensional-reduction"><i class="fas fa-link"></i></a>
 </h2>
 <p>Next we perform PCA on the scaled data. By default, only the previously determined variable features are used as input, but can be defined using <code>features</code> argument if you wish to choose a different subset.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunPCA.html">RunPCA</a></span><span class="op">(</span><span class="va">seurat_object</span>, features <span class="op">=</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/VariableFeatures.html">VariableFeatures</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">seurat_object</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; PC_ 1 </span></span>
 <span><span class="co">#&gt; Positive:  CCR7, TRAT1, CREM, ALOX5AP, NKG7, TSC22D3, CST7, PASK, GPR171, CD8A </span></span>
@@ -127,7 +127,7 @@
 <span><span class="co">#&gt;     CH25H, PLAC8, C3AR1, IL3RA, PILRA, CFD, CLEC12A, VMP1, FGL2, VNN2 </span></span>
 <span><span class="co">#&gt;     FCGR3B, MTMR11, C1QA, MAPKAPK3, LILRB2, COTL1, FAM26F, FPR2, IFNGR2, IL15</span></span></code></pre></div>
 <p>Seurat provides several useful ways of visualizing both cells and features that define the PCA, including <code>VizDimReduction()</code>, <code><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot()</a></code>, and <code><a href="https://satijalab.org/seurat/reference/DimHeatmap.html">DimHeatmap()</a></code></p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Examine and visualize PCA results a few different ways</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">$</span><span class="va">pca</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, nfeatures <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; PC_ 1 </span></span>
@@ -147,14 +147,14 @@
 <span><span class="co">#&gt; Negative:  FCGR3A, MS4A4A, MS4A7, CXCL16, PPM1N</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/VizDimLoadings.html">VizDimLoadings</a></span><span class="op">(</span><span class="va">seurat_object</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, reduction <span class="op">=</span> <span class="st">'pca'</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/pca_viz-1.png" width="672"></div>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, reduction <span class="op">=</span> <span class="st">'pca'</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/pca_viz-2.png" width="672"></div>
 <p>In particular <code><a href="https://satijalab.org/seurat/reference/DimHeatmap.html">DimHeatmap()</a></code> allows for easy exploration of the primary sources of heterogeneity in a dataset, and can be useful when trying to decide which PCs to include for further downstream analyses. Both cells and features are ordered according to their PCA scores. Setting <code>cells</code> to a number plots the ‘extreme’ cells on both ends of the spectrum, which dramatically speeds plotting for large datasets. Though clearly a supervised analysis, we find this to be a valuable tool for exploring correlated feature sets.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimHeatmap.html">DimHeatmap</a></span><span class="op">(</span><span class="va">seurat_object</span>, dims <span class="op">=</span> <span class="fl">1</span>, cells <span class="op">=</span> <span class="fl">500</span>, balanced <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/single-heatmap-1.png" width="672"></div>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimHeatmap.html">DimHeatmap</a></span><span class="op">(</span><span class="va">seurat_object</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">15</span>, cells <span class="op">=</span> <span class="fl">500</span>, balanced <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/multi-heatmap-1.png" width="864"></div>
 </div>
@@ -167,13 +167,13 @@
 <p><em>Note</em>: The Seurat developers suggest using a JackStraw resampling test to determine this. See <a href="http://www.cell.com/abstract/S0092-8674(15)00549-8">Macosko <em>et al</em></a>, and the original <a href="https://satijalab.org/seurat/articles/seurat_object3k_tutorial.html#determine-the-dimensionality-of-the-dataset-1">seurat_object3 vignette</a>. We’re going to use an Elbow Plot instead here, because its much quicker.</p>
 <hr>
 <p>An alternative heuristic method generates an ‘Elbow plot’: a ranking of principle components based on the percentage of variance explained by each one (<code><a href="https://satijalab.org/seurat/reference/ElbowPlot.html">ElbowPlot()</a></code> function). In this example, we can observe an ‘elbow’ around PC9-10, suggesting that the majority of true signal is captured in the first 10 PCs.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/ElbowPlot.html">ElbowPlot</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/elbow_plot-1.png" width="672"></div>
 <p>Identifying the true dimensionality of a dataset – can be challenging/uncertain for the user. We therefore suggest these three approaches to consider. The first is more supervised, exploring PCs to determine relevant sources of heterogeneity, and could be used in conjunction with GSEA for example. The second implements a statistical test based on a random null model, but is time-consuming for large datasets, and may not return a clear PC cutoff. The third is a heuristic that is commonly used, and can be calculated instantly. In this example, all three approaches yielded similar results, but we might have been justified in choosing anything between PC 7-12 as a cutoff.</p>
 <p>We chose 10 here, but encourage users to consider the following:</p>
 <ul>
-<li>Dendritic cell and NK aficionados may recognize that genes strongly associated with PCs 12 and 13 define rare immune subsets (i.e. MZB1 is a marker for plasmacytoid DCs). However, these groups are so rare, they are difficult to distinguish from background noise for a dataset of this size without prior knowledge.</li>
+<li>In the original version of this vignette with the PBMC3k dataset, genes strongly associated with PCs 12 and 13 defined rare immune subsets (i.e. MZB1 is a marker for plasmacytoid DCs). However, these groups are so rare, they are difficult to distinguish from background noise for a dataset of this size without prior knowledge.</li>
 <li>We encourage users to repeat downstream analyses with a different number of PCs (10, 15, or even 50!). As you will observe, the results often do not differ dramatically.</li>
 <li>We advise users to err on the higher side when choosing this parameter. For example, performing downstream analyses with only 5 PCs does significantly and adversely affect results.</li>
 </ul>
@@ -184,29 +184,28 @@
 <span class="header-section-number">8.3</span> Run non-linear dimensional reduction (UMAP/tSNE)<a class="anchor" aria-label="anchor" href="#run-non-linear-dimensional-reduction-umaptsne"><i class="fas fa-link"></i></a>
 </h2>
 <p>Seurat offers several non-linear dimensional reduction techniques, such as tSNE and UMAP, to visualize and explore these datasets. The goal of these algorithms is to learn the underlying manifold of the data in order to place similar cells together in low-dimensional space. Cells within the graph-based clusters determined above should co-localize on these dimension reduction plots. As input to the UMAP and tSNE, we suggest using the same PCs as input to the clustering analysis.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># If you haven't installed UMAP, you can do so via reticulate::py_install(packages = "umap-learn")</span></span>
-<span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html">RunUMAP</a></span><span class="op">(</span><span class="va">seurat_object</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<!-- # If you haven't installed UMAP, you can do so via reticulate::py_install(packages = "umap-learn") -->
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html">RunUMAP</a></span><span class="op">(</span><span class="va">seurat_object</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric</span></span>
 <span><span class="co">#&gt; To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'</span></span>
 <span><span class="co">#&gt; This message will be shown once per session</span></span>
-<span><span class="co">#&gt; 10:17:21 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
-<span><span class="co">#&gt; 10:17:21 Read 4877 rows and found 10 numeric columns</span></span>
-<span><span class="co">#&gt; 10:17:21 Using Annoy for neighbor search, n_neighbors = 30</span></span>
-<span><span class="co">#&gt; 10:17:21 Building Annoy index with metric = cosine, n_trees = 50</span></span>
+<span><span class="co">#&gt; 07:14:04 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
+<span><span class="co">#&gt; 07:14:04 Read 4877 rows and found 10 numeric columns</span></span>
+<span><span class="co">#&gt; 07:14:04 Using Annoy for neighbor search, n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 07:14:04 Building Annoy index with metric = cosine, n_trees = 50</span></span>
 <span><span class="co">#&gt; 0%   10   20   30   40   50   60   70   80   90   100%</span></span>
 <span><span class="co">#&gt; [----|----|----|----|----|----|----|----|----|----|</span></span>
 <span><span class="co">#&gt; **************************************************|</span></span>
-<span><span class="co">#&gt; 10:17:21 Writing NN index file to temp file /var/folders/ww/bxqtlszx6cz42v_7kxxc2r7w0000gn/T//Rtmp8rqafC/file150136c78560</span></span>
-<span><span class="co">#&gt; 10:17:21 Searching Annoy index using 1 thread, search_k = 3000</span></span>
-<span><span class="co">#&gt; 10:17:22 Annoy recall = 100%</span></span>
-<span><span class="co">#&gt; 10:17:23 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
-<span><span class="co">#&gt; 10:17:23 Initializing from normalized Laplacian + noise (using RSpectra)</span></span>
-<span><span class="co">#&gt; 10:17:23 Commencing optimization for 500 epochs, with 201290 positive edges</span></span>
-<span><span class="co">#&gt; 10:17:27 Optimization finished</span></span></code></pre></div>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># note that you can set `label = TRUE` or use the LabelClusters function to help label individual clusters</span></span>
-<span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, reduction <span class="op">=</span> <span class="st">'umap'</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt; 07:14:04 Writing NN index file to temp file /var/folders/ww/bxqtlszx6cz42v_7kxxc2r7w0000gn/T//RtmpKQXpvO/file52a7faed54c</span></span>
+<span><span class="co">#&gt; 07:14:04 Searching Annoy index using 1 thread, search_k = 3000</span></span>
+<span><span class="co">#&gt; 07:14:05 Annoy recall = 100%</span></span>
+<span><span class="co">#&gt; 07:14:06 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 07:14:06 Initializing from normalized Laplacian + noise (using RSpectra)</span></span>
+<span><span class="co">#&gt; 07:14:06 Commencing optimization for 500 epochs, with 201290 positive edges</span></span>
+<span><span class="co">#&gt; 07:14:10 Optimization finished</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, reduction <span class="op">=</span> <span class="st">'umap'</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/Umapplot-1.png" width="672"></div>
 <div id="challenge-pc-genes" class="section level4 unnumbered challenge">
 <h4>Challenge: PC genes<a class="anchor" aria-label="anchor" href="#challenge-pc-genes"><i class="fas fa-link"></i></a>
@@ -222,9 +221,10 @@
 <h2>
 <span class="header-section-number">8.4</span> Save<a class="anchor" aria-label="anchor" href="#save"><i class="fas fa-link"></i></a>
 </h2>
-<p>You can save the object at this point so that it can easily be loaded back in without having to rerun the computationally intensive steps performed above, or easily shared with collaborators.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<p>You can save the object at this point so that it can easily be loaded back in with <code><a href="https://rdrr.io/r/base/readRDS.html">readRDS()</a></code> without having to rerun the computationally intensive steps performed above, or easily shared with collaborators.</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">seurat_object</span>, file <span class="op">=</span> <span class="st">"seurat_object_tutorial_saved.rds"</span><span class="op">)</span> </span></code></pre></div>
+<p>Tip: For faster saving and loading, try the “qs” package.</p>
 
 </div>
 </div>
@@ -256,7 +256,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 04, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 06, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
