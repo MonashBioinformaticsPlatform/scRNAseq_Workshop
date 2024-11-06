@@ -16,11 +16,11 @@ github-repo: https://github.com/MonashBioinformaticsPlatform/Nov2023_scRNAseq_wo
 
 # Getting started
 
-Instructors: [Adele Barugahare,](https://www.monash.edu/researchinfrastructure/bioinformatics/about/people) [Paul Harrison](https://www.monash.edu/researchinfrastructure/bioinformatics/about/people) & [Laura Perlaza-Jimenez](https://www.monash.edu/researchinfrastructure/bioinformatics/about/people)
+Instructors:  [Paul Harrison](https://www.monash.edu/researchinfrastructure/bioinformatics/about/people) & [Laura Perlaza-Jimenez](https://www.monash.edu/researchinfrastructure/bioinformatics/about/people)
 
 ## Summary
 
-This workshop, conducted by the Monash Genomics and Bioinformatics Platform, will cover how to extend analysis to contemporary third-party tools, Seurat and SingleR. We will be walking through the Single Cell analysis using seurat package and extend this to cell annotation using SingleR.  
+This workshop, conducted by the Monash Genomics and Bioinformatics Platform, will cover how to extend analysis to contemporary third-party tools, [Seurat](https://satijalab.org/seurat/), [Harmony](https://github.com/immunogenomics/harmony) and [SingleR](https://bioconductor.org/packages/release/bioc/html/SingleR.html). We will be walking through the Single Cell analysis using Seurat package, correction of batch effects with Harmony and cell annotation using SingleR.  
 
 
 Important links:
@@ -64,6 +64,6 @@ Install latest versions of:
 # automatically create a bib database for R packages
 knitr::write_bib(c(
   .packages(), 
-  'bookdown', 'knitr', 'rmarkdown'
+  'bookdown', 'knitr', 'rmarkdown','stringr'
   ), 'packages.bib')
 ```

@@ -288,8 +288,8 @@ seurat_object <- NormalizeData(seurat_object)
 # There are other options for normalization such as
 # [SCTtransform]( https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1)
 # which was popularized in 2019, however Log base normalization
-# continued to be preferred as they perform better [see
-# here](https://www.nature.com/articles/s41592-023-01814-1) the for mo details.
+# continued to be preferred as they perform better. [See
+# here](https://www.nature.com/articles/s41592-023-01814-1) the for more details.
 
 
 # PCAs and UMAPs ================
@@ -747,8 +747,10 @@ DotPlot(seurat_object, features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A", "
 # this case, we are plotting the top 10 markers (or all markers if less than 10)
 # for each cluster.
 
+maxcells=1500
 top10 <- seurat_object.markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_log2FC)
-DoHeatmap(seurat_object, features = top10$gene) + NoLegend()
+DoHeatmap(subset(seurat_object, downsample = maxcells), features = top10$gene) + NoLegend()
+
 
 
 ## Use makers to label or find a cluster --------

@@ -2,10 +2,10 @@
 
 | Time      | Content               |
 | :---:|  :----: | 
-|10:00	|	Zoom opened for participants|
-||	Welcome and Housekeeping|
+|10:00	|	Welcome and Housekeeping|
+||	|
 ||	Background on ScRNAseq + R tools|
-||	Seurat Object|
+||	|
 |11:15|	00:15	Breakout activity| 
 | |	Load data|
 |11:50|	00:10	Break|

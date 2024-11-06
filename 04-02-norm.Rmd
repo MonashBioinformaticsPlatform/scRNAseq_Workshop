@@ -18,7 +18,7 @@ For clarity, in this previous line of code (and in future commands), we provide 
 seurat_object <- NormalizeData(seurat_object)
 ```
 
-There are other options for normalization such as [SCTtransform]( https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) which was popularized in 2019, however Log base normalization continued to be preferred as they perform better [see here](https://www.nature.com/articles/s41592-023-01814-1) the for mo details. 
+There are other options for normalization such as [SCTtransform]( https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) which was popularized in 2019, however Log base normalization continued to be preferred as they perform better. [See here](https://www.nature.com/articles/s41592-023-01814-1) the for more details. 
 
 
 
