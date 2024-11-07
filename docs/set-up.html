@@ -76,7 +76,7 @@
 <h1>
 <span class="header-section-number">2</span> Set up<a class="anchor" aria-label="anchor" href="#set-up"><i class="fas fa-link"></i></a>
 </h1>
-<p>For this workshop you will have available a VM. However, if you which to use your local computer here are the set up instructions:</p>
+<p><em>For this workshop you will have available a VM</em>. However, if you which to use your local computer here are the set up instructions:</p>
 <p><strong>IMPORTANT: If you have an M1 Mac - Make sure you have <a href="https://mac.r-project.org/tools/">gfortan</a>.</strong></p>
 <div id="get-the-workshop-material-and-data" class="section level2" number="2.1">
 <h2>
@@ -95,7 +95,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Install required packages for Seurat and clustree:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Seurat"</span>, <span class="st">"dplyr"</span>, <span class="st">"remotes"</span>, <span class="st">"R.utils"</span>, <span class="st">"harmony"</span>, </span>
-<span>                   <span class="st">"hdf5r"</span>, <span class="st">"clustree"</span>, <span class="st">"RColorBrewer"</span><span class="op">)</span><span class="op">)</span></span>
+<span>                   <span class="st">"hdf5r"</span>, <span class="st">"clustree"</span>, <span class="st">"RColorBrewer"</span>,<span class="st">"tidyverse"</span>,<span class="st">"pander"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Install required Bioconductor packages</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
@@ -103,7 +103,10 @@
 <span>                       <span class="st">'BiocGenerics'</span>, <span class="st">'DelayedArray'</span>, <span class="st">'DelayedMatrixStats'</span>,</span>
 <span>                       <span class="st">'limma'</span>, <span class="st">'S4Vectors'</span>, <span class="st">'SingleCellExperiment'</span>,</span>
 <span>                       <span class="st">'SummarizedExperiment'</span>,<span class="st">'edgeR'</span> <span class="op">)</span>,</span>
-<span>                     update<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span>                     update<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">'immunogenomics/presto@1.0.0'</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div id="raw-data" class="section level2" number="2.3">
 <h2>
@@ -155,7 +158,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 06, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 07, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

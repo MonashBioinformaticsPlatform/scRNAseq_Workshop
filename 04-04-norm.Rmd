@@ -1,5 +1,6 @@
 # Normalisation {#norm}
 
+[Slides](https://docs.google.com/presentation/d/1YAZPpgHyA6VhIWa4VeyyvfYYHnvaLt1b/edit#slide=id.p1)
 
 #### Why do we need to do this? {- .rational}
 The sequencing depth can be different per cell. This can bias the counts of expression showing higher numbers for more sequenced cells leading to the wrong biological conclusions. To correct this the feature counts are normalized.

@@ -1,6 +1,6 @@
-# Set up
+# Set up 
 
-For this workshop you will have available a VM. However, if you which to use your local computer here are the set up instructions:
+*For this workshop you will have available a VM*. However, if you which to use your local computer here are the set up instructions:
 
 **IMPORTANT: If you have an M1 Mac - Make sure you have [gfortan](https://mac.r-project.org/tools/).**
 
@@ -21,7 +21,7 @@ These instructions have been tested with R version 4.4.0 and Bioconductor versio
 ```{r eval=FALSE}
 ## Install required packages for Seurat and clustree:
 install.packages(c("Seurat", "dplyr", "remotes", "R.utils", "harmony", 
-                   "hdf5r", "clustree", "RColorBrewer"))
+                   "hdf5r", "clustree", "RColorBrewer","tidyverse","pander"))
 
 ## Install required Bioconductor packages
 install.packages("BiocManager")
@@ -30,6 +30,10 @@ BiocManager::install(c('SingleR', 'celldex',
                        'limma', 'S4Vectors', 'SingleCellExperiment',
                        'SummarizedExperiment','edgeR' ),
                      update=FALSE)
+
+
+devtools::install_github('immunogenomics/presto@1.0.0')
+
 ```
 
 ## Raw Data

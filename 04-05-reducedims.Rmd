@@ -1,5 +1,6 @@
 # PCAs and UMAPs {#reducedims}
 
+[Slides](https://docs.google.com/presentation/d/17-AYqsosmKnJFgv_7DHYNbMQFIXrGAP4/edit#slide=id.p1)
 <!-- why pca -->
 <!-- how to pick genes for pca -->
 <!-- why not pca? the blob of not very usefulness. -->

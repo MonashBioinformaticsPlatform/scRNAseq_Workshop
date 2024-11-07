@@ -1,5 +1,7 @@
 # Clustering {#clustering}
 
+[Slides](https://docs.google.com/presentation/d/1erfD1gJAZwpyh2l8wkWBGzUiVStQCyL_/edit#slide=id.p33)
+
 #### Why do we need to do this?  {- .rational}
 
 Clustering the cells will allow you to visualise the variability of your data, can help to segregate cells into cell types.   

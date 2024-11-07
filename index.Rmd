@@ -22,11 +22,9 @@ Instructors:  [Paul Harrison](https://www.monash.edu/researchinfrastructure/bioi
 
 This workshop, conducted by the Monash Genomics and Bioinformatics Platform, will cover how to extend analysis to contemporary third-party tools, [Seurat](https://satijalab.org/seurat/), [Harmony](https://github.com/immunogenomics/harmony) and [SingleR](https://bioconductor.org/packages/release/bioc/html/SingleR.html). We will be walking through the Single Cell analysis using Seurat package, correction of batch effects with Harmony and cell annotation using SingleR.  
 
+If you are using virtual machine (VM) provided by the workshop, you don't need to install any R packages Skip **SET UP** section.
 
-Important links:
-
-* [Installation and Setup instructions](set-up.html)
-* [Slideshow introduction](../slides)
+If you are using your own computer, follow [Installation and Setup instructions](set-up.html). 
 
 
 ### Recommended Computer Requirements:

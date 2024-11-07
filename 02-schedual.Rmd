@@ -2,27 +2,20 @@
 
 | Time      | Content               |
 | :---:|  :----: | 
-|10:00	|	Welcome and Housekeeping|
-||	|
+|9:00	|	Welcome and Housekeeping|
+|| Log in to VM |
 ||	Background on ScRNAseq + R tools|
-||	|
-|11:15|	00:15	Breakout activity| 
-| |	Load data|
-|11:50|	00:10	Break|
+||	Load data|
+|10:00-10:30|		Break| 
 ||	QC filtering
-|12:25|	00:10	Breakout activity|
-||	QC filtering continued
-|12:45|	00:10	Breakout activity|
 ||	Normalisation|
-||	Lunch Break|
 ||	PCAs and UMAPs|
-|14:50|	00:15	Breakout activity|
+|12:30 -13:30|	Lunch Break|
+|| Integration |
 |	|Clustering|
-|15:30|	00:15	Breakout activity|
-|15:45|	00:10	Break|
 ||	Cluster Markers|
 |	|	SingleR|
-|16:25|	00:10	Break|
+|15:00-15:30|		Break|
 ||Differential Expression|
 ||	Main room Discussion on differential expression|
 |17:00|Final remarks and conclusion|

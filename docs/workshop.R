@@ -1,6 +1,9 @@
 
 
 # Load data ================
+#
+# [Let's get started with a single cell
+#  introduction](https://docs.google.com/presentation/d/1yKxSWL_sYto-alC-1BXIk1WbSnIGxnky/edit#slide=id.p1)
 
 
 ## Setup the Seurat Object --------
@@ -262,6 +265,8 @@ FeatureScatter(seurat_object, feature1 = "nCount_RNA", feature2 = "nFeature_RNA"
 
 # Normalisation ================
 #
+# [slides](https://docs.google.com/presentation/d/1YAZPpgHyA6VhIWa4VeyyvfYYHnvaLt1b/edit#slide=id.p1)
+#
 #### Why do we need to do this?
 #
 # The sequencing depth can be different per cell. This can bias the counts of
@@ -289,10 +294,12 @@ seurat_object <- NormalizeData(seurat_object)
 # [SCTtransform]( https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1)
 # which was popularized in 2019, however Log base normalization
 # continued to be preferred as they perform better. [See
-# here](https://www.nature.com/articles/s41592-023-01814-1) the for more details.
+# here](https://www.nature.com/articles/s41592-023-01814-1) for more details.
 
 
 # PCAs and UMAPs ================
+#
+# [Slides](https://docs.google.com/presentation/d/17-AYqsosmKnJFgv_7DHYNbMQFIXrGAP4/edit#slide=id.p1)
 
 
 ## Identification of highly variable features (feature selection) --------
@@ -489,6 +496,8 @@ saveRDS(seurat_object, file = "seurat_object_tutorial_saved.rds")
 
 # Data set integration with Harmony ================
 #
+# [Slides](https://docs.google.com/presentation/d/134p04OJPKy8yJQPwGtZ14HoLTbyN_flg/edit#slide=id.p1)
+#
 ### Why do we need to do this?
 #
 # You can have data coming from different samples, batches or experiments and you
@@ -561,6 +570,8 @@ DimPlot(seurat_object, reduction="umap", group.by="harmony_clusters")
 
 
 # Clustering ================
+#
+# [Slides](https://docs.google.com/presentation/d/1erfD1gJAZwpyh2l8wkWBGzUiVStQCyL_/edit#slide=id.p33)
 #
 #### Why do we need to do this?
 #
@@ -814,6 +825,12 @@ DimPlot(seurat_object, reduction = 'umap_harmony', label = TRUE, pt.size = 0.5) 
 #
 #### save the plots
 
+
+plot <- DimPlot(seurat_object, reduction = 'umap_harmony', label = TRUE, label.size = 4.5) + xlab("UMAP 1") + ylab("UMAP 2") +
+  theme(axis.title = element_text(size = 18), legend.text = element_text(size = 18)) +
+  guides(colour = guide_legend(override.aes = list(size = 10)))
+ggsave(filename = "seurat_object3k_umap.jpg", height = 7, width = 12, plot = plot, quality = 50)
+
 #### save the seurat object
 
 saveRDS(seurat_object, file = "seurat_object3k_final.rds")
@@ -888,6 +905,8 @@ DimPlot(seurat_object,group.by = "cell",reduction = "umap_harmony")
 
 
 # Differential Expression ================
+#
+# [Slides](https://docs.google.com/presentation/d/1iTfkc2KgGy3d6yT9zCALZzk993pWwT9D/edit#slide=id.p1)
 #
 # There are many different methods for calculating differential expression between
 # groups in scRNAseq data. There are a number of review papers worth consulting on

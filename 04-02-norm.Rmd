@@ -1,5 +1,6 @@
 # Normalisation {#norm}
 
+[slides](https://docs.google.com/presentation/d/1YAZPpgHyA6VhIWa4VeyyvfYYHnvaLt1b/edit#slide=id.p1)
 
 #### Why do we need to do this? {- .rational}
 The sequencing depth can be different per cell. This can bias the counts of expression showing higher numbers for more sequenced cells leading to the wrong biological conclusions. To correct this the feature counts are normalized.
@@ -18,7 +19,7 @@ For clarity, in this previous line of code (and in future commands), we provide 
 seurat_object <- NormalizeData(seurat_object)
 ```
 
-There are other options for normalization such as [SCTtransform]( https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) which was popularized in 2019, however Log base normalization continued to be preferred as they perform better. [See here](https://www.nature.com/articles/s41592-023-01814-1) the for more details. 
+There are other options for normalization such as [SCTtransform]( https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) which was popularized in 2019, however Log base normalization continued to be preferred as they perform better. [See here](https://www.nature.com/articles/s41592-023-01814-1) for more details. 
 
 
 

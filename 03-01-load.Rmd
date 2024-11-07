@@ -2,6 +2,8 @@
 
 # Load data {#load}
 
+[Let's get started with a single cell introduction](https://docs.google.com/presentation/d/1yKxSWL_sYto-alC-1BXIk1WbSnIGxnky/edit#slide=id.p1)
+
 ## Setup the Seurat Object
 
 ## The data set

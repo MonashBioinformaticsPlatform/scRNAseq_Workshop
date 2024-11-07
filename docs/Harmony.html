@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 9 Data set integration with Harmony | scRNAseq Analysis in R with Seurat</title>
 <meta name="author" content="Monash Genomics and Bioinformatics Platform (MGBP)">
-<meta name="description" content="Why do we need to do this? You can have data coming from different samples, batches or experiments and you will need to combine them.   ind identifies a cell as coming from one of 8 individuals....">
+<meta name="description" content="Slides Why do we need to do this? You can have data coming from different samples, batches or experiments and you will need to combine them.   ind identifies a cell as coming from one of 8...">
 <meta name="generator" content="bookdown 0.41 with bs4_book()">
 <meta property="og:title" content="Chapter 9 Data set integration with Harmony | scRNAseq Analysis in R with Seurat">
 <meta property="og:type" content="book">
-<meta property="og:description" content="Why do we need to do this? You can have data coming from different samples, batches or experiments and you will need to combine them.   ind identifies a cell as coming from one of 8 individuals....">
+<meta property="og:description" content="Slides Why do we need to do this? You can have data coming from different samples, batches or experiments and you will need to combine them.   ind identifies a cell as coming from one of 8...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 9 Data set integration with Harmony | scRNAseq Analysis in R with Seurat">
-<meta name="twitter:description" content="Why do we need to do this? You can have data coming from different samples, batches or experiments and you will need to combine them.   ind identifies a cell as coming from one of 8 individuals....">
+<meta name="twitter:description" content="Slides Why do we need to do this? You can have data coming from different samples, batches or experiments and you will need to combine them.   ind identifies a cell as coming from one of 8...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -76,6 +76,7 @@
 <h1>
 <span class="header-section-number">9</span> Data set integration with Harmony<a class="anchor" aria-label="anchor" href="#Harmony"><i class="fas fa-link"></i></a>
 </h1>
+<p><a href="https://docs.google.com/presentation/d/134p04OJPKy8yJQPwGtZ14HoLTbyN_flg/edit#slide=id.p1">Slides</a></p>
 <div id="why-do-we-need-to-do-this-5" class="section level3 unnumbered rational">
 <h3>Why do we need to do this?<a class="anchor" aria-label="anchor" href="#why-do-we-need-to-do-this-5"><i class="fas fa-link"></i></a>
 </h3>
@@ -113,7 +114,7 @@
 <span><span class="co">#&gt; Running Louvain algorithm...</span></span>
 <span><span class="co">#&gt; Maximum modularity in 10 random starts: 0.9409</span></span>
 <span><span class="co">#&gt; Number of communities: 9</span></span>
-<span><span class="co">#&gt; Elapsed time: 1 seconds</span></span>
+<span><span class="co">#&gt; Elapsed time: 0 seconds</span></span>
 <span><span class="va">seurat_object</span><span class="op">$</span><span class="va">pca_clusters</span> <span class="op">&lt;-</span> <span class="va">seurat_object</span><span class="op">$</span><span class="va">seurat_clusters</span></span>
 <span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, reduction<span class="op">=</span><span class="st">"umap"</span>, group.by<span class="op">=</span><span class="st">"pca_clusters"</span><span class="op">)</span></span></code></pre></div>
@@ -143,20 +144,20 @@
 <p>We can use <code>harmony</code> the same way we used the <code>pca</code> reduction to compute a UMAP layout or to find clusters.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html">RunUMAP</a></span><span class="op">(</span><span class="va">seurat_object</span>, reduction<span class="op">=</span><span class="st">"harmony"</span>, dims<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, reduction.name<span class="op">=</span><span class="st">"umap_harmony"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 16:34:35 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
-<span><span class="co">#&gt; 16:34:35 Read 4877 rows and found 10 numeric columns</span></span>
-<span><span class="co">#&gt; 16:34:35 Using Annoy for neighbor search, n_neighbors = 30</span></span>
-<span><span class="co">#&gt; 16:34:35 Building Annoy index with metric = cosine, n_trees = 50</span></span>
+<span><span class="co">#&gt; 16:08:43 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
+<span><span class="co">#&gt; 16:08:43 Read 4877 rows and found 10 numeric columns</span></span>
+<span><span class="co">#&gt; 16:08:43 Using Annoy for neighbor search, n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 16:08:43 Building Annoy index with metric = cosine, n_trees = 50</span></span>
 <span><span class="co">#&gt; 0%   10   20   30   40   50   60   70   80   90   100%</span></span>
 <span><span class="co">#&gt; [----|----|----|----|----|----|----|----|----|----|</span></span>
 <span><span class="co">#&gt; **************************************************|</span></span>
-<span><span class="co">#&gt; 16:34:36 Writing NN index file to temp file /tmp/RtmpUsxO8R/file2bcdb776035ad5</span></span>
-<span><span class="co">#&gt; 16:34:36 Searching Annoy index using 1 thread, search_k = 3000</span></span>
-<span><span class="co">#&gt; 16:34:37 Annoy recall = 100%</span></span>
-<span><span class="co">#&gt; 16:34:38 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
-<span><span class="co">#&gt; 16:34:39 Initializing from normalized Laplacian + noise (using RSpectra)</span></span>
-<span><span class="co">#&gt; 16:34:39 Commencing optimization for 500 epochs, with 203710 positive edges</span></span>
-<span><span class="co">#&gt; 16:34:45 Optimization finished</span></span>
+<span><span class="co">#&gt; 16:08:43 Writing NN index file to temp file /tmp/RtmpqRkvbK/file2cb792f28b3b1</span></span>
+<span><span class="co">#&gt; 16:08:43 Searching Annoy index using 1 thread, search_k = 3000</span></span>
+<span><span class="co">#&gt; 16:08:45 Annoy recall = 100%</span></span>
+<span><span class="co">#&gt; 16:08:46 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 16:08:47 Initializing from normalized Laplacian + noise (using RSpectra)</span></span>
+<span><span class="co">#&gt; 16:08:47 Commencing optimization for 500 epochs, with 203710 positive edges</span></span>
+<span><span class="co">#&gt; 16:08:52 Optimization finished</span></span>
 <span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, reduction<span class="op">=</span><span class="st">"umap_harmony"</span>, group.by<span class="op">=</span><span class="st">"stim"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/harmony4-1.png" width="672"></div>
@@ -213,7 +214,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 06, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 07, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

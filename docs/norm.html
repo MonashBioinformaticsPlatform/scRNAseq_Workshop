@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 6 Normalisation | scRNAseq Analysis in R with Seurat</title>
 <meta name="author" content="Monash Genomics and Bioinformatics Platform (MGBP)">
-<meta name="description" content="Why do we need to do this? The sequencing depth can be different per cell. This can bias the counts of expression showing higher numbers for more sequenced cells leading to the wrong biological...">
+<meta name="description" content="slides Why do we need to do this? The sequencing depth can be different per cell. This can bias the counts of expression showing higher numbers for more sequenced cells leading to the wrong...">
 <meta name="generator" content="bookdown 0.41 with bs4_book()">
 <meta property="og:title" content="Chapter 6 Normalisation | scRNAseq Analysis in R with Seurat">
 <meta property="og:type" content="book">
-<meta property="og:description" content="Why do we need to do this? The sequencing depth can be different per cell. This can bias the counts of expression showing higher numbers for more sequenced cells leading to the wrong biological...">
+<meta property="og:description" content="slides Why do we need to do this? The sequencing depth can be different per cell. This can bias the counts of expression showing higher numbers for more sequenced cells leading to the wrong...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 6 Normalisation | scRNAseq Analysis in R with Seurat">
-<meta name="twitter:description" content="Why do we need to do this? The sequencing depth can be different per cell. This can bias the counts of expression showing higher numbers for more sequenced cells leading to the wrong biological...">
+<meta name="twitter:description" content="slides Why do we need to do this? The sequencing depth can be different per cell. This can bias the counts of expression showing higher numbers for more sequenced cells leading to the wrong...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -76,6 +76,7 @@
 <h1>
 <span class="header-section-number">6</span> Normalisation<a class="anchor" aria-label="anchor" href="#norm"><i class="fas fa-link"></i></a>
 </h1>
+<p><a href="https://docs.google.com/presentation/d/1YAZPpgHyA6VhIWa4VeyyvfYYHnvaLt1b/edit#slide=id.p1">slides</a></p>
 <div id="why-do-we-need-to-do-this-1" class="section level4 unnumbered rational">
 <h4>Why do we need to do this?<a class="anchor" aria-label="anchor" href="#why-do-we-need-to-do-this-1"><i class="fas fa-link"></i></a>
 </h4>
@@ -90,7 +91,7 @@
 <p>For clarity, in this previous line of code (and in future commands), we provide the default values for certain parameters in the function call. However, this isn’t required and the same behavior can be achieved with:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">)</span></span></code></pre></div>
-<p>There are other options for normalization such as <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1">SCTtransform</a> which was popularized in 2019, however Log base normalization continued to be preferred as they perform better. <a href="https://www.nature.com/articles/s41592-023-01814-1">See here</a> the for more details.</p>
+<p>There are other options for normalization such as <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1">SCTtransform</a> which was popularized in 2019, however Log base normalization continued to be preferred as they perform better. <a href="https://www.nature.com/articles/s41592-023-01814-1">See here</a> for more details.</p>
 
 </div>
 </div>
@@ -116,7 +117,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 06, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 07, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -1,5 +1,6 @@
 # Cluster Markers {#clustermarkers}
 
+
 #### Why do we need to do this?  {- .rational}
 
 Single cell data helps to segragate cell types. Use markers to identify cell types. warning: In this example the cell types/markers are well known and making this step easy, but in reality this step needs the experts curation.
@@ -153,9 +154,12 @@ DimPlot(seurat_object, reduction = 'umap_harmony', label = TRUE, pt.size = 0.5) 
 #### {-}
 
 
+
 #### save the plots
 
-```{r save.img, include=FALSE}
+
+```{r save.img , eval=FALSE}
+
 plot <- DimPlot(seurat_object, reduction = 'umap_harmony', label = TRUE, label.size = 4.5) + xlab("UMAP 1") + ylab("UMAP 2") + 
   theme(axis.title = element_text(size = 18), legend.text = element_text(size = 18)) + 
   guides(colour = guide_legend(override.aes = list(size = 10)))

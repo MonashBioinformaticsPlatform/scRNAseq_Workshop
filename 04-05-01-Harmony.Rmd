@@ -1,5 +1,6 @@
 # Data set integration with Harmony {#Harmony}
 
+[Slides](https://docs.google.com/presentation/d/134p04OJPKy8yJQPwGtZ14HoLTbyN_flg/edit#slide=id.p1)
 
 ### Why do we need to do this? {- .rational}
 
