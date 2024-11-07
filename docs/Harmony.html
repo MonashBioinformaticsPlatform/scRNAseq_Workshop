@@ -144,20 +144,20 @@
 <p>We can use <code>harmony</code> the same way we used the <code>pca</code> reduction to compute a UMAP layout or to find clusters.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html">RunUMAP</a></span><span class="op">(</span><span class="va">seurat_object</span>, reduction<span class="op">=</span><span class="st">"harmony"</span>, dims<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, reduction.name<span class="op">=</span><span class="st">"umap_harmony"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 16:08:43 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
-<span><span class="co">#&gt; 16:08:43 Read 4877 rows and found 10 numeric columns</span></span>
-<span><span class="co">#&gt; 16:08:43 Using Annoy for neighbor search, n_neighbors = 30</span></span>
-<span><span class="co">#&gt; 16:08:43 Building Annoy index with metric = cosine, n_trees = 50</span></span>
+<span><span class="co">#&gt; 16:35:19 UMAP embedding parameters a = 0.9922 b = 1.112</span></span>
+<span><span class="co">#&gt; 16:35:19 Read 4877 rows and found 10 numeric columns</span></span>
+<span><span class="co">#&gt; 16:35:19 Using Annoy for neighbor search, n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 16:35:19 Building Annoy index with metric = cosine, n_trees = 50</span></span>
 <span><span class="co">#&gt; 0%   10   20   30   40   50   60   70   80   90   100%</span></span>
 <span><span class="co">#&gt; [----|----|----|----|----|----|----|----|----|----|</span></span>
 <span><span class="co">#&gt; **************************************************|</span></span>
-<span><span class="co">#&gt; 16:08:43 Writing NN index file to temp file /tmp/RtmpqRkvbK/file2cb792f28b3b1</span></span>
-<span><span class="co">#&gt; 16:08:43 Searching Annoy index using 1 thread, search_k = 3000</span></span>
-<span><span class="co">#&gt; 16:08:45 Annoy recall = 100%</span></span>
-<span><span class="co">#&gt; 16:08:46 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
-<span><span class="co">#&gt; 16:08:47 Initializing from normalized Laplacian + noise (using RSpectra)</span></span>
-<span><span class="co">#&gt; 16:08:47 Commencing optimization for 500 epochs, with 203710 positive edges</span></span>
-<span><span class="co">#&gt; 16:08:52 Optimization finished</span></span>
+<span><span class="co">#&gt; 16:35:20 Writing NN index file to temp file /tmp/RtmpF2VcLe/file2cbf231bba6df</span></span>
+<span><span class="co">#&gt; 16:35:20 Searching Annoy index using 1 thread, search_k = 3000</span></span>
+<span><span class="co">#&gt; 16:35:21 Annoy recall = 100%</span></span>
+<span><span class="co">#&gt; 16:35:22 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30</span></span>
+<span><span class="co">#&gt; 16:35:23 Initializing from normalized Laplacian + noise (using RSpectra)</span></span>
+<span><span class="co">#&gt; 16:35:23 Commencing optimization for 500 epochs, with 203710 positive edges</span></span>
+<span><span class="co">#&gt; 16:35:29 Optimization finished</span></span>
 <span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, reduction<span class="op">=</span><span class="st">"umap_harmony"</span>, group.by<span class="op">=</span><span class="st">"stim"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/harmony4-1.png" width="672"></div>
