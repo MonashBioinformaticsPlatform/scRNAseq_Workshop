@@ -31,28 +31,28 @@
 # is the output of the CellRanger pipleine, described
 # [here](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/output/gex-outputs)
 
-├── analysis
-│   ├── clustering
-│   ├── diffexp
-│   ├── pca
-│   ├── tsne
-│   └── umap
-├── cloupe.cloupe
-├── filtered_feature_bc_matrix
-│   ├── barcodes.tsv.gz
-│   ├── features.tsv.gz
-│   └── matrix.mtx.gz
-├── filtered_feature_bc_matrix.h5.  --> matrix to read in h5 format
-├── metrics_summary.csv
-├── molecule_info.h5
-├── possorted_genome_bam.bam
-├── possorted_genome_bam.bam.bai
-├── raw_feature_bc_matrix
-│   ├── barcodes.tsv.gz
-│   ├── features.tsv.gz
-│   └── matrix.mtx.gz
-├── raw_feature_bc_matrix.h5
-└── web_summary.html
+# ├── analysis
+# │   ├── clustering
+# │   ├── diffexp
+# │   ├── pca
+# │   ├── tsne
+# │   └── umap
+# ├── cloupe.cloupe
+# ├── filtered_feature_bc_matrix
+# │   ├── barcodes.tsv.gz
+# │   ├── features.tsv.gz
+# │   └── matrix.mtx.gz
+# ├── filtered_feature_bc_matrix.h5.  --> matrix to read in h5 format
+# ├── metrics_summary.csv
+# ├── molecule_info.h5
+# ├── possorted_genome_bam.bam
+# ├── possorted_genome_bam.bam.bai
+# ├── raw_feature_bc_matrix
+# │   ├── barcodes.tsv.gz
+# │   ├── features.tsv.gz
+# │   └── matrix.mtx.gz
+# ├── raw_feature_bc_matrix.h5
+# └── web_summary.html
 
 ###
 #
@@ -82,24 +82,20 @@ library(patchwork)
 # filtered_feature_bc_matrix that is in the output folder of your cellranger run
 # using the Read10X function.
 
-## Load the PBMC dataset
-# pbmc.data <- Read10X(data.dir = "outs/filtered_feature_bc_matrix")
-## Initialize the Seurat object with the raw (non-normalized data).
-# seurat_object <- CreateSeuratObject(counts = pbmc.data, min.cells = 3, min.features = 200)
-
+# # Load the PBMC dataset
+#  pbmc.data <- Read10X(data.dir = "outs/filtered_feature_bc_matrix")
+# # Initialize the Seurat object with the raw (non-normalized data).
+#  seurat_object <- CreateSeuratObject(counts = pbmc.data, min.cells = 3, min.features = 200)
 
 # Example 2. Load your data directing the ReadMtx function to each of the
 # relevant files in the filtered_feature_bc_matrix folder in the outputs from your
 # cellranger run. MTX is a simple text format for sparse matrices.
 
-
 # expression_matrix <- ReadMtx(
 #   mtx = "outs/filtered_feature_bc_matrix/count_matrix.mtx.gz", features = "outs/filtered_feature_bc_matrix/features.tsv.gz",
 #   cells = "outs/filtered_feature_bc_matrix/barcodes.tsv.gz"
 # )
-#
 # seurat_object <- CreateSeuratObject(counts = expression_matrix)
-
 
 # Example 3. Load your data using the Read10X_h5 function to each of the relevant
 # HDF5 files. HDF5 is an efficient binary format.
@@ -107,17 +103,11 @@ library(patchwork)
 pbmc.data <- Read10X_h5("data/filtered_feature_bc_matrix.h5")
 metadata <- read.table("data/metadata.txt")
 
-
-
 seurat_object <- CreateSeuratObject(counts = pbmc.data ,
                                  assay = "RNA", project = 'pbmc')
 
-
-
 # Use AddMetaData to add new meta data to object
 seurat_object  <- AddMetaData(object = seurat_object, metadata = metadata)
-
-
 
 #   **What does data in a count matrix look like?**
 
@@ -814,12 +804,12 @@ DimPlot(seurat_object,group.by = "RNA_snn_res.0.2",reduction = "umap_harmony")|F
 #
 #   **code ideas?**
 
-Idents(seurat_object) <- seurat_object$RNA_snn_res.0.2
-# this is not the proper order. Make sure the labels are in the same order that the numers they should replace
-new.cluster.ids <- c("Naive CD4 T","B cells","CD14+ Monocytes","CD4 T cells","CD8 T cells", "Dendritic cells", "FCGR3A+ Monocytes","Megakaryocytes" )
-names(new.cluster.ids) <- levels(seurat_object)
-seurat_object <- RenameIdents(seurat_object, new.cluster.ids)
-DimPlot(seurat_object, reduction = 'umap_harmony', label = TRUE, pt.size = 0.5) + NoLegend()
+# Idents(seurat_object) <- seurat_object$RNA_snn_res.0.2
+# # this is not the proper order. Make sure the labels are in the same order that the numers they should replace
+# new.cluster.ids <- c("Naive CD4 T","B cells","CD14+ Monocytes","CD4 T cells","CD8 T cells", "Dendritic cells", "FCGR3A+ Monocytes","Megakaryocytes" )
+# names(new.cluster.ids) <- levels(seurat_object)
+# seurat_object <- RenameIdents(seurat_object, new.cluster.ids)
+# DimPlot(seurat_object, reduction = 'umap_harmony', label = TRUE, pt.size = 0.5) + NoLegend()
 
 ####
 #

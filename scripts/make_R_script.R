@@ -9,6 +9,7 @@ get_script <- function(filename) {
     state <- "main"
     blank <- ""
     need_blank <- FALSE
+    comment_code <- FALSE
     output <- c()
     show <- function(...) output[length(output)+1] <<- paste0(...)
     for(line in lines) {
@@ -25,6 +26,7 @@ get_script <- function(filename) {
             state <- "hidden_code"
         } else if (state == "main" && str_detect(line,"^```")) {
             state <- "code"
+            comment_code <- !str_detect(line,"^``` *\\{ *[rR]")
             show("")
         } else if (state %in% c("code","hidden_code") && str_detect(line,"^```")) {
             state <- "main"
@@ -65,6 +67,7 @@ get_script <- function(filename) {
                 blank <- "#"
             }
         } else if (state == "code") {
+            if (comment_code) line <- paste0("# ",line)
             show(line)
         }
     }
