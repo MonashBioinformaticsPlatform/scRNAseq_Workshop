@@ -22,10 +22,10 @@ The procedure in Seurat is described in detail [here](https://doi.org/10.1016/j.
 ```{r var_features}
 seurat_object <- FindVariableFeatures(seurat_object, selection.method = 'vst', nfeatures = 2000)
 # Identify the 10 most highly variable genes
-top10 <- head(VariableFeatures(seurat_object), 10)
+top_vf <- head(VariableFeatures(seurat_object), 10)
 # plot variable features with and without labels
 plot1 <- VariableFeaturePlot(seurat_object)
-plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
+plot2 <- LabelPoints(plot1, points = top_vf, repel = TRUE)
 plot2
 ```
 

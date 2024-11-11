@@ -317,10 +317,10 @@ seurat_object <- NormalizeData(seurat_object)
 
 seurat_object <- FindVariableFeatures(seurat_object, selection.method = 'vst', nfeatures = 2000)
 # Identify the 10 most highly variable genes
-top10 <- head(VariableFeatures(seurat_object), 10)
+top_vf <- head(VariableFeatures(seurat_object), 10)
 # plot variable features with and without labels
 plot1 <- VariableFeaturePlot(seurat_object)
-plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
+plot2 <- LabelPoints(plot1, points = top_vf, repel = TRUE)
 plot2
 
 
@@ -504,7 +504,7 @@ DimPlot(seurat_object, reduction="umap", group.by="ind")
 DimPlot(seurat_object, reduction="umap", group.by="stim")
 
 seurat_object<- FindNeighbors(seurat_object, reduction="pca", dims=1:10)
-seurat_object <- FindClusters(seurat_object, resolution=0.25)
+seurat_object <- FindClusters(seurat_object, resolution=0.5)
 seurat_object$pca_clusters <- seurat_object$seurat_clusters
 
 DimPlot(seurat_object, reduction="umap", group.by="pca_clusters")
@@ -543,7 +543,7 @@ seurat_object <- RunUMAP(seurat_object, reduction="harmony", dims=1:10, reductio
 DimPlot(seurat_object, reduction="umap_harmony", group.by="stim")
 
 seurat_object <- FindNeighbors(seurat_object, reduction="harmony", dims=1:10)
-seurat_object <- FindClusters(seurat_object, resolution=0.25)
+seurat_object <- FindClusters(seurat_object, resolution=0.5)
 seurat_object$harmony_clusters <- seurat_object$seurat_clusters
 
 DimPlot(seurat_object, reduction="umap_harmony", group.by="harmony_clusters")
@@ -606,7 +606,7 @@ DimPlot(seurat_object, reduction="umap", group.by="harmony_clusters")
 # for single-cell datasets of around 3K cells. Optimal resolution often increases
 # for larger datasets. The clusters can be found using the Idents() function.
 
-seurat_object <- FindNeighbors(seurat_object, dims = 1:10)
+seurat_object <- FindNeighbors(seurat_object, dims = 1:10, reduction = "harmony")
 seurat_object <- FindClusters(seurat_object, resolution = 0.5)
 # Look at cluster IDs of the first 5 cells
 head(Idents(seurat_object), 5)
@@ -635,8 +635,7 @@ DimPlot(seurat_object,reduction = "umap_harmony")
 # variability of your data.
 
 resolution = 2
-seurat_object <- FindClusters(object = seurat_object, reduction = "umap_harmony", resolution = seq(0.1, resolution, 0.1),
-    dims = 1:10)
+seurat_object <- FindClusters(seurat_object, resolution = seq(0.1, resolution, 0.1))
 
 # the different clustering created
 names(seurat_object@meta.data)
@@ -794,22 +793,23 @@ FeaturePlot(seurat_object, features = "Naive_CD4_T1", label = TRUE, repel = TRUE
 # | FCER1A, CST3 | DC
 # | PPBP | Platelet
 
-
-
-DimPlot(seurat_object,group.by = "RNA_snn_res.0.2",reduction = "umap_harmony")|FeaturePlot(seurat_object, features = c( "MS4A1"),reduction = "umap_harmony")
+DimPlot(seurat_object,group.by = "RNA_snn_res.0.5",reduction = "umap_harmony")|FeaturePlot(seurat_object, features = c( "MS4A1"),reduction = "umap_harmony")
 
 #### Challenge: Match cluster numbers with cell labels
 #
-# Use the markers provided and the resolution 0.2 to identity the cell labels
-#
-#   **code ideas?**
+# Use the markers provided and the resolution 0.5 to identity the cell labels
 
-# Idents(seurat_object) <- seurat_object$RNA_snn_res.0.2
-# # this is not the proper order. Make sure the labels are in the same order that the numers they should replace
-# new.cluster.ids <- c("Naive CD4 T","B cells","CD14+ Monocytes","CD4 T cells","CD8 T cells", "Dendritic cells", "FCGR3A+ Monocytes","Megakaryocytes" )
-# names(new.cluster.ids) <- levels(seurat_object)
-# seurat_object <- RenameIdents(seurat_object, new.cluster.ids)
-# DimPlot(seurat_object, reduction = 'umap_harmony', label = TRUE, pt.size = 0.5) + NoLegend()
+Idents(seurat_object) <- seurat_object$RNA_snn_res.0.5
+
+# This renaming list is incomplete and incorrect.
+# Fix and add to the list to fill in the cell types.
+new.cluster.ids <- c(
+    "0" = "Naive CD4+ T",
+    "2" = "CD14+ Monocytes",
+    "1" = "B cells")
+
+seurat_object <- RenameIdents(seurat_object, new.cluster.ids)
+DimPlot(seurat_object, reduction = 'umap_harmony', label = TRUE, pt.size = 0.5) + NoLegend()
 
 ####
 #
@@ -886,7 +886,7 @@ DimPlot(seurat_object, reduction='umap_harmony', group.by='SingleR.labels')
 
 # Compare cell labels by different annotation methods:
 
-DimPlot(seurat_object,group.by = "RNA_snn_res.0.2",reduction = "umap_harmony")
+DimPlot(seurat_object,group.by = "RNA_snn_res.0.5",reduction = "umap_harmony")
 
 DimPlot(seurat_object,group.by = "cell",reduction = "umap_harmony")
 
@@ -1074,7 +1074,6 @@ Idents(seurat_object_celltype) <- seurat_object_celltype$sample
 # AggregateExperssion returns a list of matricies - one for each assay requested (even just requesting one)
 pseudobulk_matrix_list <- AggregateExpression( seurat_object_celltype,  slot = 'counts', assays='RNA' )
 pseudobulk_matrix      <- pseudobulk_matrix_list[['RNA']]
-colnames(pseudobulk_matrix) <- as.character(colnames(pseudobulk_matrix)) # Changes colnames to simple text
 pseudobulk_matrix[1:5,1:4]
 
 # Now it looks like a bulk RNAseq experiment, so treat it like one.

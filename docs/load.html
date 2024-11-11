@@ -131,33 +131,25 @@
 <span class="header-section-number">4.3</span> Different ways of loading the data<a class="anchor" aria-label="anchor" href="#different-ways-of-loading-the-data"><i class="fas fa-link"></i></a>
 </h2>
 <p>Example 1. Load your data using the path to the folder: <code>filtered_feature_bc_matrix</code> that is in the output folder of your cellranger run using the <code>Read10X</code> function.</p>
-<pre><code>## Load the PBMC dataset
-# pbmc.data &lt;- Read10X(data.dir = "outs/filtered_feature_bc_matrix")
-## Initialize the Seurat object with the raw (non-normalized data).
-# seurat_object &lt;- CreateSeuratObject(counts = pbmc.data, min.cells = 3, min.features = 200)
-</code></pre>
+<pre><code># Load the PBMC dataset
+ pbmc.data &lt;- Read10X(data.dir = "outs/filtered_feature_bc_matrix")
+# Initialize the Seurat object with the raw (non-normalized data).
+ seurat_object &lt;- CreateSeuratObject(counts = pbmc.data, min.cells = 3, min.features = 200)</code></pre>
 <p>Example 2. Load your data directing the <code>ReadMtx</code> function to each of the relevant files in the <code>filtered_feature_bc_matrix</code> folder in the outputs from your cellranger run. MTX is a simple text format for sparse matrices.</p>
-<pre><code>
-# expression_matrix &lt;- ReadMtx(
-#   mtx = "outs/filtered_feature_bc_matrix/count_matrix.mtx.gz", features = "outs/filtered_feature_bc_matrix/features.tsv.gz",
-#   cells = "outs/filtered_feature_bc_matrix/barcodes.tsv.gz"
-# )
-#
-# seurat_object &lt;- CreateSeuratObject(counts = expression_matrix)
-</code></pre>
+<pre><code>expression_matrix &lt;- ReadMtx(
+  mtx = "outs/filtered_feature_bc_matrix/count_matrix.mtx.gz", features = "outs/filtered_feature_bc_matrix/features.tsv.gz",
+  cells = "outs/filtered_feature_bc_matrix/barcodes.tsv.gz"
+)
+seurat_object &lt;- CreateSeuratObject(counts = expression_matrix)</code></pre>
 <p>Example 3. Load your data using the <code>Read10X_h5</code> function to each of the relevant HDF5 files. HDF5 is an efficient binary format.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pbmc.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/Read10X_h5.html">Read10X_h5</a></span><span class="op">(</span><span class="st">"data/filtered_feature_bc_matrix.h5"</span><span class="op">)</span></span>
 <span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"data/metadata.txt"</span><span class="op">)</span></span>
-<span></span>
-<span>  </span>
 <span>  </span>
 <span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/CreateSeuratObject.html">CreateSeuratObject</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">pbmc.data</span> ,</span>
 <span>                                 assay <span class="op">=</span> <span class="st">"RNA"</span>, project <span class="op">=</span> <span class="st">'pbmc'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Feature names cannot have underscores ('_'),</span></span>
 <span><span class="co">#&gt; replacing with dashes ('-')</span></span>
-<span></span>
-<span></span>
 <span></span>
 <span><span class="co"># Use AddMetaData to add new meta data to object</span></span>
 <span><span class="va">seurat_object</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AddMetaData.html">AddMetaData</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">seurat_object</span>, metadata <span class="op">=</span> <span class="va">metadata</span><span class="op">)</span></span></code></pre></div>
@@ -222,7 +214,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 07, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 11, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

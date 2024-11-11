@@ -24,7 +24,7 @@ To cluster the cells, we next apply modularity optimization techniques such as t
 
 
 ```{r cluster, fig.height=5, fig.width=7}
-seurat_object <- FindNeighbors(seurat_object, dims = 1:10)
+seurat_object <- FindNeighbors(seurat_object, dims = 1:10, reduction = "harmony")
 seurat_object <- FindClusters(seurat_object, resolution = 0.5)
 # Look at cluster IDs of the first 5 cells
 head(Idents(seurat_object), 5)
@@ -59,8 +59,7 @@ Its a good idea to try different resolutions when clustering to identify the var
 
 ```{r message=FALSE, warning=FALSE,eval=TRUE, echo=TRUE,results='hide'}
 resolution = 2
-seurat_object <- FindClusters(object = seurat_object, reduction = "umap_harmony", resolution = seq(0.1, resolution, 0.1),
-    dims = 1:10)
+seurat_object <- FindClusters(seurat_object, resolution = seq(0.1, resolution, 0.1))
 
 # the different clustering created
 names(seurat_object@meta.data)

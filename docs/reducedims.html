@@ -99,10 +99,10 @@
 <code class="sourceCode R"><span><span class="va">seurat_object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindVariableFeatures.html">FindVariableFeatures</a></span><span class="op">(</span><span class="va">seurat_object</span>, selection.method <span class="op">=</span> <span class="st">'vst'</span>, nfeatures <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Finding variable features for layer counts</span></span>
 <span><span class="co"># Identify the 10 most highly variable genes</span></span>
-<span><span class="va">top10</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/VariableFeatures.html">VariableFeatures</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">top_vf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/VariableFeatures.html">VariableFeatures</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co"># plot variable features with and without labels</span></span>
 <span><span class="va">plot1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/VariableFeaturePlot.html">VariableFeaturePlot</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">)</span></span>
-<span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/LabelPoints.html">LabelPoints</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">plot1</span>, points <span class="op">=</span> <span class="va">top10</span>, repel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/LabelPoints.html">LabelPoints</a></span><span class="op">(</span><span class="va">plot1</span>, points <span class="op">=</span> <span class="va">top_vf</span>, repel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; When using repel, set xnudge and ynudge to 0 for optimal results</span></span>
 <span><span class="va">plot2</span></span>
 <span><span class="co">#&gt; Warning in scale_x_log10(): log-10 transformation</span></span>
@@ -184,7 +184,7 @@ However, particularly for advanced users who would like to use this functionalit
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 07, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 11, 2024.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

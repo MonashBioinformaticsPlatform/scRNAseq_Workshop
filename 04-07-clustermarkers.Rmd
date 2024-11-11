@@ -130,27 +130,28 @@ Fortunately in the case of this dataset, we can use canonical markers to easily 
 
 
 ```{r labelplot}
-
-
-DimPlot(seurat_object,group.by = "RNA_snn_res.0.2",reduction = "umap_harmony")|FeaturePlot(seurat_object, features = c( "MS4A1"),reduction = "umap_harmony")
+DimPlot(seurat_object,group.by = "RNA_snn_res.0.5",reduction = "umap_harmony")|FeaturePlot(seurat_object, features = c( "MS4A1"),reduction = "umap_harmony")
 ```
 
 
 #### Challenge: Match cluster numbers with cell labels  {- .challenge}
 
-Use the markers provided and the resolution 0.2 to identity the cell labels
+Use the markers provided and the resolution 0.5 to identity the cell labels
 
+```{r eval=FALSE}
+Idents(seurat_object) <- seurat_object$RNA_snn_res.0.5
 
-<details>
-  <summary>**code ideas?**</summary>
-```
-Idents(seurat_object) <- seurat_object$RNA_snn_res.0.2
-# this is not the proper order. Make sure the labels are in the same order that the numers they should replace
-new.cluster.ids <- c("Naive CD4 T","B cells","CD14+ Monocytes","CD4 T cells","CD8 T cells", "Dendritic cells", "FCGR3A+ Monocytes","Megakaryocytes" )
-names(new.cluster.ids) <- levels(seurat_object)
+# This renaming list is incomplete and incorrect.
+# Fix and add to the list to fill in the cell types.
+new.cluster.ids <- c(
+    "0" = "Naive CD4+ T",
+    "2" = "CD14+ Monocytes",
+    "1" = "B cells")
+
 seurat_object <- RenameIdents(seurat_object, new.cluster.ids)
 DimPlot(seurat_object, reduction = 'umap_harmony', label = TRUE, pt.size = 0.5) + NoLegend()
 ```
+
 #### {-}
 
 

@@ -64,7 +64,7 @@ DimPlot(seurat_object, reduction='umap_harmony', group.by='SingleR.labels')
 Compare cell labels by different annotation methods:
 
 ```{r}
-DimPlot(seurat_object,group.by = "RNA_snn_res.0.2",reduction = "umap_harmony")
+DimPlot(seurat_object,group.by = "RNA_snn_res.0.5",reduction = "umap_harmony")
 
 DimPlot(seurat_object,group.by = "cell",reduction = "umap_harmony")
 

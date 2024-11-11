@@ -196,7 +196,6 @@ Idents(seurat_object_celltype) <- seurat_object_celltype$sample
 # AggregateExperssion returns a list of matricies - one for each assay requested (even just requesting one)
 pseudobulk_matrix_list <- AggregateExpression( seurat_object_celltype,  slot = 'counts', assays='RNA' )
 pseudobulk_matrix      <- pseudobulk_matrix_list[['RNA']]
-colnames(pseudobulk_matrix) <- as.character(colnames(pseudobulk_matrix)) # Changes colnames to simple text
 pseudobulk_matrix[1:5,1:4]
 ```
 
