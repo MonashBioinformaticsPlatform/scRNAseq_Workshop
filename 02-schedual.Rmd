@@ -1,26 +1,31 @@
 # Schedule {#schedule}
-
+**Day 1**
 | Time      | Content               |
 | :---:|  :----: | 
-|9:00	|	Welcome and Housekeeping|
+|10:00	|	Welcome and Housekeeping|
 || Log in to VM |
 ||	Background on ScRNAseq + R tools|
 ||	Load data|
-|10:00-10:30|		Break| 
-||	QC filtering
+|11:00-11:15|		Break (15 mins)| 
+|11:15|	QC filtering
 ||	Normalisation|
+|12:15 -12:45|	Lunch Break|
 ||	PCAs and UMAPs|
-|12:30 -13:30|	Lunch Break|
-|| Integration |
-|	|Clustering|
+|14:00| Finish Day 1|
+
+**Day 2**
+
+| Time      | Content               |
+| :---:|  :----: | 
+|10:00| Integration |
+|11:00-11:15|		Break (15 mins)| 
+|11:15	|Clustering|
 ||	Cluster Markers|
-|	|	SingleR|
-|15:00-15:30|		Break|
+|	|SingleR|
+|12:15-12:45|		Break (15mins)|
 ||Differential Expression|
 ||	Main room Discussion on differential expression|
-|17:00|Final remarks and conclusion|
-
-
+|14:00|Final remarks and conclusion|
 
 
 
