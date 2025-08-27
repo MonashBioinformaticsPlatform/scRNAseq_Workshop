@@ -1,5 +1,7 @@
 # Schedule {#schedule}
-**Day 1**
+
+**Day 1**   
+
 | Time      | Content               |
 | :---:|  :----: | 
 |10:00	|	Welcome and Housekeeping|

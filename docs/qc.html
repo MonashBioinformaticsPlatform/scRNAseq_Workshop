@@ -7,7 +7,7 @@
 <title>Chapter 5 QC Filtering | scRNAseq Analysis in R with Seurat</title>
 <meta name="author" content="Monash Genomics and Bioinformatics Platform (MGBP)">
 <meta name="description" content="The steps below encompass the standard pre-processing workflow for scRNA-seq data in Seurat. These represent the selection and filtration of cells based on QC metrics, data normalization and...">
-<meta name="generator" content="bookdown 0.41 with bs4_book()">
+<meta name="generator" content="bookdown 0.43 with bs4_book()">
 <meta property="og:title" content="Chapter 5 QC Filtering | scRNAseq Analysis in R with Seurat">
 <meta property="og:type" content="book">
 <meta property="og:description" content="The steps below encompass the standard pre-processing workflow for scRNA-seq data in Seurat. These represent the selection and filtration of cells based on QC metrics, data normalization and...">
@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="The steps below encompass the standard pre-processing workflow for scRNA-seq data in Seurat. These represent the selection and filtration of cells based on QC metrics, data normalization and...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.9.0/transition.js"></script><script src="libs/bs3compat-0.9.0/tabs.js"></script><script src="libs/bs3compat-0.9.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -121,7 +121,7 @@
 </h4>
 <p>Where are QC metrics stored in Seurat?</p>
 <ul>
-<li>The number of unique genes and total molecules are automatically calculated during <code><a href="https://mojaveazure.github.io/seurat-object/reference/CreateSeuratObject.html">CreateSeuratObject()</a></code>
+<li>The number of unique genes and total molecules are automatically calculated during <code><a href="https://satijalab.github.io/seurat-object/reference/CreateSeuratObject.html">CreateSeuratObject()</a></code>
 <ul>
 <li>You can find them stored in the object meta data</li>
 </ul>
@@ -137,7 +137,26 @@
 <code class="sourceCode R"><span><span class="co"># Visualize QC metrics as a violin plot</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nFeature_RNA"</span>, <span class="st">"nCount_RNA"</span>, <span class="st">"percent.mt"</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Default search for "data" layer in "RNA" assay</span></span>
-<span><span class="co">#&gt; yielded no results; utilizing "counts" layer instead.</span></span></code></pre></div>
+<span><span class="co">#&gt; yielded no results; utilizing "counts" layer instead.</span></span>
+<span><span class="co">#&gt; Warning: The `slot` argument of `FetchData()` is deprecated as of</span></span>
+<span><span class="co">#&gt; SeuratObject 5.0.0.</span></span>
+<span><span class="co">#&gt; ℹ Please use the `layer` argument instead.</span></span>
+<span><span class="co">#&gt; ℹ The deprecated feature was likely used in the Seurat</span></span>
+<span><span class="co">#&gt;   package.</span></span>
+<span><span class="co">#&gt;   Please report the issue at</span></span>
+<span><span class="co">#&gt;   &lt;https://github.com/satijalab/seurat/issues&gt;.</span></span>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where</span></span>
+<span><span class="co">#&gt; this warning was generated.</span></span>
+<span><span class="co">#&gt; Warning: `PackageCheck()` was deprecated in SeuratObject 5.0.0.</span></span>
+<span><span class="co">#&gt; ℹ Please use `rlang::check_installed()` instead.</span></span>
+<span><span class="co">#&gt; ℹ The deprecated feature was likely used in the Seurat</span></span>
+<span><span class="co">#&gt;   package.</span></span>
+<span><span class="co">#&gt;   Please report the issue at</span></span>
+<span><span class="co">#&gt;   &lt;https://github.com/satijalab/seurat/issues&gt;.</span></span>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where</span></span>
+<span><span class="co">#&gt; this warning was generated.</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/qc2-1.png" width="672"></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># FeatureScatter is typically used to visualize feature-feature relationships, </span></span>
@@ -190,20 +209,21 @@
 <span><span class="co">#&gt; Warning: Default search for "data" layer in "RNA" assay</span></span>
 <span><span class="co">#&gt; yielded no results; utilizing "counts" layer instead.</span></span>
 <span><span class="co">#&gt; Scale for y is already present.</span></span>
-<span><span class="co">#&gt; Adding another scale for y, which will replace the existing scale.</span></span>
-<span><span class="co">#&gt; Warning: Removed 4624 rows containing non-finite outside</span></span>
-<span><span class="co">#&gt; the scale range (`stat_ydensity()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 4624 rows containing missing values or</span></span>
-<span><span class="co">#&gt; values outside the scale range (`geom_point()`).</span></span></code></pre></div>
+<span><span class="co">#&gt; Adding another scale for y, which will replace the existing</span></span>
+<span><span class="co">#&gt; scale.</span></span>
+<span><span class="co">#&gt; Warning: Removed 4624 rows containing non-finite outside the scale</span></span>
+<span><span class="co">#&gt; range (`stat_ydensity()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 4624 rows containing missing values or values</span></span>
+<span><span class="co">#&gt; outside the scale range (`geom_point()`).</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/unnamed-chunk-13-2.png" width="672"></div>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, features <span class="op">=</span> <span class="st">"nFeature_RNA"</span>, y.max <span class="op">=</span><span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Default search for "data" layer in "RNA" assay</span></span>
 <span><span class="co">#&gt; yielded no results; utilizing "counts" layer instead.</span></span>
-<span><span class="co">#&gt; Warning: Removed 376 rows containing non-finite outside the</span></span>
-<span><span class="co">#&gt; scale range (`stat_ydensity()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 376 rows containing missing values or</span></span>
-<span><span class="co">#&gt; values outside the scale range (`geom_point()`).</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Removed 376 rows containing non-finite outside the scale</span></span>
+<span><span class="co">#&gt; range (`stat_ydensity()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 376 rows containing missing values or values</span></span>
+<span><span class="co">#&gt; outside the scale range (`geom_point()`).</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/unnamed-chunk-13-3.png" width="672"></div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -269,7 +289,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 11, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: August 27, 2025.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

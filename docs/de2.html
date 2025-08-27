@@ -7,7 +7,7 @@
 <title>Chapter 13 Differential Expression | scRNAseq Analysis in R with Seurat</title>
 <meta name="author" content="Monash Genomics and Bioinformatics Platform (MGBP)">
 <meta name="description" content="Slides There are many different methods for calculating differential expression between groups in scRNAseq data. There are a number of review papers worth consulting on this topic. There is the...">
-<meta name="generator" content="bookdown 0.41 with bs4_book()">
+<meta name="generator" content="bookdown 0.43 with bs4_book()">
 <meta property="og:title" content="Chapter 13 Differential Expression | scRNAseq Analysis in R with Seurat">
 <meta property="og:type" content="book">
 <meta property="og:description" content="Slides There are many different methods for calculating differential expression between groups in scRNAseq data. There are a number of review papers worth consulting on this topic. There is the...">
@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="Slides There are many different methods for calculating differential expression between groups in scRNAseq data. There are a number of review papers worth consulting on this topic. There is the...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.9.0/transition.js"></script><script src="libs/bs3compat-0.9.0/tabs.js"></script><script src="libs/bs3compat-0.9.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -98,14 +98,14 @@
 <span><span class="co">#&gt; GTACTACTCATACG-1 ctrl FCGR3A+ Monocytes    singlet</span></span>
 <span><span class="co">#&gt;                  percent.mt RNA_snn_res.0.5 seurat_clusters</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1  1.6336634               1               0</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1  4.8809524               6              15</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1  4.8809524               5              15</span></span>
 <span><span class="co">#&gt; CACCGTTGTCGTAG-1  1.0655473               4              11</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1  3.0662710               3               4</span></span>
-<span><span class="co">#&gt; TACGAGACCTATTC-1  1.0837849               0               8</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1  3.0662710               3               5</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1  1.0837849               0               9</span></span>
 <span><span class="co">#&gt; GTACTACTCATACG-1  0.7137395               4              11</span></span>
 <span><span class="co">#&gt;                  pca_clusters harmony_clusters</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1            3                1</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1            0                6</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1            0                5</span></span>
 <span><span class="co">#&gt; CACCGTTGTCGTAG-1            9                4</span></span>
 <span><span class="co">#&gt; TATCGTACACGCAT-1            6                3</span></span>
 <span><span class="co">#&gt; TACGAGACCTATTC-1            0                0</span></span>
@@ -113,72 +113,72 @@
 <span><span class="co">#&gt;                  RNA_snn_res.0.1 RNA_snn_res.0.2</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1               1               1</span></span>
 <span><span class="co">#&gt; GGAGACGATTCGTT-1               0               0</span></span>
-<span><span class="co">#&gt; CACCGTTGTCGTAG-1               4               4</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1               3               3</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1               3               4</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               2               3</span></span>
 <span><span class="co">#&gt; TACGAGACCTATTC-1               0               0</span></span>
-<span><span class="co">#&gt; GTACTACTCATACG-1               4               4</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1               3               4</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.0.3 RNA_snn_res.0.4</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1               1               1</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1               0               6</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1               0               0</span></span>
 <span><span class="co">#&gt; CACCGTTGTCGTAG-1               4               4</span></span>
 <span><span class="co">#&gt; TATCGTACACGCAT-1               3               3</span></span>
 <span><span class="co">#&gt; TACGAGACCTATTC-1               0               0</span></span>
 <span><span class="co">#&gt; GTACTACTCATACG-1               4               4</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.0.6 RNA_snn_res.0.7</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1               1               1</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1               7               7</span></span>
-<span><span class="co">#&gt; CACCGTTGTCGTAG-1               5               6</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1               3               4</span></span>
-<span><span class="co">#&gt; TACGAGACCTATTC-1               0               3</span></span>
-<span><span class="co">#&gt; GTACTACTCATACG-1               5               6</span></span>
-<span><span class="co">#&gt;                  RNA_snn_res.0.8 RNA_snn_res.0.9</span></span>
-<span><span class="co">#&gt; AGGGCGCTATTTCC-1               1               1</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1               9               9</span></span>
-<span><span class="co">#&gt; CACCGTTGTCGTAG-1               7               7</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1               7               6</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1               5               5</span></span>
 <span><span class="co">#&gt; TATCGTACACGCAT-1               3               3</span></span>
 <span><span class="co">#&gt; TACGAGACCTATTC-1               0               0</span></span>
-<span><span class="co">#&gt; GTACTACTCATACG-1               7               7</span></span>
-<span><span class="co">#&gt;                  RNA_snn_res.1 RNA_snn_res.1.1</span></span>
-<span><span class="co">#&gt; AGGGCGCTATTTCC-1             0               1</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1             9               8</span></span>
-<span><span class="co">#&gt; CACCGTTGTCGTAG-1             8               7</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1             3               4</span></span>
-<span><span class="co">#&gt; TACGAGACCTATTC-1             6               0</span></span>
-<span><span class="co">#&gt; GTACTACTCATACG-1             8               7</span></span>
-<span><span class="co">#&gt;                  RNA_snn_res.1.2 RNA_snn_res.1.3</span></span>
-<span><span class="co">#&gt; AGGGCGCTATTTCC-1               0               2</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1              10              11</span></span>
-<span><span class="co">#&gt; CACCGTTGTCGTAG-1               8               9</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1               3               3</span></span>
-<span><span class="co">#&gt; TACGAGACCTATTC-1               2               7</span></span>
-<span><span class="co">#&gt; GTACTACTCATACG-1               8               9</span></span>
-<span><span class="co">#&gt;                  RNA_snn_res.1.4 RNA_snn_res.1.5</span></span>
-<span><span class="co">#&gt; AGGGCGCTATTTCC-1               0               1</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1              12              12</span></span>
-<span><span class="co">#&gt; CACCGTTGTCGTAG-1              10              10</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1               1               3</span></span>
-<span><span class="co">#&gt; TACGAGACCTATTC-1               2               4</span></span>
-<span><span class="co">#&gt; GTACTACTCATACG-1              10              10</span></span>
-<span><span class="co">#&gt;                  RNA_snn_res.1.6 RNA_snn_res.1.7</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1               5               5</span></span>
+<span><span class="co">#&gt;                  RNA_snn_res.0.8 RNA_snn_res.0.9</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1               1               0</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1              12              13</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1               7               8</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1               6               7</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               4               3</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               0               1</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1               6               7</span></span>
+<span><span class="co">#&gt;                  RNA_snn_res.1 RNA_snn_res.1.1</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1             1               0</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1             9               9</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1             7               7</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1             3               3</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1             0               1</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1             7               7</span></span>
+<span><span class="co">#&gt;                  RNA_snn_res.1.2 RNA_snn_res.1.3</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               2               0</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1               9              12</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1               7               9</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               3               2</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               0               8</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1               7               9</span></span>
+<span><span class="co">#&gt;                  RNA_snn_res.1.4 RNA_snn_res.1.5</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               0               0</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1              14              14</span></span>
 <span><span class="co">#&gt; CACCGTTGTCGTAG-1              10              11</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1               2               1</span></span>
-<span><span class="co">#&gt; TACGAGACCTATTC-1               9               7</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               2               2</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               8               9</span></span>
 <span><span class="co">#&gt; GTACTACTCATACG-1              10              11</span></span>
+<span><span class="co">#&gt;                  RNA_snn_res.1.6 RNA_snn_res.1.7</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               2               0</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1              15              14</span></span>
+<span><span class="co">#&gt; CACCGTTGTCGTAG-1              12              11</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               0               2</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1               9               9</span></span>
+<span><span class="co">#&gt; GTACTACTCATACG-1              12              11</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.1.8 RNA_snn_res.1.9</span></span>
-<span><span class="co">#&gt; AGGGCGCTATTTCC-1               0               7</span></span>
-<span><span class="co">#&gt; GGAGACGATTCGTT-1              13              14</span></span>
+<span><span class="co">#&gt; AGGGCGCTATTTCC-1               0               4</span></span>
+<span><span class="co">#&gt; GGAGACGATTCGTT-1              14              16</span></span>
 <span><span class="co">#&gt; CACCGTTGTCGTAG-1              11              12</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1               1               0</span></span>
-<span><span class="co">#&gt; TACGAGACCTATTC-1               8               8</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1               2               0</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1              10               6</span></span>
 <span><span class="co">#&gt; GTACTACTCATACG-1              11              12</span></span>
 <span><span class="co">#&gt;                  RNA_snn_res.2 Naive_CD4_T1  cell_label</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1             0   -0.3540023        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt; GGAGACGATTCGTT-1            15    2.1376158 Naive_CD4_T</span></span>
 <span><span class="co">#&gt; CACCGTTGTCGTAG-1            11   -1.1487836        &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; TATCGTACACGCAT-1             4    0.5557941        &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; TACGAGACCTATTC-1             8    1.4250065 Naive_CD4_T</span></span>
+<span><span class="co">#&gt; TATCGTACACGCAT-1             5    0.5557941        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; TACGAGACCTATTC-1             9    1.4250065 Naive_CD4_T</span></span>
 <span><span class="co">#&gt; GTACTACTCATACG-1            11   -0.2082793        &lt;NA&gt;</span></span>
 <span><span class="co">#&gt;                  SingleR.labels</span></span>
 <span><span class="co">#&gt; AGGGCGCTATTTCC-1       Monocyte</span></span>
@@ -286,11 +286,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <span><span class="co">#&gt;  4 dimensional reductions calculated: pca, umap, harmony, umap_harmony</span></span></code></pre></div>
 <p>How many copies of each gene are there?</p>
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">total_per_gene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">seurat_object</span>, assay<span class="op">=</span><span class="st">'RNA'</span>, slot<span class="op">=</span><span class="st">'counts'</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The `slot` argument of `GetAssayData()` is deprecated as of SeuratObject 5.0.0.</span></span>
-<span><span class="co">#&gt; ℹ Please use the `layer` argument instead.</span></span>
-<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
-<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span>
+<code class="sourceCode R"><span><span class="va">total_per_gene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">seurat_object</span>, assay<span class="op">=</span><span class="st">'RNA'</span>, slot<span class="op">=</span><span class="st">'counts'</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">total_per_gene</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/unnamed-chunk-49-1.png" width="672"></div>
 <p>Lets keep only those genes with at least 50 copies across the entire experiment.</p>
@@ -308,7 +304,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <p>An easy way is to subset the object.</p>
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Set idents to 'cell' column.</span></span>
-<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">seurat_object</span><span class="op">$</span><span class="va">cell</span></span>
+<span><span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">seurat_object</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">seurat_object</span><span class="op">$</span><span class="va">cell</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">seurat_object</span>, reduction <span class="op">=</span> <span class="st">"umap_harmony"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="scRNAseqInR_ABACBS_2024_Doco_files/figure-html/unnamed-chunk-52-1.png" width="672"></div>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
@@ -324,7 +320,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <p>To run this test, we change the Idents to the factor(column) we want to test. In this case, that’s ‘stim’.</p>
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Change Ident to Condition</span></span>
-<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">seurat_object_celltype</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">seurat_object_celltype</span><span class="op">$</span><span class="va">stim</span></span>
+<span><span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">seurat_object_celltype</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">seurat_object_celltype</span><span class="op">$</span><span class="va">stim</span></span>
 <span></span>
 <span><span class="co"># default, wilcox test</span></span>
 <span><span class="va">de_result_wilcox</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindMarkers.html">FindMarkers</a></span><span class="op">(</span><span class="va">seurat_object_celltype</span>, </span>
@@ -378,7 +374,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Change Ident to Condition</span></span>
-<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">seurat_object_celltype</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">seurat_object_celltype</span><span class="op">$</span><span class="va">stim</span></span>
+<span><span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">seurat_object_celltype</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">seurat_object_celltype</span><span class="op">$</span><span class="va">stim</span></span>
 <span></span>
 <span><span class="co"># default, wilcox test</span></span>
 <span><span class="va">de_result_negbinom</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindMarkers.html">FindMarkers</a></span><span class="op">(</span><span class="va">seurat_object_celltype</span>, </span>
@@ -442,7 +438,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <span></span>
 <span><span class="co"># Change idents to ind for grouping.</span></span>
 <span><span class="va">seurat_object_celltype</span><span class="op">$</span><span class="va">sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">seurat_object_celltype</span><span class="op">$</span><span class="va">stim</span>, <span class="va">seurat_object_celltype</span><span class="op">$</span><span class="va">ind</span>, sep<span class="op">=</span><span class="st">"_"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">seurat_object_celltype</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">seurat_object_celltype</span><span class="op">$</span><span class="va">sample</span></span>
+<span><span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">seurat_object_celltype</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">seurat_object_celltype</span><span class="op">$</span><span class="va">sample</span></span>
 <span></span>
 <span><span class="co"># THen pool together counts in those groups</span></span>
 <span><span class="co"># AggregateExperssion returns a list of matricies - one for each assay requested (even just requesting one)</span></span>
@@ -553,7 +549,7 @@ In single cell datasets, there are many genes like this. Filtering here to make 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: November 11, 2024.</p>
+    <p>"<strong>scRNAseq Analysis in R with Seurat</strong>" was written by Monash Genomics and Bioinformatics Platform (MGBP). It was last built on Compiled: August 27, 2025.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
